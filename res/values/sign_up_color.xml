@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    
+    <color name="sign_up_btn_bg">#4980ff</color>
+    <color name="sign_up_btn_pressed_bg">#5e0a9c</color>
+    
+    <color name="sign_up_btn_text_color">#FFFFFF</color>
+</resources>

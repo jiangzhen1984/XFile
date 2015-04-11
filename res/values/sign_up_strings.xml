@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      
+    <!-- sign_up layout -->
+    <string name="sign_up_btn_text">登 录/注 册</string>
+    <string name="sign_up_username_hint">手机号</string>
+    <string name="sign_up_password_hint">密码</string>
+    <string name="sign_up_error_username_required">需要输入手机号</string>
+    <string name="sign_up_error_pwd_required">需要密码</string>
+    <string name="sign_up_progress_title"></string>
+    <string name="sign_up_progress_sign_up">注册中&#8230;</string>
+    <string name="sign_up_progress_sign_in">登录中&#8230;</string>
+</resources>

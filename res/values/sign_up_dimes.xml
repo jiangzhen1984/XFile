@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      
+    <dimen name="sign_up_btn_text_padding_left"> 25dp</dimen>
+    <dimen name="sign_up_btn_text_padding_right"> 25dp</dimen>
+    
+    <dimen name="sign_up_layout_margin_top"> 25dp</dimen>
+</resources>
