@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.container, new MapFragment()).commit();
 		}
 	}
 	
@@ -76,67 +76,9 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public  class PlaceholderFragment extends Fragment {
-
-		private ListView lv;
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			lv = (ListView)rootView.findViewById(R.id.listView1);
-			mLocalAdapter = new LocalAdapter();
-			lv.setAdapter(mLocalAdapter);
-			return rootView;
-		}
-		
-		
-		
-		
-	}
 	
+
 	
-	private LocalAdapter mLocalAdapter;
-	class LocalAdapter extends BaseAdapter {
-
-		@Override
-		public int getCount() {
-			return list == null ? 0 : list.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return list.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return list.get(position).getId();
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = LayoutInflater.from(MainActivity.this).inflate(R.layout.widget_doctor_card, parent,
-						false);
-			}
-			Doctor doct = list.get(position);
-			TextView tvName = (TextView)convertView.findViewById(R.id.textView1);
-			TextView tvDept = (TextView)convertView.findViewById(R.id.textView2);
-			tvName.setText(doct.getName());
-			tvDept.setText(doct.getDepartment());
-			return convertView;
-		}
-		
-	}
-	
-	private List<Doctor> list;
 	
 	private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -147,8 +89,6 @@ public class MainActivity extends Activity {
 
 				@Override
 				public void onResponse(Response res) {
-					list = (List<Doctor>)res.getResult();
-					mLocalAdapter.notifyDataSetChanged();
 				}
 				
 			});
