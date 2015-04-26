@@ -15,7 +15,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.text.TextUtils;
 
 /**
@@ -25,6 +27,8 @@ import android.text.TextUtils;
  */
 public class LockCommService extends Service {
 
+	public static final String EXTRA_KEY_LOCK_ADDRES ="lock_address";
+	
 	public static final String EXTRA_KEY_LOCK_UUID = "lock_uuid";
 
 	public static final String EXTRA_KEY_LOCK_NAME = "lock_name";
@@ -36,12 +40,17 @@ public class LockCommService extends Service {
 	public static final String EXTRA_KEY_OPT_RESULT = "opt_result";
 
 	public static final String BROADCAST_ACTION = "com.xfile.lock_comm_action";
+	
+	public static final String BROADCAST_CATEGORY = "com.xfile";
 
+	private String mMacDevice;
 	private String mLockName;
 	private String mLockUUID;
 	private String mLockPin;
 	private int mOpt = -1;
 
+	private Handler mHandler = new Handler();
+	
 	private ConnectThread mConnThread;
 
 	private boolean mReceiverRegistered;
@@ -49,6 +58,8 @@ public class LockCommService extends Service {
 	private State mState = State.NORMAL;
 
 	BluetoothAdapter mBluetoothAdapter;
+	
+	private Object mThreadLock = new Object();
 
 	@Override
 	public void onCreate() {
@@ -58,16 +69,21 @@ public class LockCommService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		String name = intent.getStringExtra(EXTRA_KEY_LOCK_NAME);
-		String uuid = intent.getStringExtra(EXTRA_KEY_LOCK_UUID);
-		String pin = intent.getStringExtra(EXTRA_KEY_LOCK_secure);
-		int opt = intent.getIntExtra(EXTRA_KEY_LOCK_OPT, -1);
-		if (TextUtils.isEmpty(uuid) || TextUtils.isEmpty(name)
-				|| TextUtils.isEmpty(pin) || opt == -1) {
+		mMacDevice = intent.getStringExtra(EXTRA_KEY_LOCK_ADDRES);
+		mLockName = intent.getStringExtra(EXTRA_KEY_LOCK_NAME);
+		mLockUUID = intent.getStringExtra(EXTRA_KEY_LOCK_UUID);
+		mLockPin = intent.getStringExtra(EXTRA_KEY_LOCK_secure);
+		mOpt = intent.getIntExtra(EXTRA_KEY_LOCK_OPT, -1);
+		if (TextUtils.isEmpty(mLockUUID) || TextUtils.isEmpty(mLockName)
+				|| TextUtils.isEmpty(mLockPin) || mOpt == -1) {
 			this.stopSelf();
 			return START_STICKY;
 		} else {
-			doConnection(name, uuid, pin);
+			mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+			if (!mBluetoothAdapter.isEnabled()) {
+				return START_STICKY;
+			}
+			lookingForDevice();
 		}
 
 		return super.onStartCommand(intent, flags, startId);
@@ -81,7 +97,6 @@ public class LockCommService extends Service {
 		}
 		// close thread
 		if (mConnThread != null && mConnThread.isAlive()) {
-			// TODO close all stream
 			mConnThread.cancel();
 			mConnThread = null;
 		}
@@ -91,27 +106,36 @@ public class LockCommService extends Service {
 	public IBinder onBind(Intent intent) {
 		return null;
 	}
-
-	private void doConnection(String name, String uuid, String pin) {
-		mLockName = name;
-		mLockUUID = uuid;
-		mLockPin = pin;
-		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-		if (!adapter.isEnabled()) {
-			// user doesn't enable bluetool
-			mState = LockCommService.State.FAILED;
-			sendResultAndFinish(mState);
-			return;
-		}
-		Set<BluetoothDevice> bl = adapter.getBondedDevices();
+	
+	
+	private void lookingForDevice() {
+		boolean found = false;
+		Set<BluetoothDevice> bl = mBluetoothAdapter.getBondedDevices();
 		for (BluetoothDevice bd : bl) {
-			if (bd.getName().equals(name)) {
-				mState = State.CONNECTING;
-				mConnThread = new ConnectThread(bd);
-				mConnThread.start();
-				return;
+			if (bd.getName().equals(mLockName)) {
+				pairDevice(bd);
+				found  = true;
+				break;
 			}
 		}
+		
+		if(!found) {
+			lookingForDevice(mLockName);
+		} 
+	}
+	
+	
+	private void pairDevice(BluetoothDevice device) {
+		if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+			IntentFilter mFilter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+			registerReceiver(mReceiver, mFilter);
+			device.createBond();
+		} else {
+			startConnect(device);
+		}
+	}
+
+	private void lookingForDevice(String name) {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
 			mBluetoothAdapter
@@ -126,6 +150,7 @@ public class LockCommService extends Service {
 
 					});
 		}
+		
 		mReceiverRegistered = true;
 		IntentFilter mFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 		mFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
@@ -134,10 +159,25 @@ public class LockCommService extends Service {
 		mState = State.SEARHING;
 		BluetoothAdapter.getDefaultAdapter().startDiscovery();
 	}
+	
+	
 
+	
+	private synchronized boolean startConnect(BluetoothDevice device) {
+		if (mState ==  State.CONNECTING) {
+			return false;
+		}
+		mState = State.CONNECTING;
+		mConnThread = new ConnectThread(device);
+		mConnThread.start();
+		return true;
+	}
+	
+	
 	private void sendResultAndFinish(State st) {
 		Intent i = new Intent(BROADCAST_ACTION);
-		i.putExtra(EXTRA_KEY_OPT_RESULT, st == State.NORMAL ? 0 : 1);
+		i.addCategory(BROADCAST_CATEGORY);
+		i.putExtra(EXTRA_KEY_OPT_RESULT, st);
 		this.sendBroadcast(i);
 		stopSelf();
 	}
@@ -152,14 +192,29 @@ public class LockCommService extends Service {
 						.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 				if (device.getName().equals(mLockName)
 						&& mState == State.SEARHING) {
-					mState = State.CONNECTING;
-					mConnThread = new ConnectThread(device);
-					mConnThread.start();
+					pairDevice(device);
+					//TODO how to avoid finish event?
 				}
 			} else if (action
 					.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
-				if (mState != State.CONNECTING) {
-					// TODO handle doesn't searched matched device should retry
+				if (mState == State.SEARHING) {
+					mState = LockCommService.State.FAILED_TIMEOUT;
+					sendResultAndFinish(mState);
+				}
+			} else if (action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
+				BluetoothDevice bd = (BluetoothDevice)intent.getExtras().get(BluetoothDevice.EXTRA_DEVICE);
+				int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE);
+				if (state == BluetoothDevice.BOND_BONDED) {
+					// mThreadLock is not null means bond request by thread
+					if (mConnThread != null) {
+						synchronized (mThreadLock) {
+							mThreadLock.notify();
+						}
+					} else {
+						startConnect(bd);
+					}
+				} else {
+					//TODO what should we do?
 				}
 			}
 		}
@@ -168,36 +223,49 @@ public class LockCommService extends Service {
 	private class ConnectThread extends Thread {
 		private BluetoothSocket mSocket = null;
 		private BluetoothDevice mDevice = null;
+		InputStream reader = null;
+		OutputStream writer = null;
 
 		public ConnectThread(BluetoothDevice device) {
 			mDevice = device;
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 				mDevice.setPin(mLockPin.getBytes());
 				mDevice.setPairingConfirmation(true);
+				mBluetoothAdapter.stopLeScan(null);
+			} 
+			// Cancel discovery because it will slow down the connection
+			mBluetoothAdapter.cancelDiscovery();
+		}
+
+		public void run() {
+						
+			if (mDevice.getBondState() != BluetoothDevice.BOND_NONE) {
+				mDevice.createBond();
 			}
-			// Get a BluetoothSocket to connect with the given BluetoothDevice
+			
+			synchronized (mThreadLock) {
+				try {
+					mThreadLock.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			//TODO waiting for bound
 			try {
-				mSocket = device.createRfcommSocketToServiceRecord(UUID
+				mSocket = mDevice.createRfcommSocketToServiceRecord(UUID
 						.fromString(mLockUUID));
 			} catch (IOException e) {
 				e.printStackTrace();
 				mState = LockCommService.State.FAILED;
 			}
-		}
-
-		public void run() {
-			if (mState == LockCommService.State.FAILED) {
-				sendResultAndFinish(mState);
-				return;
-			}
-			// Cancel discovery because it will slow down the connection
-			mBluetoothAdapter.cancelDiscovery();
+			
 
 			try {
 				// Connect the device through the socket. This will block
 				// until it succeeds or throws an exception
-				mSocket.connect();
-			} catch (IOException connectException) {
+				mSocket.connect(); 
+			} catch (Exception connectException) {
 				try {
 					mSocket.close();
 				} catch (IOException closeException) {
@@ -207,7 +275,11 @@ public class LockCommService extends Service {
 				return;
 			}
 
+			Message msg = Message.obtain(mHandler, mTimeOutRunnable);
+			mHandler.sendMessageDelayed(msg, 5000);
+			
 			updateLock(mSocket);
+			mHandler.removeCallbacks(mTimeOutRunnable);
 			try {
 				sleep(200);
 			} catch (InterruptedException e) {
@@ -223,8 +295,7 @@ public class LockCommService extends Service {
 		}
 
 		private void updateLock(BluetoothSocket socket) {
-			InputStream reader = null;
-			OutputStream writer = null;
+		
 			try {
 				reader = mSocket.getInputStream();
 				writer = mSocket.getOutputStream();
@@ -241,6 +312,7 @@ public class LockCommService extends Service {
 			try {
 				writer.write((mLockPin + mOpt).getBytes());
 				writer.flush();
+				//FIXME add time out
 				int ret = reader.read();
 				if (ret == 0) {
 					mState = LockCommService.State.NORMAL;
@@ -257,16 +329,47 @@ public class LockCommService extends Service {
 
 		/** Will cancel an in-progress connection, and close the socket */
 		public void cancel() {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (writer != null) {
+				try {
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			try {
 				mSocket.close();
+				this.interrupt();
 			} catch (IOException e) {
 			}
 		}
 
 	}
+	
+	
+	private Runnable mTimeOutRunnable = new Runnable() {
 
-	enum State {
-		NORMAL, SEARHING, MATCHING, CONNECTED, DISCONNECTED, CONNECTING, FAILED, INSECURE_FAILED;
+		@Override
+		public void run() {
+			if (mConnThread != null) {
+				mConnThread.cancel();
+				mConnThread = null;
+				mState = LockCommService.State.FAILED_TIMEOUT;
+				sendResultAndFinish(mState);
+			}
+		}
+		
+	};
+
+	public enum State {
+		NORMAL, SEARHING, MATCHING, CONNECTED, DISCONNECTED, CONNECTING, FAILED, INSECURE_FAILED, FAILED_TIMEOUT;
 	}
 
 }
