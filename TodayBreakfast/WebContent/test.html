@@ -1,0 +1,1200 @@
+<html  ng-app="app">
+<!--[if lt IE 7 ]> <html lang="en-us" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-us" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-us" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-us" class="no-js ie9"> <![endif]-->   
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en-us" class="no-js"> <!--<![endif]-->
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" >
+<meta charset="utf-8">
+<title>青年菜君</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<base href="http://www.qingniancaijun.com.cn/" />
+<meta name="description" content="青年菜君" />
+<link href="http://www.qingniancaijun.com.cn/image/data/logo/fav.png" rel="icon" />
+<!-- <script type="text/javascript" name="baidu-tc-cerfication" data-appid="4489645" src="http://apps.bdimg.com/cloudaapi/lightapp.js"></script> -->
+<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
+
+<!-- RESET USER AGENT -->
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/mobilev2/assets/ionic/css/ionic.css?v=1.0.6" />
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/mobilev2/stylesheet/stylesheet.css?v=1.0.6" />
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/mobilev2/stylesheet/mobile_v2.css?v=1.0.6" />
+
+<!-- script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.6.1.min.js"></script-->
+<script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.2.min.js"></script>
+
+<!--<script type="text/javascript" src="catalog/view/javascript/jquery/jquery.min.js"></script>-->
+
+<script src="assets/libs/modernizr/modernizr.2.6.3.js"></script>
+
+<script type="text/javascript"
+	src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.9.custom.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="catalog/view/javascript/jquery/ui/themes/flick/jquery-ui-1.8.16.custom.css" />
+	
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/external/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/lodash-2.4.1.compat.min.js"></script>
+	
+<!-- Fixes for IE -->
+<!--[if lt IE 9]>
+<script src="assets/libs/dist/html5shiv.js"></script>
+<![endif]-->
+<!--[if (gte IE 6)&(lte IE 8)]>
+  <script type="text/javascript" src="assets/libs/selectivizr/1.0.2/selectivizr.js"></script>
+  <noscript><link rel="stylesheet" href="[fallback css]" /></noscript>
+<![endif]-->
+    <script type="text/javascript" src="catalog/view/theme/mobilev2/javascript/angular/1.2.27/angular.min.js"></script>
+    <script type="text/javascript" src="catalog/view/theme/mobilev2/javascript/angular/ui-router/0.2.13/angular-ui-router.min.js"></script>
+    <script>
+        angular.module('app', ['ui.router']);
+    </script>
+</head>
+<body class="ionic">
+<img src="http://hm.baidu.com/hm.gif?si=61f1331aa9214144042cf468daaf9caf&amp;et=0&amp;nv=1&amp;st=1&amp;v=wap-0-0.2&amp;rnd=1736931021" width="0" height="0" />
+<div id="page" class="page"><header id="header">
+	<div class="ix-row">
+		<div class="ix-u-sm-4">
+			<div id="logo" class="tc">
+				<a href="http://www.qingniancaijun.com.cn/index.php?route=common/home" title="">
+					<img src="catalog/view/theme/mobilev2/images/logo-m.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div class="ix-u-sm-8">
+			<div id="point-switch" ng-controller="SwitchZTDCtrl">
+				<a id="ztd-btn" ng-click="showPickPointsContainer()">
+					自提点选择				</a>
+			</div>
+		</div>
+	</div>
+
+
+</header>
+
+
+
+
+<div id="content" class="content">
+	<div role="banner">
+		  <div id="slideshow_9">
+            <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=232">
+    <img src="http://www.qingniancaijun.com.cn/image/data/banner/jg banner.jpg" alt="" data-thumb="http://www.qingniancaijun.com.cn/image/data/banner/jg banner.jpg" data-slidecaption="" />
+    </a>
+                <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=230">
+    <img src="http://www.qingniancaijun.com.cn/image/data/banner/se banner.jpg" alt="" data-thumb="http://www.qingniancaijun.com.cn/image/data/banner/se banner.jpg" data-slidecaption="" />
+    </a>
+                <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=233">
+    <img src="http://www.qingniancaijun.com.cn/image/data/banner/sy banner.jpg" alt="" data-thumb="http://www.qingniancaijun.com.cn/image/data/banner/sy banner.jpg" data-slidecaption="" />
+    </a>
+          </div>
+
+<script type="text/javascript" src="catalog/view/theme/mobilev2/javascript/NerveSlider9.2/jquery.nerveSlider.js"></script>
+<link rel="stylesheet" href="catalog/view/theme/mobilev2/javascript/NerveSlider9.2/nerveSlider.css" />
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#slideshow_9").nerveSlider({
+		slideTransitionSpeed: 1000,
+		sliderHeightAdaptable: true,
+		slidesDraggable: true,
+		sliderResizable: true,
+		showPause: false,
+		showArrows: false,
+		slideTransitionSpeed: 1000,
+		slideTransitionEasing: "easeOutExpo"
+		});
+});
+</script>
+	</div>
+	<div>
+
+<div id="period">
+		<div class="wrap">
+			<div class="htabs2 clearfix">
+								<a href="http://www.qingniancaijun.com.cn/index.php?route=common/home&amp;sequence=0" title="本周菜品" class="selected"  >
+				<span>本周菜品</span>
+				</a>
+				<span class="period-date fr">05/11-05/17</span>
+							</div>
+		</div>
+	</div>
+	</div>
+	
+	<div class="product-grid">
+		<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=3" title="尖椒肉丝">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C012C-200x200.jpg" id="pdt_img3"  alt="尖椒肉丝" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=3" title="尖椒肉丝">尖椒肉丝</a></div>
+			  <div class="material">尖椒丝、肉丝、红辣椒粒、姜菱形片、蒜片、葱花</div>
+		      <div class="subtitle">著名下饭菜，简单家常，好吃不辣</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥14.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('3');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=4" title="蒜薹炒肉">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C010C-200x200.jpg" id="pdt_img4"  alt="蒜薹炒肉" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=4" title="蒜薹炒肉">蒜薹炒肉</a></div>
+			  <div class="material">蒜薹段、五花肉片、红辣椒粒、姜菱形片、蒜片、葱花</div>
+		      <div class="subtitle">家庭餐桌常客，米饭最佳伴侣</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥14.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('4');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=48" title="尖椒土豆丝">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C001C-200x200.jpg" id="pdt_img48"  alt="尖椒土豆丝" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=48" title="尖椒土豆丝">尖椒土豆丝</a></div>
+			  <div class="material">土豆丝、尖椒丝、红辣椒粒、姜菱形片、蒜片、葱花</div>
+		      <div class="subtitle">酸辣咸淡总相宜，亦菜亦饭，减肥佳品 </div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥7.50		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('48');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=80" title="手撕包菜炒五花肉">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C007C-200x200.jpg" id="pdt_img80"  alt="手撕包菜炒五花肉" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=80" title="手撕包菜炒五花肉">手撕包菜炒五花肉</a></div>
+			  <div class="material"></div>
+		      <div class="subtitle">包菜爽脆不油腻，肉香开胃增食欲</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥9.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('80');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=91" title="香菇油菜">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C003C-200x200.jpg" id="pdt_img91"  alt="香菇油菜" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=91" title="香菇油菜">香菇油菜</a></div>
+			  <div class="material">油菜、香菇块、蒜片</div>
+		      <div class="subtitle">“洗尽铅华呈素姿”家的味道，食疗功效</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥7.50		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('91');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=93" title="榄菜肉末四季豆">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C022C-200x200.jpg" id="pdt_img93"  alt="榄菜肉末四季豆" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=93" title="榄菜肉末四季豆">榄菜肉末四季豆</a></div>
+			  <div class="material"></div>
+		      <div class="subtitle">清热去火健脾开胃，好吃又下饭</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥11.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('93');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=104" title="大盘鸡（含啤酒）">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C032C-200x200.jpg" id="pdt_img104"  alt="大盘鸡（含啤酒）" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=104" title="大盘鸡（含啤酒）">大盘鸡（含啤酒）</a></div>
+			  <div class="material">鸡肉块、土豆块、洋葱片、尖椒片、啤酒、红辣椒粒、姜菱形片、蒜片、葱花、豆瓣酱</div>
+		      <div class="subtitle">色彩鲜艳，鸡肉爽滑麻辣、土豆软糯甜润</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥20.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('104');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=118" title="黑三剁">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C044C-200x200.jpg" id="pdt_img118"  alt="黑三剁" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=118" title="黑三剁">黑三剁</a></div>
+			  <div class="material">肉末、大头菜末、尖椒末、姜末、葱花。</div>
+		      <div class="subtitle">云南风味家常菜，爽口开胃下酒饭</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥13.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('118');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=120" title="麻辣香锅">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C045C-200x200.jpg" id="pdt_img120"  alt="麻辣香锅" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=120" title="麻辣香锅">麻辣香锅</a></div>
+			  <div class="material">培根片、火腿块、木耳、娃娃菜、油麦菜段、白菜花、莴笋片、魔芋丝、鱼豆腐片、麻辣香锅底料、豆瓣酱</div>
+		      <div class="subtitle">辣而不燥鲜而不腥、入口窜香回味悠长</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥28.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('120');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=127" title="松仁玉米">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C052C-200x200.jpg" id="pdt_img127"  alt="松仁玉米" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=127" title="松仁玉米">松仁玉米</a></div>
+			  <div class="material">甜玉米粒、青豆粒、松仁、胡萝卜丁</div>
+		      <div class="subtitle">香酥甜嫩，金玉满堂的色彩</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥11.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('127');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=132" title="黑椒牛肉粒">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C057C-200x200.jpg" id="pdt_img132"  alt="黑椒牛肉粒" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=132" title="黑椒牛肉粒">黑椒牛肉粒</a></div>
+			  <div class="material">牛肉丁、杏鲍菇丁、尖椒丁、洋葱丁、黑椒汁</div>
+		      <div class="subtitle">黑椒、洋葱和牛肉的三角恋</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥24.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('132');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=157" title="京味鸡丁">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C080C-200x200.jpg" id="pdt_img157"  alt="京味鸡丁" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=157" title="京味鸡丁">京味鸡丁</a></div>
+			  <div class="material">鸡肉丁、花生、黄瓜丁、姜菱形片、蒜片、葱花、甜面酱</div>
+		      <div class="subtitle">咸甜适宜，下饭至极。</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥15.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('157');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=161" title="田园时蔬">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C083C-200x200.jpg" id="pdt_img161"  alt="田园时蔬" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=161" title="田园时蔬">田园时蔬</a></div>
+			  <div class="material">白菜块、木耳、南瓜片、黄瓜片、蒜片</div>
+		      <div class="subtitle">田园馈赠 清爽宜人</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥7.50		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('161');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=170" title="蚝油冬笋鸡片">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C093C-200x200.jpg" id="pdt_img170"  alt="蚝油冬笋鸡片" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=170" title="蚝油冬笋鸡片">蚝油冬笋鸡片</a></div>
+			  <div class="material">鸡肉片、冬笋片、黄彩椒片、红彩椒片、姜末、葱花、蚝油、</div>
+		      <div class="subtitle">平实不平淡，健康低脂看得见</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥14.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('170');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=171" title="蒜蓉蒿子秆">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C091C-200x200.jpg" id="pdt_img171"  alt="蒜蓉蒿子秆" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=171" title="蒜蓉蒿子秆">蒜蓉蒿子秆</a></div>
+			  <div class="material"></div>
+		      <div class="subtitle">碧玉明珠满盘翠，营养美味价不贵</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥7.50		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('171');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=175" title="木瓜莲子银耳汤">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C097C-200x200.jpg" id="pdt_img175"  alt="木瓜莲子银耳汤" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=175" title="木瓜莲子银耳汤">木瓜莲子银耳汤</a></div>
+			  <div class="material">木瓜丁、银耳、莲子、冰糖</div>
+		      <div class="subtitle">清甜爽滑 汤品仙女当属她</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥13.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('175');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=179" title=" 香葱培根花椰菜">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C101C-200x200.jpg" id="pdt_img179"  alt=" 香葱培根花椰菜" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=179" title=" 香葱培根花椰菜"> 香葱培根花椰菜</a></div>
+			  <div class="material">培根片、白菜花、西兰花、蒜片、香葱段</div>
+		      <div class="subtitle">双重美味 极致融合</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥16.50		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('179');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=195" title="三分钟蒸鱼">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C113C-200x200.jpg" id="pdt_img195"  alt="三分钟蒸鱼" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=195" title="三分钟蒸鱼">三分钟蒸鱼</a></div>
+			  <div class="material">草鱼段、红彩椒丝、姜丝、葱丝、姜片、葱段长、香菜叶段</div>
+		      <div class="subtitle">对爱吃鱼的人，赤果果的勾引！ </div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥24.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('195');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=207" title="回锅肉">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C121C-200x200.jpg" id="pdt_img207"  alt="回锅肉" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=207" title="回锅肉">回锅肉</a></div>
+			  <div class="material">五花肉片、尖椒片、洋葱片、黄彩椒片、红彩椒片、青蒜斜段、豆豉、豆瓣酱</div>
+		      <div class="subtitle">色泽红亮 入口浓香</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥14.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('207');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=209" title="玉兰杏鲍菇牛柳粒">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C123C-200x200.jpg" id="pdt_img209"  alt="玉兰杏鲍菇牛柳粒" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=209" title="玉兰杏鲍菇牛柳粒">玉兰杏鲍菇牛柳粒</a></div>
+			  <div class="material">牛肉丁、芥兰粒、杏鲍菇丁、黄彩椒片、红彩椒片、蒜瓣、蚝油</div>
+		      <div class="subtitle">一切从“牛”开始</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥28.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('209');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=210" title="西芹番茄炒菜花">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C124C-200x200.jpg" id="pdt_img210"  alt="西芹番茄炒菜花" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=210" title="西芹番茄炒菜花">西芹番茄炒菜花</a></div>
+			  <div class="material">芹菜段、番茄块、白菜花、蒜片</div>
+		      <div class="subtitle">小小清新 舌尖上的瑜伽课</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥9.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('210');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=213" title="火龙果明虾球">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C128C-200x200.jpg" id="pdt_img213"  alt="火龙果明虾球" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=213" title="火龙果明虾球">火龙果明虾球</a></div>
+			  <div class="material">虾仁、火龙果丁、芥兰粒、黄彩椒片、红彩椒片、蒜片</div>
+		      <div class="subtitle">鲜美多汁 拥抱这时刻</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥30.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('213');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=223" title="葱爆羊肉">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C129C-200x200.jpg" id="pdt_img223"  alt="葱爆羊肉" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=223" title="葱爆羊肉">葱爆羊肉</a></div>
+			  <div class="material">羊肉片、葱斜段</div>
+		      <div class="subtitle">我的热爱 不可战胜</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥26.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('223');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=227" title="青蒜炒五花肉">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C139C-200x200.jpg" id="pdt_img227"  alt="青蒜炒五花肉" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=227" title="青蒜炒五花肉">青蒜炒五花肉</a></div>
+			  <div class="material">五花肉片、青蒜斜段、胡萝卜片、黄彩椒片、红彩椒片、姜菱形片。</div>
+		      <div class="subtitle">肉片滑软，蒜味浓郁</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥12.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('227');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=230" title="烧鹅仔腊肉炒青笋">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C159C-200x200.jpg" id="pdt_img230"  alt="烧鹅仔腊肉炒青笋" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=230" title="烧鹅仔腊肉炒青笋">烧鹅仔腊肉炒青笋</a></div>
+			  <div class="material"></div>
+		      <div class="subtitle">菜君选用烧鹅仔特供腊肉，味道更胜一筹</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥24.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('230');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=231" title="金针菇苋菜鸡蛋汤">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C154C-200x200.jpg" id="pdt_img231"  alt="金针菇苋菜鸡蛋汤" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=231" title="金针菇苋菜鸡蛋汤">金针菇苋菜鸡蛋汤</a></div>
+			  <div class="material"></div>
+		      <div class="subtitle">生活要激情 饮食需多色</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥10.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('231');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=232" title="金钩炒芹萝">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C153C-200x200.jpg" id="pdt_img232"  alt="金钩炒芹萝" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=232" title="金钩炒芹萝">金钩炒芹萝</a></div>
+			  <div class="material"></div>
+		      <div class="subtitle">舌尖一点鲜 纤体一整天</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥13.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('232');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="product">
+		      		      <div class="image">
+		      <a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=233" title="木耳山药炒芦笋">
+		      <img src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C158C-200x200.jpg" id="pdt_img233"  alt="木耳山药炒芦笋" />
+		      			  
+		      </a></div>
+		      		      <div class="name"><a href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=233" title="木耳山药炒芦笋">木耳山药炒芦笋</a></div>
+			  <div class="material"></div>
+		      <div class="subtitle">大地惊喜 不可或缺</div>
+<!--		      <div class="unit">--><!----><!--</div>-->
+<!--		      <div class="origin">--><!----><!--</div>-->
+
+
+			<!--<div class="ix-row ix-row-collapse">
+				<div class="ix-u-sm-6"></div>
+				<div class="ix-u-sm-6"></div>
+			</div>-->
+
+					      <div class="price fl">
+		        		                ￥14.00		        		        		      </div>
+		      				<div class="cart-info fr">
+				    <div class="cart">
+                        <a rel="nofollow" onclick="addToCart('233');" class="btn">
+                        <span>加入购物车</span>
+                        </a>
+					</div>
+				</div>
+
+		    </div>
+
+
+		</div>
+</div>
+	</div>
+</div>
+
+
+<link rel="stylesheet" href="catalog/view/theme/mobilev2/angular/point/pick-take-goods-points.css?v=1.0.6"/>
+<script src="catalog/view/theme/mobilev2/angular/point/pick-take-goods-points.js?v=1.0.6"></script>
+
+<div id="ztd" ng-controller="PickTakeGoodsPointsCtrl" ng-show="showContainer">
+    <div class="ztd-content" >
+        <div class="ztd-content-right">
+            <div id="header" class="bar bar-header bar-positive">
+
+                <a ng-if="!state.is('area')" onclick="history.go(-1);" class="button icon-left ion-chevron-left button-clear button-white"></a>
+                <h1 class="title">选择自提点</h1>
+                <a class="button icon-right ion-close button-clear button-white" ng-click="closePointContainer()"></a>
+            </div>
+
+            <div ui-view></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="areas.html">
+    <ul class="lists">
+        <li ng-repeat="item in allData"><a class="item" ui-sref="cbd({areaId:item.city_id})">{{item.name}}</a></li>
+    </ul>
+</script>
+<script type="text/ng-template" id="cbds.html">
+    <ul class="lists">
+        <li ng-repeat="item in cbds"><a class="item" ui-sref="point({areaId:areaId,cbdId:item.id})">{{item.name}}</a></li>
+    </ul>
+</script>
+<script type="text/ng-template" id="points.html">
+    <ul class="lists">
+        <li ng-repeat="item in points"><a class="item" ng-click="!!showPointDetail?showDetail(item):notifyPointChoosing(item)">{{item.name}}</a></li>
+    </ul>
+</script><script type="text/ng-template" id="point-detail.html">
+    <div class="card">
+        <div class="item item-divider">
+            <h3>{{point.name}}</h3>
+        </div>
+
+        <div class="item item-text-wrap">
+            <p>详细地址：{{point.address}}</p>
+            <p>联系电话：{{point.telephone}}</p>
+            <p>营业时间：{{point.business_hour}}</p>
+
+            <a class="button button-positive button-block" ng-click="notifyPointChoosing()">确认选择</a>
+        </div>
+
+    </div>
+</script>
+<style type="text/css">
+#ztd {
+        top:0;
+}
+</style>
+<div id="zbd-data" data-show-location-tip="1" data-show-point-detail="true"></div>
+
+
+
+
+<div class="bar bar-footer bar-light">
+  <div class="tabs tabs-icon-top tabs-default">
+	  <a class="tab-item" href="index.php?route=common/home">
+	    <i class="icon ion-home" id="home_icon">首页</i>
+	  </a>
+	  <a class="tab-item" href="index.php?route=product/category/lists">
+	    <i class="icon ion-navicon" id="catagery_icon">分类</i>
+	  </a>
+	  		  <a class="tab-item" href="index.php?route=account/login">
+		  	    <i class="icon ion-person" id="person_icon">个人中心</i>
+	  </a>
+
+	   <a class="tab-item tab-item-cart" href="index.php?route=checkout/cart">
+	    	<div class="tab-item-cart-total">
+				<span id="cart_total" class="ix-badge ix-radius">
+					0				</span>
+			</div>
+		   <i class="icon ion-bag" id="cart_icon">购物车</i>
+
+	  </a>
+	</div>
+</div><!--END .bar-footer-->
+
+</div>
+
+<script type="text/javascript" src="catalog/view/javascript/common.js?id=1431868340"></script>
+<script type="text/javascript" src="catalog/view/javascript/jquery/tabs.js"></script>
+</body>
+</html>
+<style type="text/css">
+#bestseller{ margin-top:170px; }
+.allsort{ background: none; }
+.allsort .mc{ display:block; }
+.allsort .mt .extra { display:none; }
+</style>
