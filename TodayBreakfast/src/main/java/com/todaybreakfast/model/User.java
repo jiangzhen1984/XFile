@@ -1,5 +1,6 @@
 package com.todaybreakfast.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,12 +19,16 @@ public class User {
 	@GenericGenerator(name="increment", strategy = "increment")
 	private long id;
 	
+	@Column(columnDefinition="CELL_PHONE")
 	private String cellPhone;
 	
+	@Column(columnDefinition="USER_PWD")
 	private String password;
 	
+	@Column(columnDefinition="NAME")
 	private String name;
 	
+	@Column(columnDefinition="ADDRESS")
 	private String address;
 
 	public long getId() {
