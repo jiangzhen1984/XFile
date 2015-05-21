@@ -24,6 +24,9 @@ public class BFBreakfast {
 	
 	@Column(columnDefinition="PIC_PATH")
 	private String picUrl;
+	
+	@Column(columnDefinition =  "IS_TOADY")
+	private boolean isToday;
 
 	public BFCategory getCategory() {
 		return category;
@@ -55,6 +58,14 @@ public class BFBreakfast {
 
 	public void setPicUrl(String picUrl) {
 		this.picUrl = picUrl;
+	}
+
+	public boolean isToday() {
+		return isToday;
+	}
+
+	public void setToday(boolean isToday) {
+		this.isToday = isToday;
 	}
 	
 	
