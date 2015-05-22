@@ -31,6 +31,8 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 
+        <mapping class="com.todaybreakfast.model.BFBreakfast" />
+        <mapping class="com.todaybreakfast.model.User" />
     </session-factory>
 
 </hibernate-configuration>

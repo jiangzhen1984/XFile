@@ -3,10 +3,9 @@ package com.todaybreakfast.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
@@ -15,20 +14,19 @@ public class User {
 	
 	
 	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@Column(columnDefinition="CELL_PHONE")
+	@Column(name="CELL_PHONE", columnDefinition="VARCHAR(40)")
 	private String cellPhone;
 	
-	@Column(columnDefinition="USER_PWD")
+	@Column(name="USER_PWD", columnDefinition="VARCHAR(40)")
 	private String password;
 	
-	@Column(columnDefinition="NAME")
+	@Column(name="NAME", columnDefinition="VARCHAR(40)")
 	private String name;
 	
-	@Column(columnDefinition="ADDRESS")
+	@Column(name="ADDRESS", columnDefinition="VARCHAR(200)")
 	private String address;
 
 	public long getId() {

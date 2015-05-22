@@ -3,29 +3,29 @@ package com.todaybreakfast.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "BF_BREAKFAST")
 public class BFBreakfast {
 	
+	@Transient
 	private BFCategory category;
 	
 	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@Column(columnDefinition="NAME")
+	@Column(name="NAME", columnDefinition="VARCHAR(40)")
 	private String name;
 	
-	@Column(columnDefinition="PIC_PATH")
+	@Column(name="PIC_PATH", columnDefinition="VARCHAR(200)")
 	private String picUrl;
 	
-	@Column(columnDefinition =  "IS_TOADY")
+	@Column(name =  "IS_TOADY",  columnDefinition="BOOL")
 	private boolean isToday;
 
 	public BFCategory getCategory() {
