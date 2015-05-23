@@ -1,12 +1,13 @@
-package com.todaybreakfast.model.util;
+package com.todaybreakfast.service;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-public class HibernateUtil {
-	private static final SessionFactory sessionFactory = buildSessionFactory();
+public class BaseService {
+
+	protected static SessionFactory sessionFactory = buildSessionFactory();
 
 	private static SessionFactory buildSessionFactory() {
 		try {
@@ -30,7 +31,8 @@ public class HibernateUtil {
 		}
 	}
 
-	public static SessionFactory getSessionFactory() {
+	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+
 }
