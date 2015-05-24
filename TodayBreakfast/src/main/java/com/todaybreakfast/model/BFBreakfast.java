@@ -22,6 +22,12 @@ public class BFBreakfast {
 	@Column(name="NAME", columnDefinition="VARCHAR(40)")
 	private String name;
 	
+	@Column(name="STUFF", columnDefinition="VARCHAR(100)")
+	private String stuff;
+	
+	@Column(name="DESCRIPTION", columnDefinition="VARCHAR(100)")
+	private String description;
+	
 	@Column(name="PIC_PATH", columnDefinition="VARCHAR(200)")
 	private String picUrl;
 	
@@ -77,6 +83,24 @@ public class BFBreakfast {
 
 	public void setPrice(float price) {
 		this.price = price;
+	}
+	
+	
+
+	public String getStuff() {
+		return stuff;
+	}
+
+	public void setStuff(String stuff) {
+		this.stuff = stuff;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override

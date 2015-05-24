@@ -64,15 +64,15 @@ public class BaseServiceTest {
 	
 	@Test
 	public void testAddBreakfastWrapper() {
-		BreakfastSingleWrapper bw = new BreakfastSingleWrapper(12.2F, "sdf", "/erwe");
+		BreakfastSingleWrapper bw = new BreakfastSingleWrapper(12.2F, "sdf", "/erwe", "辣椒， 狮子", "描述信息");
 		bs.addBreakfastWrapper(bw);
 		assertTrue(bw.getId() > 0);
 		
-		BreakfastSingleWrapper bw1 = new BreakfastSingleWrapper(12.2F, "bw", "/erwe1111");
+		BreakfastSingleWrapper bw1 = new BreakfastSingleWrapper(12.2F, "bw", "/erwe1111", "辣椒， 狮子", "描述信息");
 		bs.addBreakfastWrapper(bw1);
 		assertTrue(bw1.getId() > 0);
 		
-		BreakfastComboWrapper bwc = new BreakfastComboWrapper(13.2F, "sdf"	);
+		BreakfastComboWrapper bwc = new BreakfastComboWrapper(13.2F, "sdf", "辣椒， 狮子", "描述信息"	);
 		bwc.addItem(bw);
 		bwc.addItem(bw1);
 		bs.addBreakfastWrapper(bwc);
@@ -82,7 +82,7 @@ public class BaseServiceTest {
 	
 	@Test
 	public void testRemoveBreakfastWrapper() {
-		BreakfastComboWrapper bwc = new BreakfastComboWrapper(18);
+		BreakfastComboWrapper bwc = new BreakfastComboWrapper(1);
 		bs.removeBreakfastWrapper(bwc);
 	}
 

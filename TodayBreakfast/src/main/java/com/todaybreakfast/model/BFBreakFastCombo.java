@@ -33,6 +33,12 @@ public class BFBreakFastCombo {
 	@Column(name = "NAME", columnDefinition =  "VARCHAR(40)")
 	private String name;
 	
+	@Column(name="STUFF", columnDefinition="VARCHAR(100)")
+	private String stuff;
+	
+	@Column(name="DESCRIPTION", columnDefinition="VARCHAR(100)")
+	private String description;
+	
 	 @OneToMany
 	    @JoinTable(
 	            name="BF_COMBO_ITEM",
@@ -77,7 +83,25 @@ public class BFBreakFastCombo {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
 
+
+	public String getStuff() {
+		return stuff;
+	}
+
+	public void setStuff(String stuff) {
+		this.stuff = stuff;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public void addBreakfast(BFBreakfast bf) {
 		if (list == null) {
