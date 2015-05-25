@@ -75,6 +75,8 @@ public class BreakfastBasicService extends BaseService {
 		session.flush();
 		t.commit();
 		session.close();
+		
+		cacheList.add(bw);
 	}
 	
 	
@@ -93,6 +95,7 @@ public class BreakfastBasicService extends BaseService {
 		session.flush();
 		t.commit();
 		session.close();
+		cacheList.remove(bw);
 	}
 	
 	

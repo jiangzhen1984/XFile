@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 import com.todaybreakfast.model.vo.BreakfastWrapper;
-import com.todaybreakfast.model.vo.Cart;
 import com.todaybreakfast.service.BreakfastBasicService;
 
 public class AJAXHandler extends HttpServlet {
@@ -45,23 +44,24 @@ public class AJAXHandler extends HttpServlet {
 		JSONObject ret = new JSONObject();
 		
 		HttpSession session = req.getSession();
-		Cart cart = (Cart)session.getAttribute("cart");
-		if (cart == null) {
-			cart = new Cart();
-			session.setAttribute("cart", cart);
-		}
-		try {
-			long id = Long.parseLong((String)req.getParameter("bf_id"));
-			int type = Integer.parseInt((String)req.getParameter("type"));
-			BreakfastWrapper wrp = service.findBreakfast(id, type == BreakfastWrapper.Type.SINGLE.ordinal()? BreakfastWrapper.Type.SINGLE : BreakfastWrapper.Type.COMBO);
-			cart.addBreakfast(wrp);
-			ret.put("errcode", 0);
-			ret.put("total", cart.getItemCount());
-			
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			ret.put("errcode", 1);
-			ret.put("msg", "id incorrect");
+		CartBean cartBean = (CartBean)session.getAttribute("cartBean");
+		if (cartBean == null) {
+			ret.put("errcode", 2);
+			ret.put("msg", "No Bean");
+		} else {
+			try {
+				long id = Long.parseLong((String)req.getParameter("bf_id"));
+				int type = Integer.parseInt((String)req.getParameter("type"));
+				BreakfastWrapper wrp = service.findBreakfast(id, type == BreakfastWrapper.Type.SINGLE.ordinal()? BreakfastWrapper.Type.SINGLE : BreakfastWrapper.Type.COMBO);
+				cartBean.getCart().addBreakfast(wrp);
+				ret.put("errcode", 0);
+				ret.put("total", cartBean.getTotalCount());
+				
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				ret.put("errcode", 1);
+				ret.put("msg", "id incorrect");
+			}
 		}
 		resp.setContentType("application/json");
 		PrintWriter out = resp.getWriter();

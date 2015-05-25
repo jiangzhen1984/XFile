@@ -1,0 +1,838 @@
+<html style=""
+	class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope"
+	ng-app="app" lang="en-us" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<!--[if lt IE 7 ]> <html lang="en-us" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-us" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-us" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-us" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<!--<![endif]-->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+@charset "UTF-8";
+
+[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide
+	{
+	display: none !important;
+}
+
+ng\:form {
+	display: block;
+}
+
+.ng-animate-block-transitions {
+	transition: 0s all !important;
+	-webkit-transition: 0s all !important;
+}
+
+.ng-hide-add-active,.ng-hide-remove {
+	display: block !important;
+}
+</style>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+<meta charset="utf-8" />
+<title>订单信息确认</title>
+<base href="#{global.globalUrl}" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<!-- base href="http://www.qingniancaijun.com.cn/" -->
+<link href="http://www.qingniancaijun.com.cn/image/data/logo/fav.png"
+	rel="icon" />
+<!-- <script type="text/javascript" name="baidu-tc-cerfication" data-appid="4489645" src="http://apps.bdimg.com/cloudaapi/lightapp.js"></script> -->
+<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
+
+<!-- RESET USER AGENT -->
+<link rel="stylesheet" type="text/css" href="css/ionic.css" />
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="css/mobile_v2.css" />
+
+<!-- script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.6.1.min.js"></script-->
+<script type="text/javascript" src="javascript/jquery-1.js"></script>
+
+<!--<script type="text/javascript" src="catalog/view/javascript/jquery/jquery.min.js"></script>-->
+
+<script src="javascript/modernizr.js"></script>
+
+<script type="text/javascript" src="javascript/jquery-ui-1.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.css" />
+
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/lodash-2.js"></script>
+
+<!-- Fixes for IE -->
+<!--[if lt IE 9]>
+<script src="assets/libs/dist/html5shiv.js"></script>
+<![endif]-->
+<!--[if (gte IE 6)&(lte IE 8)]>
+  <script type="text/javascript" src="assets/libs/selectivizr/1.0.2/selectivizr.js"></script>
+  <noscript><link rel="stylesheet" href="[fallback css]" /></noscript>
+<![endif]-->
+<script type="text/javascript" src="javascript/angular.js"></script>
+<script type="text/javascript" src="javascript/angular-ui-router.js"></script>
+<script>
+        angular.module('app', ['ui.router']);
+    </script>
+<link id="skinlayercss" href="css/layer.css" rel="stylesheet"
+	type="text/css" />
+<link href="css/laydate_002.css" rel="stylesheet" type="text/css" />
+<link id="LayDateSkin" href="css/laydate.css" rel="stylesheet"
+	type="text/css" />
+</head>
+<body class="ionic">
+	<img src="css/graphic/hm.gif" height="0" width="0" />
+	<div id="page" class="page">
+		<div id="header" class="bar bar-header bar-positive">
+			<h1 class="title">订单信息确认</h1>
+		</div>
+		<div id="content" class="checkout-page ng-scope"
+			ng-controller="CheckoutCtrl">
+			<input name="verified" id="verified" value="1" type="hidden" />
+			<div id="warnning"></div>
+			<div class="order-title">填写核对订单信息：</div>
+			<div class="checkout">
+
+				<div id="shipping-method">
+					<div class="checkout-heading">
+						请选择取菜点 <span class="fr ng-scope" ng-controller="SwitchZTDCtrl">
+							<a ng-click="showPickPointsContainer()"
+							class="button button-slim button-positive">切换自提点</a>
+						</span>
+					</div>
+
+					<div class="checkout-content">
+						<div class="shipping-method-list">
+
+
+							<table class="form">
+								<tbody>
+									<tr>
+										<td>
+											<div class="row list">
+												<select name="shipping_method"
+													onchange="shipping_function('parent',this,0)"
+													style="width: 100%;">
+													<option value="pickupaddr.pickupaddr_22"
+														selected="selected">清友园[ 朝阳区北苑家园清友园四号楼一层 社区驿站 ]</option>
+												</select> <input id="default_shipping_method"
+													value="pickupaddr.pickupaddr_22" type="hidden" />
+											</div>
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+
+						</div>
+
+						<div class="cart-module"></div>
+					</div>
+				</div>
+				<div id="payment-method">
+					<div class="checkout-heading">支付方式</div>
+					<div class="checkout-content">
+						<p>请选择一个支付方式.</p>
+						<table class="form">
+							<tbody>
+								<tr>
+									<td style="width: 1px;"><input name="payment_method"
+										value="alipay" id="alipay" checked="checked" type="radio" /></td>
+									<td><label class="icon_alipay" for="alipay">支付宝</label></td>
+								</tr>
+							</tbody>
+						</table>
+						<div id="bank" style="display: none;">
+							<ul class="bank-list">
+								<li><input name="pay_bank" value="ICBCB2C" type="radio" /><span
+									class="bank-icon ICBCB2C"></span></li>
+
+								<li><input name="pay_bank" value="CMB" type="radio" /><span
+									class="bank-icon CMB"></span></li>
+
+								<li><input name="pay_bank" value="CCB" type="radio" /><span
+									class="bank-icon CCB"></span></li>
+
+								<li><input name="pay_bank" value="BOCB2C" type="radio" /><span
+									class="bank-icon BOCB2C"></span></li>
+
+								<li><input name="pay_bank" value="ABC" type="radio" /><span
+									class="bank-icon ABC"></span></li>
+
+								<li><input name="pay_bank" value="COMM" type="radio" /><span
+									class="bank-icon COMM"></span></li>
+
+								<li><input name="pay_bank" value="PSBC-DEBIT" type="radio" /><span
+									class="bank-icon PSBC-DEBIT"></span></li>
+
+								<li><input name="pay_bank" value="CEBBANK" type="radio" /><span
+									class="bank-icon CEBBANK"></span></li>
+
+								<li><input name="pay_bank" value="SPDB" type="radio" /><span
+									class="bank-icon SPDB"></span></li>
+
+								<li><input name="pay_bank" value="GDB" type="radio" /><span
+									class="bank-icon GDB"></span></li>
+
+								<li><input name="pay_bank" value="CITIC" type="radio" /><span
+									class="bank-icon CITIC"></span></li>
+
+								<li><input name="pay_bank" value="CIB" type="radio" /><span
+									class="bank-icon CIB"></span></li>
+
+								<li><input name="pay_bank" value="SDB" type="radio" /><span
+									class="bank-icon SDB"></span></li>
+
+								<li><input name="pay_bank" value="CMBC" type="radio" /><span
+									class="bank-icon CMBC"></span></li>
+
+								<li><input name="pay_bank" value="BJBANK" type="radio" /><span
+									class="bank-icon BJBANK"></span></li>
+
+								<li><input name="pay_bank" value="HZCBB2C" type="radio" /><span
+									class="bank-icon HZCBB2C"></span></li>
+
+								<li><input name="pay_bank" value="SHBANK" type="radio" /><span
+									class="bank-icon SHBANK"></span></li>
+
+								<li><input name="pay_bank" value="BJRCB" type="radio" /><span
+									class="bank-icon BJRCB"></span></li>
+
+								<li><input name="pay_bank" value="SPABANK" type="radio" /><span
+									class="bank-icon SPABANK"></span></li>
+
+								<li><input name="pay_bank" value="FDB" type="radio" /><span
+									class="bank-icon FDB"></span></li>
+
+								<li><input name="pay_bank" value="WZCBB2C-DEBIT"
+									type="radio" /><span class="bank-icon WZCBB2C-DEBIT"></span></li>
+
+								<li><input name="pay_bank" value="NBBANK" type="radio" /><span
+									class="bank-icon NBBANK"></span></li>
+
+								<li><input name="pay_bank" value="ICBCBTB" type="radio" /><span
+									class="bank-icon ICBCBTB"></span></li>
+
+								<li><input name="pay_bank" value="CCBBTB" type="radio" /><span
+									class="bank-icon CCBBTB"></span></li>
+
+								<li><input name="pay_bank" value="SPDBB2B" type="radio" /><span
+									class="bank-icon SPDBB2B"></span></li>
+
+								<li><input name="pay_bank" value="ABCBTB" type="radio" /><span
+									class="bank-icon ABCBTB"></span></li>
+
+							</ul>
+							<div class="clear"></div>
+							<a id="bank-confirm" onclick="payment_alibank_click();"
+								class="button"><span>保存我的网银选择</span></a>
+						</div>
+
+
+					</div>
+				</div>
+				<div id="confirm">
+					<div class="checkout-heading">
+						<a
+							href="http://www.qingniancaijun.com.cn/index.php?route=checkout/cart"
+							class="button button-slim button-positive">修改购物车</a> 商品清单
+					</div>
+					<div class="checkout-content">
+						<div class="checkout-product">
+							<div class="checkout-heading">
+								<label>取菜时间：</label><b>2015-05-26</b>
+							</div>
+							<table>
+								<thead>
+									<tr>
+										<td class="name">商品名称</td>
+										<td class="price">单价（元）</td>
+										<td class="promotion">优惠</td>
+
+										<td class="quantity">数量</td>
+										<!--	       <td class="total">合计（元）</td>-->
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr>
+										<td class="name"><a
+											href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=120">麻辣香锅</a>
+										</td>
+										<td class="price">￥28.00</td>
+
+										<td class="promation"></td>
+										<td class="quantity">1</td>
+
+										<!--			        <td class="total">￥28.00</td>-->
+									</tr>
+									<tr>
+										<td class="name"><a
+											href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=118">黑三剁</a>
+										</td>
+										<td class="price">￥13.00</td>
+
+										<td class="promation"></td>
+										<td class="quantity">1</td>
+
+										<!--			        <td class="total">￥13.00</td>-->
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="cart-module">
+					<div>
+						<div class="cart-heading">使用特权券</div>
+						<div class="cart-content" id="coupon">
+
+							<!--请选择您的特权券(<a href="index.php?route=account/coupon">去用户中心关联特权券)</a> :<br />
+  <div class="item-input">
+    <label class="item-input">
+      <input type="text" name="coupon" class="span2" value="" placeholder="" />
+    </label>
+    <button id="button-coupon" class="button button-small">
+      使用特权券    </button>
+  </div>
+
+  -->
+							请选择您的特权券(<a
+								href="http://www.qingniancaijun.com.cn/index.php?route=account/coupon">去用户中心关联特权券)</a>
+							:<select name="coupon">
+								<option selected="selected" value="37680">5元券</option>
+								<option value="37681">满28减10</option>
+								<option value="37682">满39减15</option>
+								<option value="37683">5折券</option>
+							</select> <a id="button-coupon"
+								class="button button-block button-positive button-slim">使用特权券</a>
+
+						</div>
+					</div>
+					<script type="text/javascript"><!--
+$('#button-coupon').bind('click', function() {
+	$.ajax({
+		type: 'POST',
+		url: 'index.php?route=total/coupon/calculate',
+		data: $('#coupon :input'),
+		dataType: 'json',		
+		beforeSend: function() {
+			$('.success, .warning').remove();
+			$('#button-coupon').attr('disabled', true);
+			$('#button-coupon').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+		},
+		complete: function() {
+			$('#button-coupon').attr('disabled', false);
+			$('.wait').remove();
+		},		
+		success: function(json) {
+			if (json['error']) {
+				$('#basket').before('<div class="warning">' + json['error'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+			}
+			
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+		}
+	});
+});
+//--></script>
+					<div id="comment">
+						<div class="cart-heading">订单备注</div>
+						<div class="cart-content" id="comment">
+							<textarea name="comment" rows="4" style="width: 100%;"
+								id="order_comment"></textarea>
+							<a id="button-comment"
+								class="button button-slim button-positive button-block">保存</a>
+						</div>
+					</div>
+					<script type="text/javascript"><!--
+$('#button-comment').bind('click', function() {
+	if($('#comment #order_comment').attr('value')){
+		$.ajax({
+			type: 'POST',
+			url: 'index.php?route=total/comment/add',
+			data: $('#comment :input'),
+			dataType: 'json',		
+			beforeSend: function() {
+				$('.success, .warning').remove();
+				$('#button-comment').attr('disabled', true);
+				$('#button-comment').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			},
+			complete: function() {
+				$('#button-comment').attr('disabled', false);
+				$('.wait').remove();
+			},		
+			success: function(json) {
+				if(json['success']){
+					$('#comment').prepend('<div class="success" style="display: none;">' + json['success'] + '</div>');
+					$('.success').fadeIn('slow');
+
+					$('#comment .cart-heading').click();
+				}
+					
+			}
+		});
+	}
+});
+//--></script>
+					<div id="reference">
+						<div class="cart-heading">推荐码</div>
+						<div class="cart-content" id="reference">
+							 <input name="reference" maxlength="50" type="text" />
+								<a id="button_reference"
+								class="button button-block button-positive button-slim"><span>保存推荐码</span></a>
+						</div>
+					</div>
+					<script type="text/javascript"><!--
+    $('#button_reference').bind('click', function() {
+        $.ajax({
+            type: 'POST',
+            url: 'index.php?route=campaign/reference/calculate',
+            data: $('#reference :input'),
+            dataType: 'json',
+            beforeSend: function() {
+                $('.success, .warning').remove();
+                $('#button_reference').attr('disabled', true);
+                $('#button_reference').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+            },
+            complete: function() {
+                $('#button_reference').attr('disabled', false);
+                $('.wait').remove();
+            },
+            success: function(json) {
+                if (json['error']) {
+                    $('#reference').before('<div class="warning">' + json['error'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+                }
+
+                if (json['success']) {
+                    $('#reference').before('<div class="success">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+                    $('#reference .cart-heading').click();
+                }
+            }
+        });
+    });
+    //--></script>
+				</div>
+
+				<div id="payment-button">
+					<div class="checkout-content">
+						<div class="columns">
+							<div class="information">
+								<div class="pay-info">
+									支付方式： <b>支付宝</b>
+								</div>
+
+								<div class="ship-info">
+									取菜点：<b>清友园[ 朝阳区北苑家园清友园四号楼一层 社区驿站 ]</b>
+								</div>
+
+							</div>
+							<div class="checkout-total">
+								<div class="sub_total">
+									<span class="price">商品总金额:</span> <span class="total number"><b>￥41.00</b></span>
+								</div>
+								<div class="total">
+									<span class="price">应付总额:</span> <span class="total number"><b>￥41.00</b></span>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<div class="payment">
+								<a id="button-confirm" class="button"><span>立即付款</span></a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<script src="javascript/layer.js"></script>
+			<script type="text/javascript" src="javascript/laydate.js"></script>
+			<script type="text/javascript"><!--
+$('.cart-module .cart-heading').bind('click', function() {
+	if ($(this).hasClass('active')) {
+		$(this).removeClass('active');
+	} else {
+		$(this).addClass('active');
+	}
+
+	$(this).parent().find('.cart-content').slideToggle('slow');
+});
+
+$('#checkout-comment .checkout-heading').bind('click', function() {
+	$('#checkout-comment .checkout-content').slideDown('slow');
+});
+
+    $(document).ready(function () {
+    	$.ajax({
+		url: 'index.php?route=checkout/shipping',
+		type: 'post',
+		//data: $('#shipping-method input[type=\'radio\']:checked, #shipping-method textarea'),
+		data: "shipping_method=" + document.getElementById("default_shipping_method").value,
+		dataType: 'json',
+		error: function(){
+//			alert("暂无自提点信息");
+		},
+		success: function(json) {
+			$('.warning').remove();
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+
+			if (json['error']) {
+				if (json['error']['warning']) {
+					$('#shipping-method .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '</div>');
+
+					$('.warning').fadeIn('slow');
+				}
+			} else {
+				loadShippingDetail();
+				checkoutComfirm();
+			}
+		}
+	});
+});
+
+
+//问卷调查
+function testabc(){
+    var datas='';
+    var ret = 0;
+    $("[name^='question_value']").each(function(i, o){
+       //alert($(o).attr("name"));
+       //alert($(o).val());
+    
+       //datas=$(o).attr("name")+"="+$(o).val()+"&"+datas;
+       if($(o).attr('type')=='radio') {
+           if ($(o).attr('checked')) {
+               datas=$(o).attr("name")+"="+$(o).val()+"&"+datas;
+               ret++;
+           }
+       }else{
+           if($(o).val() != ''){
+               datas=$(o).attr("name")+"="+$(o).val()+"&"+datas;
+               ret++;
+           }
+       }
+    });
+    
+    if( ret==5 )
+    {
+       $.ajax({
+           type: 'POST',
+           url: 'index.php?route=campaign/question/add',
+           data: datas,
+           dataType: 'json',
+           beforeSend: function() {
+               $('.success, .warning').remove();
+               $('#button-question').attr('disabled', true);
+               $('#button-question').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+           },
+           complete: function() {
+               //$('#button-question').attr('disabled', false);
+               $('.wait').remove();
+           },
+           success: function(json) {
+               if(json['success']){
+                   $('#question_comment').prepend('<div class="success" style="display: none;">' + json['success'] + '</div>');
+                   $('.success').fadeIn('slow');
+                   //$('#button-question').attr('disabled', true);
+                   //$('#comment .cart-heading').click();
+                   $('#button-question').attr('disabled', true);
+                   checkoutComfirm();
+    
+               }
+    
+           }
+    
+    
+       });
+       layer.closeAll();
+    }
+    else{
+       alert('答卷未完成！');
+    }
+}
+
+
+//显示节日   
+function datetimes(){
+    laydate({
+        elem: '#birday',
+        format: 'YYYY/MM',
+        festival: true                 
+    });
+}
+
+
+
+    $("input[name='payment_method']").live('click', function() {
+	if($("#alipaybank").attr("checked")=='checked'){
+		$("#bank").show();
+		checkoutComfirm();
+	}else{
+		$("#bank").hide();
+
+		$.ajax({
+			url: 'index.php?route=checkout/payment',
+			type: 'post',
+			data: $('#payment-method input[type=\'radio\']:checked, #payment-method input[type=\'checkbox\']:checked, #payment-method textarea'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-payment').attr('disabled', true);
+				$('#button-payment').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			},
+			complete: function() {
+				$('#button-payment').attr('disabled', false);
+				$('.wait').remove();
+			},
+			success: function(json) {
+				$('.warning').remove();
+
+				if (json['redirect']) {
+					location = json['redirect'];
+				}
+
+				if (json['error']) {
+					if (json['error']['warning']) {
+						$('#payment-method .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '</div>');
+
+						$('.warning').fadeIn('slow');
+					}
+				} else {
+					checkoutComfirm();
+				}
+			}
+		});
+	}
+});
+
+function payment_alibank_change(){
+	$("#bank").show();
+}
+
+function payment_alibank_click(){
+	var banks= $('input:radio[name="pay_bank"]:checked').val();
+     if(banks==null){
+        alert('请选择您的网上银行，然后保存。');
+        return false;
+     }
+	$("#bank").hide();
+	$.ajax({
+		url: 'index.php?route=checkout/payment&type=json',
+		type: 'post',
+		async: false,
+		data: $('input[name=\'pay_bank\']:checked,#payment-method input[type=\'radio\']:checked, #payment-method input[type=\'checkbox\']:checked, #payment-method textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-payment').attr('disabled', true);
+			$('#button-payment').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+		},
+		complete: function() {
+			$('#button-payment').attr('disabled', false);
+			$('.wait').remove();
+		},
+		success: function(json) {
+			$('.warning').remove();
+			checkoutComfirm();
+		}
+	});
+}
+function shipping_function(targ,selObj,restore){
+	$.ajax({
+		url: 'index.php?route=checkout/shipping',
+		type: 'post',
+		data: "shipping_method=" + selObj.options[selObj.selectedIndex].value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-shipping').attr('disabled', true);
+			$('#button-shipping').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+		},
+		complete: function() {
+			$('#button-shipping').attr('disabled', false);
+			$('.wait').remove();
+		},
+		success: function(json) {
+			$('.warning').remove();
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+
+			if (json['error']) {
+				if (json['error']['warning']) {
+					$('#shipping-method .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '</div>');
+
+					$('.warning').fadeIn('slow');
+				}
+			} else {
+				loadShippingDetail();
+				checkoutComfirm();
+			}
+		}
+	});
+}
+function checkoutComfirm(){
+	$.ajax({
+		url: 'index.php?route=checkout/checkout/update',
+		dataType: 'json',
+		success: function(json) {
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	});
+
+
+
+	$.ajax({
+		url: 'index.php?route=checkout/confirm/payment',
+		dataType: 'json',
+		success: function(json) {
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+
+			if (json['output']) {
+				$('#payment-button').html(json['output']);
+
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	});
+
+}
+
+function loadShippingDetail(){
+	$('#shipping-method .cart-module').load('index.php?route=checkout/shipping/detail');
+}
+
+angular.module('app').
+    controller('CheckoutCtrl',function ($rootScope) {
+    	
+        $rootScope.$on('point.picked', function (event,data) {
+        	
+        	
+            $.ajax({
+                url: 'index.php?route=point/home/location',
+                type: 'post',
+                data: 'city_id='+data.areaId+'&cbd_id='+data.cbdId+'&point_id='+data.pointId,
+                dataType: 'json',
+                success: function (json) {
+  
+                    if($('.shipping-method-list #addressList')) {
+                        $('#shipping-method .shipping-method-list').load('index.php?route=checkout/checkout/shipping_method_load');
+                    }
+                }
+            });
+
+        })
+    });
+
+//--></script>
+
+			<link rel="stylesheet" href="css/pick-take-goods-points.css" />
+			<script src="javascript/pick-take-goods-points.js"></script>
+
+			<div class="ng-scope ng-hide" id="ztd"
+				ng-controller="PickTakeGoodsPointsCtrl" ng-show="showContainer">
+				<div class="ztd-content">
+					<div class="ztd-content-right">
+						<div id="header" class="bar bar-header bar-positive">
+
+							<!-- ngIf: !state.is('area') -->
+							<h1 class="title">选择自提点</h1>
+							<a class="button icon-right ion-close button-clear button-white"
+								ng-click="closePointContainer()"></a>
+						</div>
+
+						<!-- uiView:  -->
+						<div class="ng-scope" ui-view="">
+							<ul class="lists ng-scope">
+								<!-- ngRepeat: item in allData -->
+								<li class="ng-scope" ng-repeat="item in allData"><a
+									href="#/areas/405/cbds" class="item ng-binding"
+									ui-sref="cbd({areaId:item.city_id})">昌平区</a></li>
+								<!-- end ngRepeat: item in allData -->
+								<li class="ng-scope" ng-repeat="item in allData"><a
+									href="#/areas/390/cbds" class="item ng-binding"
+									ui-sref="cbd({areaId:item.city_id})">朝阳区</a></li>
+								<!-- end ngRepeat: item in allData -->
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<script type="text/ng-template" id="areas.html">
+    <ul class="lists">
+        <li ng-repeat="item in allData"><a class="item" ui-sref="cbd({areaId:item.city_id})">{{item.name}}</a></li>
+    </ul>
+</script>
+			<script type="text/ng-template" id="cbds.html">
+    <ul class="lists">
+        <li ng-repeat="item in cbds"><a class="item" ui-sref="point({areaId:areaId,cbdId:item.id})">{{item.name}}</a></li>
+    </ul>
+</script>
+			<script type="text/ng-template" id="points.html">
+    <ul class="lists">
+        <li ng-repeat="item in points"><a class="item" ng-click="!!showPointDetail?showDetail(item):notifyPointChoosing(item)">{{item.name}}</a></li>
+    </ul>
+</script>
+			<script type="text/ng-template" id="point-detail.html">
+    <div class="card">
+        <div class="item item-divider">
+            <h3>{{point.name}}</h3>
+        </div>
+
+        <div class="item item-text-wrap">
+            <p>详细地址：{{point.address}}</p>
+            <p>联系电话：{{point.telephone}}</p>
+            <p>营业时间：{{point.business_hour}}</p>
+
+            <a class="button button-positive button-block" ng-click="notifyPointChoosing()">确认选择</a>
+        </div>
+
+    </div>
+</script>
+
+
+			<div class="bar bar-footer bar-light">
+				<div class="tabs tabs-icon-top tabs-default">
+					<a class="tab-item"
+						href="http://www.qingniancaijun.com.cn/index.php?route=common/home">
+						<i class="icon ion-home" id="home_icon">首页</i>
+					</a> <a class="tab-item"
+						href="http://www.qingniancaijun.com.cn/index.php?route=product/category/lists">
+						<i class="icon ion-navicon" id="catagery_icon">分类</i>
+					</a> <a class="tab-item"
+						href="http://www.qingniancaijun.com.cn/index.php?route=account/account">
+						<i class="icon ion-person" id="person_icon">个人中心</i>
+					</a> <a class="tab-item tab-item-cart"
+						href="http://www.qingniancaijun.com.cn/index.php?route=checkout/cart">
+						<div class="tab-item-cart-total">
+							<span id="cart_total" class="ix-badge ix-radius"> 2 </span>
+						</div> <i class="icon ion-bag select" id="cart_icon">购物车</i>
+
+					</a>
+				</div>
+			</div>
+			<!--END .bar-footer-->
+
+		</div>
+
+		<script type="text/javascript" src="javascript/common.js"></script>
+		<script type="text/javascript" src="javascript/tabs.js"></script>
+
+	</div>
+</body>
+</html>
