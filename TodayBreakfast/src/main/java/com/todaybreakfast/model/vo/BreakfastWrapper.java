@@ -67,7 +67,13 @@ public class BreakfastWrapper {
 	}
 
 	public enum Type {
-		SINGLE, COMBO
+		SINGLE, COMBO;
+		
+		
+		public int getValue() {
+			return this.ordinal();
+		}
+		
 	}
 
 }

@@ -126,8 +126,9 @@ $(document).ready(function() {
 								<div class="image">
 									<a
 										href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=3"
-										title="尖椒肉丝"> <img
-										src="http://www.qingniancaijun.com.cn/image/cache/data/caipin/chengpin/C012C-200x200.jpg"
+										title="#{b.name}"> 
+										<img
+										src="#{global.imageHost}#{b.url}"
 										id="pdt_img#{b.id}_#{b.typeOrdinal}" alt="尖椒肉丝" />
 
 									</a>
@@ -135,7 +136,7 @@ $(document).ready(function() {
 								<div class="name">
 									<a
 										href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=3"
-										title="尖椒肉丝">#{b.name}</a>
+										title="#{b.name}">#{b.name}</a>
 								</div>
 								<div class="material">#{b.stuff}</div>
 								<div class="subtitle">#{b.description}</div>

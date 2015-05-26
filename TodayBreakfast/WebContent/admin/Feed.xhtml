@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html style=""
+	class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths"
+	data-useragent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0"
+	lang="en" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Foundation Template | Feed</title>
+<meta name="description"
+	content="Documentation and reference library for ZURB Foundation. JavaScript, CSS, components, grid and more." />
+<meta name="author"
+	content="ZURB, inc. ZURB network also includes zurb.com" />
+<meta name="copyright" content="ZURB, inc. Copyright (c) 2015" />
+<link rel="stylesheet" href="css/foundation.css" />
+<script src="javascript/modernizr.js"></script>
+<meta class="foundation-data-attribute-namespace" />
+<meta class="foundation-mq-xxlarge" />
+<meta class="foundation-mq-xlarge-only" />
+<meta class="foundation-mq-xlarge" />
+<meta class="foundation-mq-large-only" />
+<meta class="foundation-mq-large" />
+<meta class="foundation-mq-medium-only" />
+<meta class="foundation-mq-medium" />
+<meta class="foundation-mq-small-only" />
+<meta class="foundation-mq-small" />
+<style></style>
+<meta class="foundation-mq-topbar" />
+<script src="javascript/foundation.js"></script>
+<script src="javascript/jquery.js"></script>
+</head>
+<body>
+
+	<div class="row">
+		<div class="large-12 columns">
+			<div class="panel">
+				<h1>管理界面</h1>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="row">
+
+
+		<div class="large-5 columns ">
+
+			<div class="panel">
+				<h4>
+					<h:commandButton action="#{testBean.updateOpt}">
+						
+    添加早餐
+</h:commandButton>
+				</h4>
+				<h1>查看早餐</h1>
+				<h1>订单管理</h1>
+
+			</div>
+
+
+			<div class="panel">
+				<div class="section-container vertical-nav" data-section=""
+					data-options="deep_linking: false; one_up: true"></div>
+			</div>
+		</div>
+
+
+
+
+
+		<div class="large-6 columns">
+
+			<div class="panel">
+				<h1>添加早餐:</h1>
+				<h:form enctype="multipart/form-data">
+					早餐名称：<h:inputText id="name" value="#{breakfastManagementBean.name}"
+						name="名称" />
+					早餐价格：	<h:inputText id="price"
+						value="#{breakfastManagementBean.price}" name="价格" />
+					
+					早餐配料：<h:inputText id="stuff"
+						value="#{breakfastManagementBean.stuff}" name="配料" />
+							早餐描述：<h:inputText id="desc"
+						value="#{breakfastManagementBean.desc}" name="描述" />
+					早餐图片：<h:inputFile id="file"
+						value="#{breakfastManagementBean.picture}" name="早餐图片" />
+					<h:commandButton value="创建"
+						actionListener="#{breakfastManagementBean.create()}" />
+				</h:form>
+			</div>
+
+
+			<c:forEach items="${breakfastManagementBean.BFList}" var="b">
+				<c:set var='btype' value="#{b.type}" />
+
+				<div class="row">
+					<div class="large-4 columns">
+						<img src="#{global.imageHost}#{b.url}" />
+					</div>
+					<div class="large-8 columns1">
+						<p>
+							<strong>#{b.name}</strong>
+						</p>
+						<p>#{b.stuff}</p>
+						<p>#{b.description}</p>
+						<p>#{b.price}</p>
+						<ul class="inline-list">
+							<li><a href="">#{b.price}</a></li>
+						</ul>
+
+
+
+						<c:if test="#{btype == 'COMBO'}">
+							<c:forEach var="combo" items="${b.items}">
+
+								<div class="row">
+									<div class="large-4 columns">
+										<img src="Feed_files/50x50textimg.gif" />
+									</div>
+									<div class="large-6 columns1">
+										<p>
+											<strong>#{combo.name}</strong>
+										</p>
+										<p>#{combo.stuff}</p>
+										<p>#{combo.description}</p>
+										<p>#{combo.price}</p>
+									</div>
+								</div>
+							</c:forEach>
+						</c:if>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+
+
+
+		<aside class="large-1 columns hide-for-small"></aside>
+	</div>
+
+	<footer class="row">
+		<div class="large-12 columns">
+			<div class="row">
+				<div class="large-5 columns">
+					<p>© Copyright no one at all. Go to town.</p>
+				</div>
+				<div class="large-7 columns">
+					<ul class="inline-list right">
+						<li><a href="#">Section 1</a></li>
+						<li><a href="#">Section 2</a></li>
+						<li><a href="#">Section 3</a></li>
+						<li><a href="#">Section 4</a></li>
+						<li><a href="#">Section 5</a></li>
+						<li><a href="#">Section 6</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>
