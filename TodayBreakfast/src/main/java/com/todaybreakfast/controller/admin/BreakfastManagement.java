@@ -77,8 +77,8 @@ public class BreakfastManagement {
 
 	
 	
-	public void updateOpt() {
-		
+	public void forward(int type) {
+		this.optType = type;
 	}
 	
 	

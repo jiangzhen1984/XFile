@@ -5,6 +5,7 @@
 	data-useragent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0"
 	lang="en" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -49,18 +50,28 @@
 	<div class="row">
 
 
-		<div class="large-5 columns ">
+		<div class="large-3 columns ">
 
 			<div class="panel">
-				<h4>
-					<h:commandButton action="#{testBean.updateOpt}">
-						
-    添加早餐
-</h:commandButton>
-				</h4>
-				<h1>查看早餐</h1>
-				<h1>订单管理</h1>
+				<h:form>
+					<h4>
 
+						<h:commandLink value="添加早餐"
+							action="#{breakfastManagementBean.forward(1)}" />
+					</h4>
+					<h4>
+						<h:commandLink value="添加套餐"
+							action="#{breakfastManagementBean.forward(2)}" />
+					</h4>
+					<h4>
+						<h:commandLink value="查看早餐"
+							action="#{breakfastManagementBean.forward(3)}" />
+					</h4>
+					<h4>
+						<h:commandLink value="订单管理"
+							action="#{breakfastManagementBean.forward(4)}" />
+					</h4>
+				</h:form>
 			</div>
 
 
@@ -74,71 +85,115 @@
 
 
 
-		<div class="large-6 columns">
-
-			<div class="panel">
-				<h1>添加早餐:</h1>
-				<h:form enctype="multipart/form-data">
+		<div class="large-8 columns">
+			<c:if test="#{breakfastManagementBean.optType == 1}">
+				<div class="panel">
+					<h1>添加早餐:</h1>
+					<h:form enctype="multipart/form-data">
 					早餐名称：<h:inputText id="name" value="#{breakfastManagementBean.name}"
-						name="名称" />
+							name="名称" />
 					早餐价格：	<h:inputText id="price"
-						value="#{breakfastManagementBean.price}" name="价格" />
+							value="#{breakfastManagementBean.price}" name="价格" />
 					
 					早餐配料：<h:inputText id="stuff"
-						value="#{breakfastManagementBean.stuff}" name="配料" />
+							value="#{breakfastManagementBean.stuff}" name="配料" />
 							早餐描述：<h:inputText id="desc"
-						value="#{breakfastManagementBean.desc}" name="描述" />
+							value="#{breakfastManagementBean.desc}" name="描述" />
 					早餐图片：<h:inputFile id="file"
-						value="#{breakfastManagementBean.picture}" name="早餐图片" />
-					<h:commandButton value="创建"
-						actionListener="#{breakfastManagementBean.create()}" />
-				</h:form>
-			</div>
-
-
-			<c:forEach items="${breakfastManagementBean.BFList}" var="b">
-				<c:set var='btype' value="#{b.type}" />
-
-				<div class="row">
-					<div class="large-4 columns">
-						<img src="#{global.imageHost}#{b.url}" />
-					</div>
-					<div class="large-8 columns1">
-						<p>
-							<strong>#{b.name}</strong>
-						</p>
-						<p>#{b.stuff}</p>
-						<p>#{b.description}</p>
-						<p>#{b.price}</p>
-						<ul class="inline-list">
-							<li><a href="">#{b.price}</a></li>
-						</ul>
-
-
-
-						<c:if test="#{btype == 'COMBO'}">
-							<c:forEach var="combo" items="${b.items}">
-
-								<div class="row">
-									<div class="large-4 columns">
-										<img src="Feed_files/50x50textimg.gif" />
-									</div>
-									<div class="large-6 columns1">
-										<p>
-											<strong>#{combo.name}</strong>
-										</p>
-										<p>#{combo.stuff}</p>
-										<p>#{combo.description}</p>
-										<p>#{combo.price}</p>
-									</div>
-								</div>
-							</c:forEach>
-						</c:if>
-					</div>
+							value="#{breakfastManagementBean.picture}" name="早餐图片" />
+						<h:commandButton value="创建"
+							actionListener="#{breakfastManagementBean.create()}" />
+					</h:form>
 				</div>
-			</c:forEach>
-		</div>
+			</c:if>
 
+
+			<c:if test="#{breakfastManagementBean.optType == 2}">
+				<h:form enctype="multipart/form-data">
+					<div class="panel large-5 columns ">
+						<h3>添加套餐:</h3>
+						套餐名称：
+						<h:inputText id="name" value="#{breakfastManagementBean.name}"
+							name="名称" />
+						套餐价格：
+						<h:inputText id="price" value="#{breakfastManagementBean.price}"
+							name="价格" />
+
+						套餐配料：
+						<h:inputText id="stuff" value="#{breakfastManagementBean.stuff}"
+							name="配料" />
+						套餐描述：
+						<h:inputText id="desc" value="#{breakfastManagementBean.desc}"
+							name="描述" />
+						套餐图片：
+						<h:inputFile id="file" value="#{breakfastManagementBean.picture}"
+							name="早餐图片" />
+						<h:commandButton value="创建"
+							actionListener="#{breakfastManagementBean.create()}" />
+
+					</div>
+
+					<div class=" large-5 columns">
+						<c:forEach items="${breakfastManagementBean.BFList}" var="b">
+							<div class="row">
+								<div class="large-2 columns">
+								<input type="checkbox" />
+								</div>
+								<div class="large-2 columns">
+								#{b.name}
+								</div>
+								<div class="large-2 columns">
+								#{b.price}
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+
+				</h:form>
+			</c:if>
+
+
+
+			<c:if test="#{breakfastManagementBean.optType == 3}">
+				<c:forEach items="${breakfastManagementBean.BFList}" var="b">
+					<div class="row">
+						<div class="large-4 columns">
+							<img src="#{global.imageHost}#{b.url}" />
+						</div>
+						<div class="large-8 columns1">
+							<p>
+								<strong>#{b.name}</strong>
+							</p>
+							<p>#{b.stuff}</p>
+							<p>#{b.description}</p>
+							<p>#{b.price}</p>
+							<ul class="inline-list">
+								<li><a href="">#{b.price}</a></li>
+							</ul>
+
+							<c:if test="#{btype == 'COMBO'}">
+								<c:forEach var="combo" items="${b.items}">
+
+									<div class="row">
+										<div class="large-4 columns">
+											<img src="Feed_files/50x50textimg.gif" />
+										</div>
+										<div class="large-6 columns1">
+											<p>
+												<strong>#{combo.name}</strong>
+											</p>
+											<p>#{combo.stuff}</p>
+											<p>#{combo.description}</p>
+											<p>#{combo.price}</p>
+										</div>
+									</div>
+								</c:forEach>
+							</c:if>
+						</div>
+					</div>
+				</c:forEach>
+			</c:if>
+		</div>
 
 
 		<aside class="large-1 columns hide-for-small"></aside>

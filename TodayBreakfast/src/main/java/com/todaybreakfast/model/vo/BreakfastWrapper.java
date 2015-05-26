@@ -13,6 +13,8 @@ public class BreakfastWrapper {
 	protected String stuff;
 
 	protected String description;
+	
+	protected String url;
 
 	public Type getType() {
 		return type;
@@ -65,6 +67,16 @@ public class BreakfastWrapper {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+	
 
 	public enum Type {
 		SINGLE, COMBO;

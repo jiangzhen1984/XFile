@@ -4,10 +4,6 @@ import com.todaybreakfast.model.BFBreakfast;
 
 public class BreakfastSingleWrapper extends BreakfastWrapper {
 	
-	private String url;
-	
-	
-	
 	
 	public BreakfastSingleWrapper(float price, String name, String url, String stuff, String desc) {
 		super();
@@ -32,13 +28,4 @@ public class BreakfastSingleWrapper extends BreakfastWrapper {
 		this.type = BreakfastWrapper.Type.SINGLE;
 	}
 
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	
-	
 }
