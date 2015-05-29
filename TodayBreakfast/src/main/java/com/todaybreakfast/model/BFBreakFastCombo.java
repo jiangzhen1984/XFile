@@ -29,6 +29,9 @@ public class BFBreakFastCombo {
 
 	@Column(name = "PRICE", columnDefinition =  "NUMERIC(6,2)")
 	private Float price;
+	
+	@Column(name="PIC_PATH", columnDefinition="VARCHAR(200)")
+	private String picUrl;
 
 	@Column(name = "NAME", columnDefinition =  "VARCHAR(40)")
 	private String name;
@@ -42,8 +45,8 @@ public class BFBreakFastCombo {
 	 @OneToMany
 	    @JoinTable(
 	            name="BF_COMBO_ITEM",
-	            joinColumns = @JoinColumn( name="COMBO_ID"),
-	            inverseJoinColumns = @JoinColumn( name="BF_ID")
+	            joinColumns = @JoinColumn( name="COMBO_ID",   referencedColumnName="id", unique=false),
+	            inverseJoinColumns = @JoinColumn( name="BF_ID",  referencedColumnName="id", unique = false)
 	    )
 	private Set<BFBreakfast> list;
 	
@@ -86,6 +89,14 @@ public class BFBreakFastCombo {
 	
 	
 
+
+	public String getPicUrl() {
+		return picUrl;
+	}
+
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
+	}
 
 	public String getStuff() {
 		return stuff;

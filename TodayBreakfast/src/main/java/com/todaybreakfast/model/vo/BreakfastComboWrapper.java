@@ -18,17 +18,18 @@ public class BreakfastComboWrapper extends BreakfastWrapper {
 	}
 	
 	
-	public BreakfastComboWrapper(float price, String name, String stuff, String desc) {
+	public BreakfastComboWrapper(float price, String name,String url,  String stuff, String desc) {
 		this.type = BreakfastWrapper.Type.COMBO;
 		this.price = price;
 		this.name = name;
 		this.stuff = stuff;
+		this.url = url;
 		this.description = desc;
 		list = new ArrayList<BreakfastSingleWrapper>();
 	}
 	
 	public BreakfastComboWrapper(BFBreakFastCombo bfc) {
-		this(bfc.getPrice(), bfc.getName(), bfc.getStuff(), bfc.getDescription());
+		this(bfc.getPrice(), bfc.getName(), bfc.getPicUrl(), bfc.getStuff(), bfc.getDescription());
 		this.id = bfc.getId();
 		List<BFBreakfast> l = bfc.getItems();
 		for (BFBreakfast bf : l) {

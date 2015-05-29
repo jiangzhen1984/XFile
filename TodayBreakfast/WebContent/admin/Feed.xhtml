@@ -89,7 +89,10 @@
 			<c:if test="#{breakfastManagementBean.optType == 1}">
 				<div class="panel">
 					<h1>添加早餐:</h1>
-					<h:form enctype="multipart/form-data">
+					<h:message for="name" errorClass="errorMessage" />
+					<h:message for="stuff" errorClass="errorMessage" />
+					<h:message for="file" errorClass="errorMessage" />
+					<h:form id="createBFForm" enctype="multipart/form-data">
 					早餐名称：<h:inputText id="name" value="#{breakfastManagementBean.name}"
 							name="名称" />
 					早餐价格：	<h:inputText id="price"
@@ -97,10 +100,12 @@
 					
 					早餐配料：<h:inputText id="stuff"
 							value="#{breakfastManagementBean.stuff}" name="配料" />
+							
 							早餐描述：<h:inputText id="desc"
 							value="#{breakfastManagementBean.desc}" name="描述" />
 					早餐图片：<h:inputFile id="file"
 							value="#{breakfastManagementBean.picture}" name="早餐图片" />
+
 						<h:commandButton value="创建"
 							actionListener="#{breakfastManagementBean.create()}" />
 					</h:form>
@@ -109,8 +114,11 @@
 
 
 			<c:if test="#{breakfastManagementBean.optType == 2}">
-				<h:form enctype="multipart/form-data">
+				<h:form enctype="multipart/form-data" id="createComboBFForm">
 					<div class="panel large-5 columns ">
+						<h:message for="name" errorClass="errorMessage" />
+						<h:message for="stuff" errorClass="errorMessage" />
+						<h:message for="file" errorClass="errorMessage" />
 						<h3>添加套餐:</h3>
 						套餐名称：
 						<h:inputText id="name" value="#{breakfastManagementBean.name}"
@@ -129,24 +137,39 @@
 						<h:inputFile id="file" value="#{breakfastManagementBean.picture}"
 							name="早餐图片" />
 						<h:commandButton value="创建"
-							actionListener="#{breakfastManagementBean.create()}" />
+							actionListener="#{breakfastManagementBean.createCombo()}" />
 
 					</div>
 
 					<div class=" large-5 columns">
+
+						<!-- 
 						<c:forEach items="${breakfastManagementBean.BFList}" var="b">
 							<div class="row">
 								<div class="large-2 columns">
-								<input type="checkbox" />
+									<h:selectManyCheckbox 
+										value="#{breakfastManagementBean.comboFBList}"
+										layout="pageDirection">
+										<f:selectItem itemValue="#{b.id}" />
+									</h:selectManyCheckbox>
 								</div>
-								<div class="large-2 columns">
-								#{b.name}
-								</div>
-								<div class="large-2 columns">
-								#{b.price}
-								</div>
+								<div class="large-2 columns">#{b.name}</div>
+								<div class="large-2 columns">#{b.price}</div>
 							</div>
 						</c:forEach>
+ -->
+						<h:selectManyCheckbox value="#{breakfastManagementBean.comboFBList}"
+							layout="pageDirection" var="n">
+							<div class="row">
+								<div class="large-2 columns">
+									<f:selectItems value="#{breakfastManagementBean.BFSingleList}" var="n"
+										itemLabel="#{n.name}" itemValue="#{n.id}" >
+										    #{n.price}
+										</f:selectItems>
+								</div>
+							</div>
+						</h:selectManyCheckbox>
+
 					</div>
 
 				</h:form>

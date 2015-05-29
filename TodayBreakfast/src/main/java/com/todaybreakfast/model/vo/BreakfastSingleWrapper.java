@@ -5,6 +5,11 @@ import com.todaybreakfast.model.BFBreakfast;
 public class BreakfastSingleWrapper extends BreakfastWrapper {
 	
 	
+	
+	public BreakfastSingleWrapper(long id) {
+		this.id = id;
+	}
+	
 	public BreakfastSingleWrapper(float price, String name, String url, String stuff, String desc) {
 		super();
 		this.type = BreakfastWrapper.Type.SINGLE;

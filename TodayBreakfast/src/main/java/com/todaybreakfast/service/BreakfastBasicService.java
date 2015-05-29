@@ -51,13 +51,13 @@ public class BreakfastBasicService extends BaseService {
 			bfc.setToday(true);
 			bfc.setDescription(bw.getDescription());
 			bfc.setStuff(bw.getDescription());
-			
+			bfc.setPicUrl(bw.getUrl());
 			BreakfastComboWrapper bcw = (BreakfastComboWrapper) bw;
 			List<BreakfastSingleWrapper> itemWrapperList = bcw.getItems();
 			for(BreakfastSingleWrapper item: itemWrapperList) {
 				BFBreakfast bf = new BFBreakfast();
 				bf.setId(item.getId());
-				bfc.addBreakfast(bf);
+				bfc.addBreakfast((BFBreakfast)session.get(BFBreakfast.class, item.getId()));
 			}
 			session.saveOrUpdate(bfc);
 			bw.setId(bfc.getId());
@@ -75,8 +75,9 @@ public class BreakfastBasicService extends BaseService {
 		session.flush();
 		t.commit();
 		session.close();
-		
-		cacheList.add(bw);
+		if (cacheList != null) {
+			cacheList.add(bw);
+		}
 	}
 	
 	
@@ -95,7 +96,9 @@ public class BreakfastBasicService extends BaseService {
 		session.flush();
 		t.commit();
 		session.close();
-		cacheList.remove(bw);
+		if (cacheList != null) {
+			cacheList.remove(bw);
+		}
 	}
 	
 	
