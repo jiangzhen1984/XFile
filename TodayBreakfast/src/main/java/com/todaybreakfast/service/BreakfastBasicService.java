@@ -59,7 +59,7 @@ public class BreakfastBasicService extends BaseService {
 				bf.setId(item.getId());
 				bfc.addBreakfast((BFBreakfast)session.get(BFBreakfast.class, item.getId()));
 			}
-			session.saveOrUpdate(bfc);
+			session.save(bfc);
 			bw.setId(bfc.getId());
 		} else if (bw.getType() == BreakfastWrapper.Type.SINGLE) {
 			BFBreakfast bf = new BFBreakfast();

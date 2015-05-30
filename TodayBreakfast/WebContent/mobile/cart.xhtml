@@ -79,8 +79,7 @@ ng\:form {
     </script>
 </head>
 <body class="ionic">
-	<img src="css/graphic/hm.gif"
-		height="0" width="0" />
+	<img src="css/graphic/hm.gif" height="0" width="0" />
 	<div id="page" class="page">
 		<div id="header" class="bar bar-header bar-positive">
 			<h1 class="title">我的购物车</h1>
@@ -88,9 +87,8 @@ ng\:form {
 		<div id="content" class="content">
 
 
-			<form class="ng-pristine ng-valid"
-				action="http://www.qingniancaijun.com.cn/index.php?route=checkout/cart"
-				method="post" enctype="multipart/form-data" id="basket">
+			<h:form class="ng-pristine ng-valid" method="post"
+				enctype="multipart/form-data" id="basket">
 				<div class="cart-info">
 
 					<div class="list">
@@ -101,84 +99,55 @@ ng\:form {
 								<div class="ix-u-sm-2">删除</div>
 							</div>
 						</div>
-						<div class="item f12" data-id="120">
-							<div class="ix-row">
-								<div class="ix-u-sm-6">
-									<div class="image fl mr10">
-										<a
-											href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=120"
-											title="麻辣香锅"> <img
-											src="%E6%88%91%E7%9A%84%E8%B4%AD%E7%89%A9%E8%BD%A6_files/C045C-80x80.jpg"
-											alt="麻辣香锅" /></a>
-									</div>
-									<div class="item-product-detail ">
-										麻辣香锅 <br />
+						<c:forEach items="#{cartBean.cart.items}" var="item">
+							<div class="item f12" data-id="120">
+								<div class="ix-row">
+									<div class="ix-u-sm-6">
+										<div class="image fl mr10">
+											<a
+												href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=3"
+												title="#{item.value.wr.name}"> <img
+												src="#{global.imageHost}#{item.value.wr.url}"
+												id="pdt_img#{item.value.wr.id}_#{item.value.wr.typeOrdinal}"
+												alt="#{item.value.wr.name}" />
 
-										<span class="f14 mt10">￥28.00</span> <br />
+											</a>
+										</div>
+										<div class="item-product-detail ">
+											#{item.value.wr.name} <br /> <span class="f14 mt10">￥#{item.value.wr.price}</span>
+											<br />
+										</div>
+									</div>
+									<div class="ix-u-sm-3 quantity tc">
+										<h:commandButton
+											action="#{cartBean.updateCart(item.value.wr.id, 1,item.value.wr.typeOrdinal)}"
+											class="btn" style="width: 36px;" value=" - "
+											disabled="disabled" onclick="minus('quantity[120:]');"
+											alt="-1" title="-1"  />
+
+										<input
+											style="width: 25px; padding: 0 2px 0 2px; height: 28px; line-height: 18px;"
+											onchange="$('#basket').submit();" name="quantity[120:]"
+											value="#{item.value.count}" size="2" type="text" /> 
+										<h:commandButton class="btn"
+											action="#{cartBean.updateCart(item.value.wr.id, 2,item.value.wr.typeOrdinal)}"
+											style="width: 36px;" value=" + " alt="+1" title="+1"
+											/>
+									</div>
+									<div class="ix-u-sm-2 remove tc">
+										<h:commandButton
+											action="#{cartBean.removeItem(item.value.wr.id)}"
+											image="css/graphic/remove.png" alt="删除">
+										</h:commandButton>
 									</div>
 								</div>
-								<div class="ix-u-sm-3 quantity tc">
-									<input class="btn" style="width: 36px;" value=" - "
-										disabled="disabled" onclick="minus('quantity[120:]');"
-										alt="-1" title="-1" type="button" /><input
-										style="width: 25px; padding: 0 2px 0 2px; height: 28px; line-height: 18px;"
-										onchange="$('#basket').submit();" name="quantity[120:]"
-										value="1" size="2" type="text" /><input class="btn"
-										style="width: 36px;" value=" + "
-										onclick="plus('quantity[120:]');" alt="+1" title="+1"
-										type="button" />
-								 </div>
-								<div class="ix-u-sm-2 remove tc">
-									<a class="fr"
-										href="http://www.qingniancaijun.com.cn/index.php?route=checkout/cart&amp;remove=120:"
-										title="删除"> <img
-										src="css/graphic/remove.png"
-										alt="删除" title="删除" /></a>
-								</div>
+
 							</div>
-
-						</div>
-						<div class="item f12" data-id="118">
-							<div class="ix-row">
-								<div class="ix-u-sm-6">
-									<div class="image fl mr10">
-										<a
-											href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=118"
-											title="黑三剁"> <img
-											src="%E6%88%91%E7%9A%84%E8%B4%AD%E7%89%A9%E8%BD%A6_files/C044C-80x80.jpg"
-											alt="黑三剁" /></a>
-									</div>
-									<div class="item-product-detail ">
-										黑三剁 <br />
-										<div></div>
-
-										<span class="f14 mt10">￥13.00</span> <br />
-									</div>
-								</div>
-								<div class="ix-u-sm-3 quantity tc">
-									<input class="btn" style="width: 36px;" value=" - "
-										disabled="disabled" onclick="minus('quantity[118:]');"
-										alt="-1" title="-1" type="button" /><input
-										style="width: 25px; padding: 0 2px 0 2px; height: 28px; line-height: 18px;"
-										onchange="$('#basket').submit();" name="quantity[118:]"
-										value="1" size="2" type="text" /><input class="btn"
-										style="width: 36px;" value=" + "
-										onclick="plus('quantity[118:]');" alt="+1" title="+1"
-										type="button" />
-								</div>
-								<div class="ix-u-sm-2 remove tc">
-									<a class="fr"
-										href="http://www.qingniancaijun.com.cn/index.php?route=checkout/cart&amp;remove=118:"
-										title="删除"> <img
-										src="css/graphic/remove.png"
-										alt="删除" title="删除" /></a>
-								</div>
-							</div>
-
-						</div>
+						</c:forEach>
 					</div>
 
 
+<!-- 
 					<div class="pick-date-select clearfix mb10">
 						<div class="ix-row">
 							<div class="ix-u-sm-5">配送时间选择：</div>
@@ -196,6 +165,7 @@ ng\:form {
 							</div>
 						</div>
 					</div>
+					 -->
 				</div>
 
 				<div class="cart_submit card">
@@ -203,20 +173,19 @@ ng\:form {
 					<div class="cart-total tr">
 						<ul>
 							<li class="ilex sub_total"><span class="zebiaoti">商品总金额</span>
-								<span class="zonge">￥41.00</span></li>
+								<span class="zonge">￥#{cartBean.cart.totalPrice}</span></li>
 							<li class="ilex total"><span class="zebiaoti">应付总额</span> <span
-								class="zonge">￥41.00</span></li>
+								class="zonge">￥#{cartBean.cart.totalPrice}</span></li>
 						</ul>
 					</div>
 
 					<div class="submit">
 						<a
-							href="http://www.qingniancaijun.com.cn/index.php?route=checkout/checkout"
+							href="mobile/order.xhtml"
 							title="去结帐" class="button button-block button-positive">去结帐</a>
 					</div>
-					<!--    	<a class="clear_cart" onclick="$('#basket').attr('action', 'http://www.qingniancaijun.com.cn/index.php?route=checkout/cart/remove');$('#basket').submit();"><img src="catalog/view/theme/default/image/remove.png" alt="删除选中的商品" title="删除选中的商品">删除选中的商品</a>-->
 				</div>
-			</form>
+			</h:form>
 		</div>
 
 
@@ -225,19 +194,14 @@ ng\:form {
 
 		<div class="bar bar-footer bar-light">
 			<div class="tabs tabs-icon-top tabs-default">
-				<a class="tab-item"
-					href="http://www.qingniancaijun.com.cn/index.php?route=common/home">
-					<i class="icon ion-home" id="home_icon">首页</i>
-				</a> <a class="tab-item"
-					href="http://www.qingniancaijun.com.cn/index.php?route=product/category/lists">
-					<i class="icon ion-navicon" id="catagery_icon">分类</i>
-				</a> <a class="tab-item"
-					href="http://www.qingniancaijun.com.cn/index.php?route=account/account">
-					<i class="icon ion-person" id="person_icon">个人中心</i>
+				<a class="tab-item" href="mobile/bflist.xhtml"> <i
+					class="icon ion-home" id="home_icon">首页</i>
+				</a> <a class="tab-item" href="mobile/login.xhtml"> <i
+					class="icon ion-person" id="person_icon">个人中心</i>
 				</a> <a class="tab-item tab-item-cart"
-					href="http://www.qingniancaijun.com.cn/index.php?route=checkout/cart">
+					href="mobile/cart.xhtml">
 					<div class="tab-item-cart-total">
-						<span id="cart_total" class="ix-badge ix-radius"> 2 </span>
+						<span id="cart_total" class="ix-badge ix-radius"> #{cartBean.totalCount} </span>
 					</div> <i class="icon ion-bag select" id="cart_icon">购物车</i>
 
 				</a>
@@ -247,10 +211,8 @@ ng\:form {
 
 	</div>
 
-	<script type="text/javascript"
-		src="javascript/common.js"></script>
-	<script type="text/javascript"
-		src="javascript/tabs.js"></script>
+	<script type="text/javascript" src="javascript/common.js"></script>
+	<script type="text/javascript" src="javascript/tabs.js"></script>
 
 	<script type="text/javascript"><!--
 $('.cart-module .cart-heading').bind('click', function() {
@@ -267,39 +229,19 @@ function plus(name){
 	var number=parseInt($('.cart-info input[name=\''+name+'\']').val())+ 1
 	$('.cart-info input[name=\''+name+'\']').val(number);
 
-	$('#basket').submit();
+	//$('#basket').submit();
 }
 
 function minus(name){
 	var number=parseInt($('.cart-info input[name=\''+name+'\']').val())- 1
 	$('.cart-info input[name=\''+name+'\']').val(number);
 
-	$('#basket').submit();
+	//$('#basket').submit();
 }
 //--></script>
 
 
 
-	<div class="bar bar-footer bar-light">
-		<div class="tabs tabs-icon-top tabs-default">
-			<a class="tab-item"
-				href="http://www.qingniancaijun.com.cn/index.php?route=common/home">
-				<i class="icon ion-home" id="home_icon">首页</i>
-			</a> <a class="tab-item"
-				href="http://www.qingniancaijun.com.cn/index.php?route=product/category/lists">
-				<i class="icon ion-navicon" id="catagery_icon">分类</i>
-			</a> <a class="tab-item"
-				href="http://www.qingniancaijun.com.cn/index.php?route=account/account">
-				<i class="icon ion-person" id="person_icon">个人中心</i>
-			</a> <a class="tab-item tab-item-cart"
-				href="http://www.qingniancaijun.com.cn/index.php?route=checkout/cart">
-				<div class="tab-item-cart-total">
-					<span id="cart_total" class="ix-badge ix-radius"> 2 </span>
-				</div> <i class="icon ion-bag select" id="cart_icon">购物车</i>
-
-			</a>
-		</div>
-	</div>
 	<!--END .bar-footer-->
 
 </body>

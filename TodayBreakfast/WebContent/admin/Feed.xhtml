@@ -71,6 +71,10 @@
 						<h:commandLink value="订单管理"
 							action="#{breakfastManagementBean.forward(4)}" />
 					</h4>
+					<h4>
+						<h:commandLink value="提货地点"
+							action="#{breakfastManagementBean.forward(5)}" />
+					</h4>
 				</h:form>
 			</div>
 
@@ -89,9 +93,9 @@
 			<c:if test="#{breakfastManagementBean.optType == 1}">
 				<div class="panel">
 					<h1>添加早餐:</h1>
-					<h:message for="name" errorClass="errorMessage" />
-					<h:message for="stuff" errorClass="errorMessage" />
-					<h:message for="file" errorClass="errorMessage" />
+					<h:message for="name" errorClass="error" />
+					<h:message for="stuff" errorClass="error" />
+					<h:message for="picture" errorClass="error" />
 					<h:form id="createBFForm" enctype="multipart/form-data">
 					早餐名称：<h:inputText id="name" value="#{breakfastManagementBean.name}"
 							name="名称" />
@@ -103,7 +107,7 @@
 							
 							早餐描述：<h:inputText id="desc"
 							value="#{breakfastManagementBean.desc}" name="描述" />
-					早餐图片：<h:inputFile id="file"
+					早餐图片：<h:inputFile id="picture"
 							value="#{breakfastManagementBean.picture}" name="早餐图片" />
 
 						<h:commandButton value="创建"
@@ -116,9 +120,9 @@
 			<c:if test="#{breakfastManagementBean.optType == 2}">
 				<h:form enctype="multipart/form-data" id="createComboBFForm">
 					<div class="panel large-5 columns ">
-						<h:message for="name" errorClass="errorMessage" />
-						<h:message for="stuff" errorClass="errorMessage" />
-						<h:message for="file" errorClass="errorMessage" />
+						<h:message for="name" errorClass="error" />
+						<h:message for="stuff" errorClass="error" />
+						<h:message for="file" errorClass="error" />
 						<h3>添加套餐:</h3>
 						套餐名称：
 						<h:inputText id="name" value="#{breakfastManagementBean.name}"
@@ -158,12 +162,13 @@
 							</div>
 						</c:forEach>
  -->
-						<h:selectManyCheckbox value="#{breakfastManagementBean.comboFBList}"
+						<h:selectManyCheckbox
+							value="#{breakfastManagementBean.comboFBList}"
 							layout="pageDirection" var="n">
 							<div class="row">
 								<div class="large-2 columns">
-									<f:selectItems value="#{breakfastManagementBean.BFSingleList}" var="n"
-										itemLabel="#{n.name}" itemValue="#{n.id}" >
+									<f:selectItems value="#{breakfastManagementBean.BFSingleList}"
+										var="n" itemLabel="#{n.name}" itemValue="#{n.id}">
 										    #{n.price}
 										</f:selectItems>
 								</div>
@@ -178,44 +183,94 @@
 
 
 			<c:if test="#{breakfastManagementBean.optType == 3}">
-				<c:forEach items="${breakfastManagementBean.BFList}" var="b">
-					<div class="row">
-						<div class="large-4 columns">
-							<img src="#{global.imageHost}#{b.url}" />
-						</div>
-						<div class="large-8 columns1">
-							<p>
-								<strong>#{b.name}</strong>
-							</p>
-							<p>#{b.stuff}</p>
-							<p>#{b.description}</p>
-							<p>#{b.price}</p>
-							<ul class="inline-list">
-								<li><a href="">#{b.price}</a></li>
-							</ul>
+				<h:messages style="color:red;margin:8px;" />
+				<h:form id="form_delete">
+					<c:forEach items="${breakfastManagementBean.BFList}" var="b">
+						<div class="row">
+							<div class="large-4 columns">
+								<img src="#{global.imageHost}#{b.url}" />
+							</div>
+							<div class="large-8 columns1">
+								<p>
+									<strong>#{b.name}</strong>
+								</p>
+								<p>#{b.stuff}</p>
+								<p>#{b.description}</p>
+								<p>#{b.price}</p>
+								<ul class="inline-list">
 
-							<c:if test="#{btype == 'COMBO'}">
-								<c:forEach var="combo" items="${b.items}">
+									<c:if test="#{b.type == 'COMBO'}">
+										<li><h:commandLink value="删除"
+												action="#{breakfastManagementBean.deleteComboBF(b.id)}" /></li>
+									</c:if>
+									<c:if test="#{b.type == 'SINGLE'}">
+										<li><h:commandLink value="删除"
+												action="#{breakfastManagementBean.deleteBF(b.id)}" /></li>
+									</c:if>
 
-									<div class="row">
-										<div class="large-4 columns">
-											<img src="Feed_files/50x50textimg.gif" />
+								</ul>
+
+								<c:if test="#{b.type == 'COMBO'}">
+									<c:forEach var="combo" items="${b.items}">
+
+										<div class="row">
+											<div class="large-4 columns">
+												<img src="#{global.imageHost}#{combo.url}" />
+											</div>
+											<div class="large-6 columns1">
+												<p>
+													<strong>#{combo.name}</strong>
+												</p>
+												<p>#{combo.stuff}</p>
+												<p>#{combo.description}</p>
+												<p>#{combo.price}</p>
+											</div>
 										</div>
-										<div class="large-6 columns1">
-											<p>
-												<strong>#{combo.name}</strong>
-											</p>
-											<p>#{combo.stuff}</p>
-											<p>#{combo.description}</p>
-											<p>#{combo.price}</p>
-										</div>
-									</div>
-								</c:forEach>
-							</c:if>
+									</c:forEach>
+								</c:if>
+							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
+				</h:form>
 			</c:if>
+
+
+
+
+			<c:if test="#{breakfastManagementBean.optType == 5}">
+				<div class="panel">
+					<h1>提货地点管理:</h1>
+					<h:message for="address" errorClass="error" />
+					<h:message for="district" errorClass="error" />
+					<h:form id="placeForm">
+					地区：<h:inputText id="district"
+							value="#{breakfastManagementBean.district}" name="地区" />
+					详细地址：	<h:inputText id="address"
+							value="#{breakfastManagementBean.address}" name="详细地址" />
+
+						<h:commandButton value="创建"
+							actionListener="#{breakfastManagementBean.createPlace()}" />
+					</h:form>
+				</div>
+
+				<h:form id="deletePlaceForm">
+					<div class="panel">
+						<c:forEach items="${global.places}" var="b">
+							<div class="row">
+								<div class="large-8 columns">
+									<ul class="inline-list right">
+										<li>#{b.district}#{b.address}</li>
+										<li><h:commandLink value="删除"
+												action="#{breakfastManagementBean.deletePlace(b.id)}" /></li>
+									</ul>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				</h:form>
+			</c:if>
+
+
 		</div>
 
 

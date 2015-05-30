@@ -14,10 +14,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 
+import com.todaybreakfast.model.Place;
 import com.todaybreakfast.model.vo.BreakfastComboWrapper;
 import com.todaybreakfast.model.vo.BreakfastSingleWrapper;
 import com.todaybreakfast.model.vo.BreakfastWrapper;
 import com.todaybreakfast.service.BreakfastBasicService;
+import com.todaybreakfast.service.PlaceService;
 
 @ManagedBean(name = "breakfastManagementBean", eager = false)
 @ViewScoped
@@ -35,9 +37,15 @@ public class BreakfastManagement {
 	private String stuff;
 	private int optType;
 	private long[] comboFBList;
+	
+	//////
+	private PlaceService plService;
+	private String address;
+	private String district;
 
 	public BreakfastManagement() {
 		service = new BreakfastBasicService();
+		plService = new PlaceService();
 	}
 
 	public List<BreakfastWrapper> getBFList() {
@@ -143,6 +151,26 @@ public class BreakfastManagement {
 		this.comboFBList = comboFBList;
 	}
 
+	
+	
+	
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
 	public void create() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		if (name == null || name.isEmpty()) {
@@ -153,15 +181,18 @@ public class BreakfastManagement {
 		if (file != null && file.getSize() > 0) {
 			String imgUrl = writeImage();
 			if (imgUrl == null) {
-				facesContext.addMessage("createBFForm:file", new FacesMessage(
+				facesContext.addMessage("createBFForm:picture", new FacesMessage(
 						"上传图片失败"));
 				return;
 			}
 			BreakfastWrapper bw = new BreakfastSingleWrapper(price, name,
 					imgUrl, stuff, desc);
 			service.addBreakfastWrapper(bw);
+			if (breakfastSingleList != null) {
+				breakfastSingleList.add(bw);
+			}
 		} else {
-			facesContext.addMessage("file", new FacesMessage("请选择早餐图片!"));
+			facesContext.addMessage("createBFForm:picture", new FacesMessage("请选择早餐图片!"));
 		}
 	}
 
@@ -187,12 +218,84 @@ public class BreakfastManagement {
 			}
 			BreakfastComboWrapper bw = new BreakfastComboWrapper(price, name,
 					imgUrl, stuff, desc);
-			for (int i = 0; i < comboFBList.length; i++) {
-				bw.addItem(new BreakfastSingleWrapper(comboFBList[i]));
-			}
+			bw.addItems(getSelectedList());
 			service.addBreakfastWrapper(bw);
+			if (breakfastSingleCombo != null) {
+				breakfastSingleCombo.add(bw);
+			}
 		} else {
-			facesContext.addMessage("file", new FacesMessage("请选择早餐图片!"));
+			facesContext.addMessage("createComboBFForm:file", new FacesMessage("请选择早餐图片!"));
+		}
+	}
+	
+	private List<BreakfastSingleWrapper> getSelectedList() {
+		List<BreakfastSingleWrapper> list = new ArrayList<BreakfastSingleWrapper>();
+		for (int i = 0; i < comboFBList.length; i++) {
+			List<BreakfastWrapper> singleList= getBFSingleList();
+			for (int j = 0; j < singleList.size(); j++) {
+				BreakfastWrapper  bw = singleList.get(j);
+				if (bw.getId() == comboFBList[i]) {
+					list.add((BreakfastSingleWrapper)bw);
+				}
+			}
+		}
+		
+		return list;
+	}
+	
+	
+	public void deleteBF(long id) {
+		List<BreakfastWrapper> comboList = getBFComoboList();
+		for (int i = 0; i < comboList.size(); i++) {
+			BreakfastComboWrapper bw = (BreakfastComboWrapper)comboList.get(i);
+			if (bw.findItem(id) != null) {
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+				facesContext.addMessage("form_delete", new FacesMessage("请先删除 套餐:" + bw.getName()));
+				return;
+			}
+		}
+		
+		BreakfastWrapper single = null;
+		List<BreakfastWrapper> singleList= getBFSingleList();
+		for (int i = 0; i < singleList.size(); i++) {
+			BreakfastWrapper  bw = singleList.get(i);
+			if (bw.getId() == id) {
+				single = bw;
+				break;
+			}
+		}
+		if (single != null) {
+			if (breakfastSingleList != null) {
+				breakfastSingleList.remove(single);
+			}
+			service.removeBreakfastWrapper(single);
+		} else {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage("form_delete", new FacesMessage("没有找到早餐"));
+		}
+		
+	}
+	
+	public void deleteComboBF(long id) {
+		BreakfastWrapper combo = null;
+		List<BreakfastWrapper> comboList = getBFComoboList();
+		for (int i = 0; i < comboList.size(); i++) {
+			BreakfastComboWrapper bw = (BreakfastComboWrapper)comboList.get(i);
+			if (bw.getId() == id) {
+				combo = bw;
+				break;
+			}
+		}
+		
+		if (combo != null) {
+			if (breakfastSingleCombo != null) {
+				breakfastSingleCombo.remove(combo);
+			}
+			
+			service.removeBreakfastWrapper(combo);
+		} else {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage("form_delete", new FacesMessage("没有找到套餐"));
 		}
 	}
 
@@ -235,6 +338,31 @@ public class BreakfastManagement {
 
 		return imgUrl;
 
+	}
+	
+	
+	
+	public void createPlace() {
+		if (address == null || address.isEmpty()) {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage("address", new FacesMessage("没有输入地址"));
+			return;
+		}
+		if (district == null || district.isEmpty()) {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage("address", new FacesMessage("没有输入地区"));
+			return;
+		}
+		
+		Place newPlace = new Place();
+		newPlace.setAddress(address);
+		newPlace.setDistrict(district);
+		plService.addPlace(newPlace);
+	}
+	
+	
+	public void deletePlace(long id) {
+		plService.removePlace(id);
 	}
 
 }

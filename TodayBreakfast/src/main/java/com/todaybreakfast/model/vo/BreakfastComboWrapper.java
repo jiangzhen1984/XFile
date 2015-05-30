@@ -49,4 +49,19 @@ public class BreakfastComboWrapper extends BreakfastWrapper {
 	public void addItem(BreakfastSingleWrapper bw) {
 		list.add(bw);
 	}
+	
+	
+	public void addItems(List<BreakfastSingleWrapper> items) {
+		list.addAll(items);
+	}
+	
+	public BreakfastSingleWrapper findItem(long id) {
+		for (int i = 0; i < list.size(); i++) {
+			BreakfastSingleWrapper item = list.get(i);
+			if (item.getId() == id) {
+				return item; 
+			}
+		}
+		return null;
+	}
 }

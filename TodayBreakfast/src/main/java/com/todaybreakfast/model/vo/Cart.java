@@ -2,39 +2,65 @@ package com.todaybreakfast.model.vo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class Cart {
 	
 	private int count;
 	
-	private Map<BreakfastWrapper, InnerBox> cache;
+	private float totalPrice;
+	
+	private Map<Long, InnerBox> cache;
 
 	
 	public Cart() {
-		cache = new HashMap<BreakfastWrapper, InnerBox>();
+		cache = new HashMap<Long, InnerBox>();
 		count = 0;
+		totalPrice = 0F;
 	}
 	
 	
-	public void addBreakfast(BreakfastWrapper bf) {
-		InnerBox box = cache.get(bf);
+	public void addBreakfast(BreakfastWrapper bw) {
+		if (bw == null) {
+			return;
+		}
+		InnerBox box = cache.get(Long.valueOf(bw.getId()));
 		if (box == null) {
 			box = new InnerBox();
-			box.wr = bf;
-			cache.put(bf, box);
+			box.wr = bw;
+			cache.put(Long.valueOf(bw.getId()), box);
 		}
 		box.count ++; 
 		count ++;
+		totalPrice += bw.getPrice();
 	}
 	
-	public void removeBreakfast(BreakfastWrapper bw) {
-		InnerBox box = cache.get(bw);
+	public void minusBreakfast(BreakfastWrapper bw) {
+		if (bw == null) {
+			return;
+		}
+		InnerBox box = cache.get(Long.valueOf(bw.getId()));
 		if (box == null) {
 			return;
 		}
 		box.count --; 
 		count --;
+		totalPrice -= bw.getPrice();
+		if (box.count == 0) {
+			cache.remove(Long.valueOf(bw.getId()));
+		}
 	}
+	
+	
+	public void removeBreakfastItem(BreakfastWrapper bw) {
+		InnerBox box = cache.remove(Long.valueOf(bw.getId()));
+		if (box != null) {
+			count -= box.count;
+			totalPrice -= (box.wr.getPrice() * box.count);
+		}
+	}
+	
 	
 	public void clear() {
 		cache.clear();
@@ -45,8 +71,15 @@ public class Cart {
 		return count;
 	}
 	
+	public float getTotalPrice() {
+		return totalPrice;
+	}
 	
-	class InnerBox {
+	public Set<Entry<Long, InnerBox>> getItems() {
+		return cache.entrySet();
+	}
+	
+	public class InnerBox {
 		BreakfastWrapper wr;
 		int count;
 		@Override
@@ -79,5 +112,13 @@ public class Cart {
 			return Cart.this;
 		}
 		
+		
+		public BreakfastWrapper getWr(){
+			return wr;
+		}
+		
+		public int getCount(){
+			return count;
+		}
 	}
 }

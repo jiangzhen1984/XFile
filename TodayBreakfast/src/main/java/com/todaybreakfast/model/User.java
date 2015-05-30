@@ -28,6 +28,18 @@ public class User {
 	
 	@Column(name="ADDRESS", columnDefinition="VARCHAR(200)")
 	private String address;
+	
+	
+	public User() {
+		
+	}
+	
+	public User(User u) {
+		u.setAddress(u.getAddress());
+		u.setCellPhone(u.getCellPhone());
+		u.setName(u.getName());
+		u.setId(u.getId());
+	}
 
 	public long getId() {
 		return id;

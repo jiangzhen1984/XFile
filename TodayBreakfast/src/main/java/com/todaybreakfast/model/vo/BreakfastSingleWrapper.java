@@ -32,5 +32,8 @@ public class BreakfastSingleWrapper extends BreakfastWrapper {
 		this.description = bf.getDescription();
 		this.type = BreakfastWrapper.Type.SINGLE;
 	}
+	
+	
+	
 
 }

@@ -2,6 +2,7 @@
 	class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope"
 	ng-app="app" lang="en-us" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <!--[if lt IE 7 ]> <html lang="en-us" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en-us" class="no-js ie7"> <![endif]-->
@@ -95,12 +96,7 @@ ng\:form {
 			<div class="checkout">
 
 				<div id="shipping-method">
-					<div class="checkout-heading">
-						请选择取菜点 <span class="fr ng-scope" ng-controller="SwitchZTDCtrl">
-							<a ng-click="showPickPointsContainer()"
-							class="button button-slim button-positive">切换自提点</a>
-						</span>
-					</div>
+					<div class="checkout-heading">请选择取菜点</div>
 
 					<div class="checkout-content">
 						<div class="shipping-method-list">
@@ -111,13 +107,11 @@ ng\:form {
 									<tr>
 										<td>
 											<div class="row list">
-												<select name="shipping_method"
-													onchange="shipping_function('parent',this,0)"
-													style="width: 100%;">
-													<option value="pickupaddr.pickupaddr_22"
-														selected="selected">清友园[ 朝阳区北苑家园清友园四号楼一层 社区驿站 ]</option>
-												</select> <input id="default_shipping_method"
-													value="pickupaddr.pickupaddr_22" type="hidden" />
+
+												<h:selectOneMenu style="width: 100%;" layout="pageDirection">
+													<f:selectItems value="#{global.places}" var="p"
+														itemLabel="#{p.district}#{p.address}" itemValue="#{p.id}" />
+												</h:selectOneMenu>
 											</div>
 										</td>
 									</tr>
@@ -234,15 +228,16 @@ ng\:form {
 				</div>
 				<div id="confirm">
 					<div class="checkout-heading">
-						<a
-							href="http://www.qingniancaijun.com.cn/index.php?route=checkout/cart"
+						<a href="mobile/cart.xhtml"
 							class="button button-slim button-positive">修改购物车</a> 商品清单
 					</div>
 					<div class="checkout-content">
 						<div class="checkout-product">
+							<!-- 
 							<div class="checkout-heading">
 								<label>取菜时间：</label><b>2015-05-26</b>
 							</div>
+							 -->
 							<table>
 								<thead>
 									<tr>
@@ -251,33 +246,21 @@ ng\:form {
 										<td class="promotion">优惠</td>
 
 										<td class="quantity">数量</td>
-										<!--	       <td class="total">合计（元）</td>-->
 									</tr>
 								</thead>
 								<tbody>
+									<c:forEach items="#{cartBean.cart.items}" var="item">
+										<tr>
+											<td class="name"><a
+												href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=120">#{item.value.wr.name}</a>
+											</td>
+											<td class="price">￥#{item.value.wr.price}</td>
 
-									<tr>
-										<td class="name"><a
-											href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=120">麻辣香锅</a>
-										</td>
-										<td class="price">￥28.00</td>
+											<td class="promation"></td>
+											<td class="quantity">#{item.value.count}</td>
 
-										<td class="promation"></td>
-										<td class="quantity">1</td>
-
-										<!--			        <td class="total">￥28.00</td>-->
-									</tr>
-									<tr>
-										<td class="name"><a
-											href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=118">黑三剁</a>
-										</td>
-										<td class="price">￥13.00</td>
-
-										<td class="promation"></td>
-										<td class="quantity">1</td>
-
-										<!--			        <td class="total">￥13.00</td>-->
-									</tr>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -382,8 +365,8 @@ $('#button-comment').bind('click', function() {
 					<div id="reference">
 						<div class="cart-heading">推荐码</div>
 						<div class="cart-content" id="reference">
-							 <input name="reference" maxlength="50" type="text" />
-								<a id="button_reference"
+							<input name="reference" maxlength="50" type="text" /> <a
+								id="button_reference"
 								class="button button-block button-positive button-slim"><span>保存推荐码</span></a>
 						</div>
 					</div>
@@ -425,18 +408,13 @@ $('#button-comment').bind('click', function() {
 								<div class="pay-info">
 									支付方式： <b>支付宝</b>
 								</div>
-
-								<div class="ship-info">
-									取菜点：<b>清友园[ 朝阳区北苑家园清友园四号楼一层 社区驿站 ]</b>
-								</div>
-
 							</div>
 							<div class="checkout-total">
 								<div class="sub_total">
-									<span class="price">商品总金额:</span> <span class="total number"><b>￥41.00</b></span>
+									<span class="price">商品总金额:</span> <span class="total number"><b>￥#{cartBean.cart.totalPrice}</b></span>
 								</div>
 								<div class="total">
-									<span class="price">应付总额:</span> <span class="total number"><b>￥41.00</b></span>
+									<span class="price">应付总额:</span> <span class="total number"><b>￥#{cartBean.cart.totalPrice}</b></span>
 								</div>
 							</div>
 							<div class="clear"></div>
@@ -740,38 +718,6 @@ angular.module('app').
 
 //--></script>
 
-			<link rel="stylesheet" href="css/pick-take-goods-points.css" />
-			<script src="javascript/pick-take-goods-points.js"></script>
-
-			<div class="ng-scope ng-hide" id="ztd"
-				ng-controller="PickTakeGoodsPointsCtrl" ng-show="showContainer">
-				<div class="ztd-content">
-					<div class="ztd-content-right">
-						<div id="header" class="bar bar-header bar-positive">
-
-							<!-- ngIf: !state.is('area') -->
-							<h1 class="title">选择自提点</h1>
-							<a class="button icon-right ion-close button-clear button-white"
-								ng-click="closePointContainer()"></a>
-						</div>
-
-						<!-- uiView:  -->
-						<div class="ng-scope" ui-view="">
-							<ul class="lists ng-scope">
-								<!-- ngRepeat: item in allData -->
-								<li class="ng-scope" ng-repeat="item in allData"><a
-									href="#/areas/405/cbds" class="item ng-binding"
-									ui-sref="cbd({areaId:item.city_id})">昌平区</a></li>
-								<!-- end ngRepeat: item in allData -->
-								<li class="ng-scope" ng-repeat="item in allData"><a
-									href="#/areas/390/cbds" class="item ng-binding"
-									ui-sref="cbd({areaId:item.city_id})">朝阳区</a></li>
-								<!-- end ngRepeat: item in allData -->
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
 
 			<script type="text/ng-template" id="areas.html">
     <ul class="lists">
@@ -808,25 +754,19 @@ angular.module('app').
 
 			<div class="bar bar-footer bar-light">
 				<div class="tabs tabs-icon-top tabs-default">
-					<a class="tab-item"
-						href="http://www.qingniancaijun.com.cn/index.php?route=common/home">
-						<i class="icon ion-home" id="home_icon">首页</i>
-					</a> <a class="tab-item"
-						href="http://www.qingniancaijun.com.cn/index.php?route=product/category/lists">
-						<i class="icon ion-navicon" id="catagery_icon">分类</i>
-					</a> <a class="tab-item"
-						href="http://www.qingniancaijun.com.cn/index.php?route=account/account">
-						<i class="icon ion-person" id="person_icon">个人中心</i>
-					</a> <a class="tab-item tab-item-cart"
-						href="http://www.qingniancaijun.com.cn/index.php?route=checkout/cart">
+					<a class="tab-item" href="mobile/bflist.xhtml"> <i
+						class="icon ion-home" id="home_icon">首页</i>
+					</a> <a class="tab-item" href="mobile/login.xhtml"> <i
+						class="icon ion-person" id="person_icon">个人中心</i>
+					</a> <a class="tab-item tab-item-cart" href="mobile/cart.xhtml">
 						<div class="tab-item-cart-total">
-							<span id="cart_total" class="ix-badge ix-radius"> 2 </span>
+							<span id="cart_total" class="ix-badge ix-radius">
+								#{cartBean.totalCount} </span>
 						</div> <i class="icon ion-bag select" id="cart_icon">购物车</i>
 
 					</a>
 				</div>
 			</div>
-			<!--END .bar-footer-->
 
 		</div>
 

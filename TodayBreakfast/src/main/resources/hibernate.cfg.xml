@@ -29,11 +29,12 @@
         <property name="show_sql">true</property>
 
         <!-- Drop and re-create the database schema on startup -->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">none</property>
 
         <mapping class="com.todaybreakfast.model.BFBreakFastCombo" />
         <mapping class="com.todaybreakfast.model.BFBreakfast" />
         <mapping class="com.todaybreakfast.model.User" />
+        <mapping class="com.todaybreakfast.model.Place" />
     </session-factory>
 
 </hibernate-configuration>

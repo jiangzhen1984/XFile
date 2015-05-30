@@ -72,7 +72,7 @@ public class BaseServiceTest {
 		bs.addBreakfastWrapper(bw1);
 		assertTrue(bw1.getId() > 0);
 		
-		BreakfastComboWrapper bwc = new BreakfastComboWrapper(13.2F, "sdf", "辣椒， 狮子", "描述信息"	);
+		BreakfastComboWrapper bwc = new BreakfastComboWrapper(13.2F, "sdf", "辣椒", " 狮子", "描述信息");
 		bwc.addItem(bw);
 		bwc.addItem(bw1);
 		bs.addBreakfastWrapper(bwc);
