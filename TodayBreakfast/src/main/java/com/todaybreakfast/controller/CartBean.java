@@ -1,19 +1,25 @@
 package com.todaybreakfast.controller;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import com.todaybreakfast.model.vo.BreakfastWrapper;
 import com.todaybreakfast.model.vo.Cart;
 import com.todaybreakfast.service.BreakfastBasicService;
 
-@ManagedBean(name = "cartBean", eager = true)
+@ManagedBean(name = "cartBean", eager = false)
 @SessionScoped
 public class CartBean {
 
+	
+	@ManagedProperty(value="#{userBean}")
+	private UserBean userBean;
+	
 	private Cart cart;
 	private BreakfastBasicService service;
 	private String retrieveDate;
+	
 
 	public CartBean() {
 		cart = new Cart();
@@ -26,6 +32,12 @@ public class CartBean {
 
 	public Cart getCart() {
 		return this.cart;
+	}
+	
+	
+
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
 	}
 
 	public void removeItem(long id) {
@@ -53,6 +65,20 @@ public class CartBean {
 
 	public void setRetrieveDate(String retrieveDate) {
 		this.retrieveDate = retrieveDate;
+	}
+	
+
+
+	public String checkout() {
+		if (userBean.getLoggedInUser() != null) {
+			if (cart.getItemCount() <= 0 || cart.getTotalPrice() <= 0) {
+				return "bflist";
+			} else {
+				return "order";
+			}
+		} else {
+			return "login";
+		}
 	}
 	
 }

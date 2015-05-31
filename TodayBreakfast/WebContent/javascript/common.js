@@ -206,6 +206,31 @@ function addCartAnimation(product_id, bf_type, total) {
         });
     }
 };
+  
+
+function sendValidationCode() {
+	 var cellphonenumber = $('#register\\:cellphone').val();
+	 if (cellphonenumber == 'undefined' || cellphonenumber =='') {
+		 $('#mobile-error').css('display','block');
+		 return;
+	 }
+	$.ajax({
+		url: 'AjaxRequest?',
+		type: 'post',
+		data: 'action=sendValidationCode&cellphone=' + cellphonenumber,
+		dataType: 'json',
+		success: function(json) {
+	
+			$('.success, .warning, .attention, .information, .error').remove();
+				
+			if (json['errcode'] == 0) {
+				$('#get-vcode-btn').attr('disabled',"true"); 
+			} else if (json['errcode'] == 1) {
+			}
+		}
+	});
+	
+};
 
 
 /* 加入购物车*/
@@ -214,7 +239,7 @@ function addToCart2(product_id, bf_type) {
 	$.ajax({
 		url: 'AjaxRequest?',
 		type: 'post',
-		data: 'bf_id=' + product_id+ '&type=' + bf_type,
+		data: 'action=addCart&bf_id=' + product_id+ '&type=' + bf_type,
 		dataType: 'json',
 		success: function(json) {
 		
@@ -233,6 +258,7 @@ function addToCart2(product_id, bf_type) {
 	});
 	
 }
+
 
 /* 加入购物车*/
 function addToCart(product_id,promotion_code) {

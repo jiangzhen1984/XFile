@@ -1,17 +1,12 @@
-<html style=""
-	class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope"
-	ng-app="app" lang="en-us">
-<!--[if lt IE 7 ]> <html lang="en-us" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en-us" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en-us" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en-us" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!-->
-<!--<![endif]-->
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <base href="#{global.globalUrl}" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <style type="text/css">
-@charset "UTF-8"; 
+@charset "UTF-8";
 
 [ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide
 	{
@@ -36,41 +31,27 @@ ng\:form {
 <title>用户注册</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-	<!-- s href="http://www.qingniancaijun.com.cn/" -->
+<!-- s href="http://www.qingniancaijun.com.cn/" -->
 <link href="http://www.qingniancaijun.com.cn/image/data/logo/fav.png"
 	rel="icon" />
 <script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
 
 <!-- RESET USER AGENT -->
 <link rel="stylesheet" type="text/css" href="css/ionic.css" />
-<link rel="stylesheet" type="text/css"
-	href="css/stylesheet.css" />
-<link rel="stylesheet" type="text/css"
-	href="css/mobile_v2.css" />
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="css/mobile_v2.css" />
 
 <script type="text/javascript" src="javascript/jquery-1.js"></script>
 
 <script src="javascript/modernizr.js"></script>
 
 <script type="text/javascript" src="javascript/jquery-ui-1.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="css/jquery-ui-1.css" />
-<script type="text/javascript" src="javascript/jquery_002.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.css" />
 <script type="text/javascript" src="javascript/lodash-2.js"></script>
-
-<!-- Fixes for IE -->
-<!--[if lt IE 9]>
-<script src="assets/libs/dist/html5shiv.js"></script>
-<![endif]-->
-<!--[if (gte IE 6)&(lte IE 8)]>
-  <script type="text/javascript" src="assets/libs/selectivizr/1.0.2/selectivizr.js"></script>
-  <noscript><link rel="stylesheet" href="[fallback css]" /></noscript>
-<![endif]-->
+<script type="text/javascript" src="javascript/common.js"></script>
+<script type="text/javascript" src="javascript/tabs.js"></script>
 <script type="text/javascript" src="javascript/angular.js"></script>
 <script type="text/javascript" src="javascript/angular-ui-router.js"></script>
-<script>
-        angular.module('app', ['ui.router']);
-    </script>
 </head>
 <body class="ionic">
 	<div id="page" class="page">
@@ -79,143 +60,102 @@ ng\:form {
 		</div>
 		<div id="content" class="content">
 			<div id="login-panel" class="card">
-				<form class="ng-pristine ng-valid"
-					action="http://www.qingniancaijun.com.cn/index.php?route=account/register"
-					method="post" enctype="multipart/form-data" id="register">
+				<h:messages class="error" />
+				<h:form class="ng-pristine ng-valid" enctype="multipart/form-data"
+					id="register">
 					<table class="form">
 						<tbody>
 							<tr>
-								<td><span class="required">*</span> 中文名:<br />
-								<input class="login_form_user" name="name" maxlength="50"
+								<td><span class="required">*</span> 中文名:<br /> <h:inputText
+										class="login_form_user" maxlength="40"
+										value="#{userBean.name}" /></td>
+							</tr>
+							<tr>
+								<td>推荐码:<br /> <input name="reference" maxlength="50"
 									type="text" /></td>
 							</tr>
 							<tr>
-								<td><span class="required">*</span> 性别:<br />
-								<label><input name="salution" value="M"
-										checked="checked" type="radio" /> 男</label> <label><input
-										name="salution" value="F" type="radio" /> 女</label></td>
+								<td><span class="required">*</span> 手机号码:<br /> <h:inputText
+										class="login_form_user" maxlength="40"
+										value="#{userBean.cellphone}" id="cellphone" /> <span
+									class="error" style="display:none" id="mobile-error">请填手机号</span></td>
 							</tr>
 							<tr>
-								<td>推荐码:<br />
-								<input name="reference" maxlength="50" type="text" /></td>
-							</tr>
-							<tr>
-								<td><span class="required">*</span> 手机号码:<br />
-								<input name="mobile" maxlength="50" class="login_form_mobile"
-									type="text" /><span class="error" id="mobile-error">请填手机号</span>
-								</td>
-							</tr>
-							<tr>
-								<td>电子邮箱:<br />
-								<input name="email" class="login_form_email" maxlength="100"
-									type="text" /></td>
+								<td>电子邮箱:<br /> <input name="email"
+									class="login_form_email" maxlength="100" type="text" /></td>
 							</tr>
 
 							<tr>
-								<td><span class="required">*</span> 登录密码:<br />
-								<input name="password" value="" maxlength="20"
-									class="login_form_password" autocomplete="off" type="password" /></td>
+								<td><span class="required">*</span> 登录密码:<br /> <h:inputSecret
+										value="#{userBean.password}" placeholder="密码"
+										class="login_form_password" autocomplete="off" maxlength="20" />
+								</td>
 							</tr>
 							<tr>
-								<td><span class="required">*</span> 确认密码:<br />
-								<input name="confirm" value="" class="login_form_password"
-									autocomplete="off" type="password" /></td>
+								<td><span class="required">*</span> 确认密码:<br /> <h:inputSecret
+										value="#{userBean.confirmPassword}" placeholder="密码"
+										class="login_form_password" autocomplete="off" maxlength="20" /></td>
 							</tr>
 							<tr>
 								<td><span class="required">*</span> 注册验证码:<br />
-								<div class="ix-row ix-row-collapse">
+									<div class="ix-row ix-row-collapse">
 										<div class="ix-u-sm-8">
-											<input name="mobile_vcode" class="input-slim" type="text" />
+											<h:inputText class="input-slim" maxlength="40"
+												value="#{userBean.cellphoneCode}" />
 										</div>
 										<div class="ix-u-sm-4">
 											<button
 												class="button button-slim button-block button-positive"
-												type="button" id="get-vcode-btn">获取验证码</button>
+												type="button" id="get-vcode-btn"
+												onClick="sendValidationCode();">获取验证码</button>
 										</div>
-									</div> <br />
-								<span class="error" id="mobile-vcode-error"></span></td>
+									</div> <br /> <span class="error" id="mobile-vcode-error"></span></td>
 							</tr>
 							<tr>
 								<td><label> <input name="agree" value="1"
 										checked="checked" type="checkbox" /> 我已经阅读并同意条款 <a
 										class="fancybox"
 										href="http://www.qingniancaijun.com.cn/index.php?route=information/information&amp;information_id=20"
-										alt="会员政策" ><b>会员政策</b></a>
+										alt="会员政策"><b>会员政策</b></a>
 								</label></td>
 							</tr>
 							<tr>
 								<td><label> <input name="newsletter" value="1"
-										checked="checked" type="checkbox" /> 订阅网站促销信息 </label></td>
+										checked="checked" type="checkbox" /> 订阅网站促销信息
+								</label></td>
 							</tr>
 							<tr>
 								<td>
 									<div class="left">
-										<a onclick="$('#register').submit();"
-											class="button button-block button-positive"> 注册 </a> <a
-											href="http://www.qingniancaijun.com.cn/index.php?route=account/login"
-											class="button button-block button-default">已有账号登录</a>
+										<h:commandButton action="#{userBean.register}" value="注 册"
+											class="button button-block button-positive" />
+
+										<h:link outcome="login" value="已有账号登录"
+											class="button button-block button-default" />
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 					<input name="invite_code" value="0" type="hidden" />
-				</form>
+				</h:form>
 			</div>
 			<!-- #END #login-panel -->
 		</div>
 		<script type="text/javascript" src="javascript/jquery.js"></script>
-		<link rel="stylesheet" type="text/css"
-			href="css/jquery.css" media="screen" /> 
-		<script type="text/javascript">
-        $('.fancybox').fancybox({
-            width: 560,
-            height: 560,
-            autoDimensions: false
-        });
-
-        $(document).ready(function () {
-            var getBtn$ = $('#get-vcode-btn');
-            getBtn$.click(function () {
-                var mobile = $('[name="mobile"]').val();
-                if (!mobile) {
-                    $('#mobile-error').text('请填手机号');
-                    return;
-                };
-                
-                var url = "index.php?route=account/register/validate_mobile" + mobile;
-                getBtn$.attr('disabled', 'disabled');
-                $.getJSON(url, function (result) {
-                    console.log(result);
-                    getBtn$.removeAttr('disabled');
-                    if (!result.success) {
-                        $('#mobile-vcode-error').text(result.msg);
-                    } else {
-                        $('#mobile-vcode-error').html('<span style="color:#0000ff">请查看您的手机获取验证码</span>');
-                    }
-                });
-            });
-        });
-
-    </script>
 
 
 
 		<div class="bar bar-footer bar-light">
 			<div class="tabs tabs-icon-top tabs-default">
-				<a class="tab-item"
-					href="http://www.qingniancaijun.com.cn/index.php?route=common/home">
-					<i class="icon ion-home" id="home_icon">首页</i>
-				</a> <a class="tab-item"
-					href="http://www.qingniancaijun.com.cn/index.php?route=product/category/lists">
-					<i class="icon ion-navicon" id="catagery_icon">分类</i>
-				</a> <a class="tab-item"
-					href="http://www.qingniancaijun.com.cn/index.php?route=account/login">
-					<i class="icon ion-person select" id="person_icon">个人中心</i>
-				</a> <a class="tab-item tab-item-cart"
-					href="http://www.qingniancaijun.com.cn/index.php?route=checkout/cart">
+				<a class="tab-item" href="mobile/bflist.xhtml"> <i
+					class="icon ion-home" id="home_icon">首页</i>
+				</a> <a class="tab-item" href="mobile/personel.xhtml"> <i
+					class="icon ion-person select" id="person_icon">个人中心</i>
+				</a> <a class="tab-item tab-item-cart" href="mobile/cart.xhtml">
 					<div class="tab-item-cart-total">
-						<span id="cart_total" class="ix-badge ix-radius"> 0 </span>
+						<span id="cart_total" class="ix-badge ix-radius">
+							#{cartBean.totalCount} </span>
 					</div> <i class="icon ion-bag" id="cart_icon">购物车</i>
 
 				</a>
@@ -225,32 +165,5 @@ ng\:form {
 
 	</div>
 
-	<script type="text/javascript" src="javascript/common.js"></script>
-	<script type="text/javascript" src="javascript/tabs.js"></script>
-
-	<div id="fancybox-tmp"></div>
-	<div id="fancybox-loading">
-		<div></div>
-	</div>
-	<div id="fancybox-overlay"></div>
-	<div id="fancybox-wrap">
-		<div id="fancybox-outer">
-			<div class="fancybox-bg" id="fancybox-bg-n"></div>
-			<div class="fancybox-bg" id="fancybox-bg-ne"></div>
-			<div class="fancybox-bg" id="fancybox-bg-e"></div>
-			<div class="fancybox-bg" id="fancybox-bg-se"></div>
-			<div class="fancybox-bg" id="fancybox-bg-s"></div>
-			<div class="fancybox-bg" id="fancybox-bg-sw"></div>
-			<div class="fancybox-bg" id="fancybox-bg-w"></div>
-			<div class="fancybox-bg" id="fancybox-bg-nw"></div>
-			<div id="fancybox-content"></div>
-			<a id="fancybox-close"></a>
-			<div id="fancybox-title"></div>
-			<a href="javascript:;" id="fancybox-left"><span class="fancy-ico"
-				id="fancybox-left-ico"></span></a><a href="javascript:;"
-				id="fancybox-right"><span class="fancy-ico"
-				id="fancybox-right-ico"></span></a>
-		</div>
-	</div>
 </body>
 </html>

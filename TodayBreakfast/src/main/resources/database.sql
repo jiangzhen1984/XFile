@@ -33,6 +33,7 @@ create table TB_USER (
 	CELL_PHONE VARCHAR(40), 
 	NAME VARCHAR(40), 
 	USER_PWD VARCHAR(40), 
+	MAIL VARCHAR(100),
 	primary key (id)
 );
 

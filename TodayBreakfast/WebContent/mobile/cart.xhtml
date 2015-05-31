@@ -123,16 +123,15 @@ ng\:form {
 											action="#{cartBean.updateCart(item.value.wr.id, 1,item.value.wr.typeOrdinal)}"
 											class="btn" style="width: 36px;" value=" - "
 											disabled="disabled" onclick="minus('quantity[120:]');"
-											alt="-1" title="-1"  />
+											alt="-1" title="-1" />
 
 										<input
 											style="width: 25px; padding: 0 2px 0 2px; height: 28px; line-height: 18px;"
 											onchange="$('#basket').submit();" name="quantity[120:]"
-											value="#{item.value.count}" size="2" type="text" /> 
+											value="#{item.value.count}" size="2" type="text" />
 										<h:commandButton class="btn"
 											action="#{cartBean.updateCart(item.value.wr.id, 2,item.value.wr.typeOrdinal)}"
-											style="width: 36px;" value=" + " alt="+1" title="+1"
-											/>
+											style="width: 36px;" value=" + " alt="+1" title="+1" />
 									</div>
 									<div class="ix-u-sm-2 remove tc">
 										<h:commandButton
@@ -147,7 +146,7 @@ ng\:form {
 					</div>
 
 
-<!-- 
+					<!-- 
 					<div class="pick-date-select clearfix mb10">
 						<div class="ix-row">
 							<div class="ix-u-sm-5">配送时间选择：</div>
@@ -180,9 +179,11 @@ ng\:form {
 					</div>
 
 					<div class="submit">
-						<a
-							href="mobile/order.xhtml"
-							title="去结帐" class="button button-block button-positive">去结帐</a>
+						<h:form>
+								<h:commandButton value="去结帐"
+								class="button button-block button-positive"
+								action="#{cartBean.checkout}" />
+						</h:form>
 					</div>
 				</div>
 			</h:form>
@@ -196,12 +197,12 @@ ng\:form {
 			<div class="tabs tabs-icon-top tabs-default">
 				<a class="tab-item" href="mobile/bflist.xhtml"> <i
 					class="icon ion-home" id="home_icon">首页</i>
-				</a> <a class="tab-item" href="mobile/login.xhtml"> <i
+				</a> <a class="tab-item" href="mobile/personel.xhtml"> <i
 					class="icon ion-person" id="person_icon">个人中心</i>
-				</a> <a class="tab-item tab-item-cart"
-					href="mobile/cart.xhtml">
+				</a> <a class="tab-item tab-item-cart" href="mobile/cart.xhtml">
 					<div class="tab-item-cart-total">
-						<span id="cart_total" class="ix-badge ix-radius"> #{cartBean.totalCount} </span>
+						<span id="cart_total" class="ix-badge ix-radius">
+							#{cartBean.totalCount} </span>
 					</div> <i class="icon ion-bag select" id="cart_icon">购物车</i>
 
 				</a>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.todaybreakfast.model.User;
 
@@ -38,7 +39,16 @@ public class UserService extends BaseService {
 		return user;
 	}
 	
-	public void addUser(User user) {
-		
+	public int addUser(User user) {
+		User u = selectUser(user.getCellPhone());
+		if (u != null) {
+			return -1;
+		}
+		Session session = this.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		session.save(user);
+		t.commit();
+		session.close();
+		return 0;
 	}
 }

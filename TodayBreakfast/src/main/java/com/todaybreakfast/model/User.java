@@ -29,16 +29,19 @@ public class User {
 	@Column(name="ADDRESS", columnDefinition="VARCHAR(200)")
 	private String address;
 	
+	@Column(name="MAIL", columnDefinition="VARCHAR(100)")
+	private String mail;
+	
 	
 	public User() {
 		
 	}
 	
 	public User(User u) {
-		u.setAddress(u.getAddress());
-		u.setCellPhone(u.getCellPhone());
-		u.setName(u.getName());
-		u.setId(u.getId());
+		this.setAddress(u.getAddress());
+		this.setCellPhone(u.getCellPhone());
+		this.setName(u.getName());
+		this.setId(u.getId());
 	}
 
 	public long getId() {
@@ -79,6 +82,14 @@ public class User {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 	
 	

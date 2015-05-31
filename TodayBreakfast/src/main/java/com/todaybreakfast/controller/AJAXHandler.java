@@ -41,8 +41,19 @@ public class AJAXHandler extends HttpServlet {
 	
 	private void handleRequest(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		JSONObject ret = new JSONObject();
+		String action = req.getParameter("action");
+		if ("addCart".equalsIgnoreCase(action)) {
+			handleAddCart(req, resp);
+		} else if ("sendValidationCode".equals(action)) {
+			handleSendValidationCode(req, resp);
+		}
 		
+	}
+	
+	
+	private void handleAddCart(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		JSONObject ret = new JSONObject();
 		HttpSession session = req.getSession();
 		CartBean cartBean = (CartBean)session.getAttribute("cartBean");
 		if (cartBean == null) {
@@ -63,6 +74,23 @@ public class AJAXHandler extends HttpServlet {
 				ret.put("msg", "id incorrect");
 			}
 		}
+		resp.setContentType("application/json");
+		PrintWriter out = resp.getWriter();
+		out.print(ret.toString());
+		out.flush();
+		
+	}
+	
+	
+	private void handleSendValidationCode(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		JSONObject ret = new JSONObject();
+		
+		String cellphone = (String)req.getParameter("cellphone");
+		//TODO send cell phone validation code;
+		req.getSession().setAttribute("code", 1234);
+		ret.put("errcode", 0);
+		
 		resp.setContentType("application/json");
 		PrintWriter out = resp.getWriter();
 		out.print(ret.toString());
