@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,46 +15,43 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "BF_BREAKFAST_COMBO")
 public class BFBreakFastCombo {
-	
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
-	@Column(name = "IS_TODAY", columnDefinition =  "bool default TRUE", nullable=false)
+
+	@Column(name = "IS_TODAY", columnDefinition = "bool default TRUE", nullable = false)
 	private boolean isToday;
 
-	@Column(name = "PRICE", columnDefinition =  "NUMERIC(6,2)")
+	@Column(name = "PRICE", columnDefinition = "NUMERIC(6,2)")
 	private Float price;
-	
-	@Column(name="PIC_PATH", columnDefinition="VARCHAR(200)")
+
+	@Column(name = "PIC_PATH", columnDefinition = "VARCHAR(200)")
 	private String picUrl;
 
-	@Column(name = "NAME", columnDefinition =  "VARCHAR(40)")
+	@Column(name = "NAME", columnDefinition = "VARCHAR(40)")
 	private String name;
-	
-	@Column(name="STUFF", columnDefinition="VARCHAR(100)")
+
+	@Column(name = "STUFF", columnDefinition = "VARCHAR(100)")
 	private String stuff;
-	
-	@Column(name="DESCRIPTION", columnDefinition="VARCHAR(100)")
+
+	@Column(name = "DESCRIPTION", columnDefinition = "VARCHAR(100)")
 	private String description;
-	
-	 @OneToMany
-	    @JoinTable(
-	            name="BF_COMBO_ITEM",
-	            joinColumns = @JoinColumn( name="COMBO_ID",   referencedColumnName="id", unique=false),
-	            inverseJoinColumns = @JoinColumn( name="BF_ID",  referencedColumnName="id", unique = false)
-	    )
+
+	@OneToMany
+	@JoinTable(name = "BF_COMBO_ITEM", 
+			joinColumns = {
+			@JoinColumn(name = "COMBO_ID", referencedColumnName = "id", unique = false),
+			@JoinColumn(name = "BF_ID", referencedColumnName = "id", unique = false),
+			 },
+			 uniqueConstraints={@UniqueConstraint(columnNames={"COMBO_ID", "BF_ID"})}
+	)
 	private Set<BFBreakfast> list;
-	
-	
-	 
-	 
-	
 
 	public long getId() {
 		return id;
@@ -72,7 +70,7 @@ public class BFBreakFastCombo {
 	}
 
 	public float getPrice() {
-		return  price == null? 0 : price;
+		return price == null ? 0 : price;
 	}
 
 	public void setPrice(float price) {
@@ -86,9 +84,6 @@ public class BFBreakFastCombo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-
 
 	public String getPicUrl() {
 		return picUrl;
@@ -120,16 +115,16 @@ public class BFBreakFastCombo {
 		}
 		list.add(bf);
 	}
-	
+
 	public void removeBreakfast(BFBreakfast bf) {
 		if (list == null) {
 			return;
 		}
 		list.remove(bf);
 	}
-	
+
 	public List<BFBreakfast> getItems() {
-		 return new ArrayList<BFBreakfast>(list);
+		return new ArrayList<BFBreakfast>(list);
 	}
 
 }

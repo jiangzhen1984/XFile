@@ -1,10 +1,14 @@
-<html xmlns:ui="http://java.sun.com/jsf/facelets"
+<html 
+	class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths"
+	data-useragent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <base href="#{global.globalUrl}" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
 <style type="text/css">
 @charset "UTF-8";
 
@@ -71,18 +75,15 @@ ng\:form {
 										value="#{userBean.name}" /></td>
 							</tr>
 							<tr>
-								<td>推荐码:<br /> <input name="reference" maxlength="50"
-									type="text" /></td>
-							</tr>
-							<tr>
 								<td><span class="required">*</span> 手机号码:<br /> <h:inputText
 										class="login_form_user" maxlength="40"
-										value="#{userBean.cellphone}" id="cellphone" /> <span
-									class="error" style="display:none" id="mobile-error">请填手机号</span></td>
+										value="#{userBean.cellphone}" /> <span class="error"
+									style="display: none" id="mobile-error">请填手机号</span></td>
 							</tr>
 							<tr>
-								<td>电子邮箱:<br /> <input name="email"
-									class="login_form_email" maxlength="100" type="text" /></td>
+								<td>电子邮箱:<br /> <h:inputText class="login_form_user"
+										maxlength="40" value="#{userBean.mail}" />
+								</td>
 							</tr>
 
 							<tr>

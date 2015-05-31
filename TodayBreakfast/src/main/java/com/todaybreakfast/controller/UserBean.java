@@ -18,6 +18,7 @@ public class UserBean {
 	private String cellphoneCode;
 	private String confirmPassword;
 	private String name;
+	private String mail;
 	
 	private User user;
 	private UserService userService;
@@ -65,6 +66,16 @@ public class UserBean {
 		this.confirmPassword = confirmPassword;
 	}
 
+	
+	
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
 	public User getLoggedInUser() {
 		return this.user;
 	}
@@ -110,6 +121,12 @@ public class UserBean {
 	
 	public String register() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
+
+		if (name == null || name.isEmpty()) {
+			facesContext.addMessage("name", new FacesMessage("请确认姓名"));
+			return "failed";
+		}
+		
 		if (this.cellphone == null || this.cellphone.isEmpty()) {
 			facesContext.addMessage("cellphone", new FacesMessage("请输入手机号"));
 			return "failed";
@@ -123,22 +140,27 @@ public class UserBean {
 			facesContext.addMessage("confirmPassword", new FacesMessage("请确认密码"));
 			return "failed";
 		}
-		if (confirmPassword == null || confirmPassword.isEmpty()) {
-			facesContext.addMessage("confirmPassword", new FacesMessage("请确认密码"));
-			return "failed";
-		}
-		if (name == null || name.isEmpty()) {
-			facesContext.addMessage("name", new FacesMessage("请确认姓名"));
-			return "failed";
-		}
+
 		if (cellphoneCode == null || cellphoneCode.isEmpty()) {
 			facesContext.addMessage("cellphoneCode", new FacesMessage("请输入验证码"));
 			return "failed";
 		}
+		if (!password.equals(confirmPassword)) {
+			facesContext.addMessage("confirmPassword", new FacesMessage("两次密码输入的不一致"));
+			return "failed";
+		}
+		Integer code = (Integer) facesContext.getExternalContext().getSessionMap().get("code");
+		if (!cellphoneCode.equals(code+"")) {
+			facesContext.addMessage("cellphoneCode", new FacesMessage("验证码不匹配"));
+			return "failed";
+		}
+		
 		User newUser = new User();
 		newUser.setName(name);
 		newUser.setCellPhone(cellphone);
 		newUser.setPassword(password);
+		newUser.setMail(mail);
+		
 		int ret = userService.addUser(newUser);
 		if (ret == 0) {
 			this.user = newUser;
