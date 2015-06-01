@@ -5,15 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -43,14 +43,9 @@ public class BFBreakFastCombo {
 	@Column(name = "DESCRIPTION", columnDefinition = "VARCHAR(100)")
 	private String description;
 
-	@OneToMany
-	@JoinTable(name = "BF_COMBO_ITEM", 
-			joinColumns = {
-			@JoinColumn(name = "COMBO_ID", referencedColumnName = "id", unique = false),
-			@JoinColumn(name = "BF_ID", referencedColumnName = "id", unique = false),
-			 },
-			 uniqueConstraints={@UniqueConstraint(columnNames={"COMBO_ID", "BF_ID"})}
-	)
+	@ManyToMany(targetEntity = BFBreakfast.class, cascade = {
+			CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "BF_COMBO_ITEM", joinColumns = { @JoinColumn(name = "COMBO_ID") }, inverseJoinColumns = @JoinColumn(name = "BF_ID"))
 	private Set<BFBreakfast> list;
 
 	public long getId() {
