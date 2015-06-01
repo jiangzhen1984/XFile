@@ -13,11 +13,11 @@ import com.todaybreakfast.service.PlaceService;
 public class GlobalBean {
 
 	
-	public static String GLOBAL_HOST = "http://192.168.1.104:8080/";
+	public static String GLOBAL_HOST = "http://10.147.6.103:8080/";
 	
 	public static String GLOBAL_CONTEXT = "TodayBreakfast/";
 	
-	public static String GLOBAL_IMAGE_HOST = "http://192.168.1.104:8080/TodayBreakfast/";
+	public static String GLOBAL_IMAGE_HOST = "http://10.147.6.103:8080/TodayBreakfast/";
 	
 	private PlaceService plService;
 	

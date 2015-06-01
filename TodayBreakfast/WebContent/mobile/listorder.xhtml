@@ -1,7 +1,6 @@
 <html style=""
 	class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope"
-	ng-app="app" lang="en-us" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	ng-app="app" lang="en-us" xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <!--[if lt IE 7 ]> <html lang="en-us" class="no-js ie6"> <![endif]-->
@@ -11,7 +10,6 @@
 <!--[if (gt IE 9)|!(IE)]><!-->
 <!--<![endif]-->
 <head>
-<base href="#{global.globalUrl}" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <style type="text/css">
 @charset "UTF-8";
@@ -34,9 +32,19 @@ ng\:form {
 	display: block !important;
 }
 </style>
+<base href="#{global.globalUrl}" />
 <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
 <meta charset="utf-8" />
-<title>个人中心</title>
+<c:if test="#{request.getParameter('ot') == 1}">
+	<title>未付款订单</title>
+</c:if>
+<c:if test="#{request.getParameter('ot') == 2}">
+	<title>进行中订单</title>
+</c:if>
+<c:if test="#{request.getParameter('ot') == 3}">
+	<title>已完成订单</title>
+</c:if>
+
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 <link href="http://www.qingniancaijun.com.cn/image/data/logo/fav.png"
@@ -48,10 +56,8 @@ ng\:form {
 <link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
 <link rel="stylesheet" type="text/css" href="css/mobile_v2.css" />
 
-<!-- script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.6.1.min.js"></script-->
-<script type="text/javascript" src="javascript/jquery-1.js"></script>
+<script type="text/javascript" src="javascript/jquery-1_002.js"></script>
 
-<!--<script type="text/javascript" src="catalog/view/javascript/jquery/jquery.min.js"></script>-->
 
 <script src="javascript/modernizr.js"></script>
 
@@ -75,37 +81,118 @@ ng\:form {
     </script>
 </head>
 <body class="ionic">
-	<div id="page" class="page">
-		<div id="header" class="bar bar-header bar-default">
-			<h1 class="title">个人中心</h1>
+	<div id="page" class="page mm-page">
+		<div id="header" class="bar bar-header bar-positive">
+			<a href="#menu" class="button button-icon icon ion-navicon"></a>
+			<c:if test="#{request.getParameter('ot') == 1}">
+				<h1 class="title">未付款订单</h1>
+			</c:if>
+			<c:if test="#{request.getParameter('ot') == 2}">
+				<h1 class="title">进行中订单</h1>
+			</c:if>
+			<c:if test="#{request.getParameter('ot') == 3}">
+				<h1 class="title">已完成订单</h1>
+			</c:if>
 		</div>
+
+
 		<div id="content" class="content">
-			<div class="account-info card">
-				<div class="username">
-					<strong>#{userBean.loggedInUser.name} </strong>, <span id="welcome">欢迎您！</span>
+			<div class="card">
+				<c:if test="#{request.getParameter('ot') == 1}">
+					<c:forEach items="#{orderBean.unPaidOrderList}" var="o">
+						<div class="list">
+							<a
+								href="http://www.qingniancaijun.com.cn/index.php?route=account/order/info&amp;order_id=15060100962"
+								class="item">
+								<table class="form">
+									<tbody>
+										<tr>
+											<td>订单号</td>
+											<td>#{o.transaction}</td>
+											<td>状态</td>
+											<td>待付款</td>
+										</tr>
+										<tr>
+											<td>取菜时间</td>
+											<td></td>
+											<td>合计</td>
+											<td>￥{o.price}</td>
+										</tr>
+									</tbody>
+								</table>
+							</a>
+						</div>
+					</c:forEach>
+				</c:if>
+				<c:if test="#{request.getParameter('ot') == 2}">
+					<c:forEach items="#{orderBean.paidOrderList}" var="o">
+						<div class="list">
+							<a
+								href="http://www.qingniancaijun.com.cn/index.php?route=account/order/info&amp;order_id=15060100962"
+								class="item">
+								<table class="form">
+									<tbody>
+										<tr>
+											<td>订单号</td>
+											<td>#{o.transaction}</td>
+											<td>状态</td>
+											<td>待付款</td>
+										</tr>
+										<tr>
+											<td>取菜时间</td>
+											<td></td>
+											<td>合计</td>
+											<td>￥{o.price}</td>
+										</tr>
+									</tbody>
+								</table>
+							</a>
+						</div>
+					</c:forEach>
+				</c:if>
+				<c:if test="#{request.getParameter('ot') == 3}">
+					<c:forEach items="#{orderBean.finishedOrderList}" var="o">
+						<div class="list">
+							<a
+								href="http://www.qingniancaijun.com.cn/index.php?route=account/order/info&amp;order_id=15060100962"
+								class="item">
+								<table class="form">
+									<tbody>
+										<tr>
+											<td>订单号</td>
+											<td>#{o.transaction}</td>
+											<td>状态</td>
+											<td>待付款</td>
+										</tr>
+										<tr>
+											<td>取菜时间</td>
+											<td></td>
+											<td>合计</td>
+											<td>￥{o.price}</td>
+										</tr>
+									</tbody>
+								</table>
+							</a>
+						</div>
+					</c:forEach>
+				</c:if>
+				<div class="pagination">
+					<div class="results">显示 1 - 1 之 1 (共计 1 页)</div>
 				</div>
+
 			</div>
-
-			<h:form>
-				<div class="list">
-					<div class="item item-divider">交易管理</div>
-					<h:link class="item" outcome="listorder">
-						<f:param name="ot" value="1" />
-					未付款订单(<span class="count">#{userBean.unPaidOrderCount}</span>)</h:link>
-
-					<h:link class="item" outcome="listorder">
-						<f:param name="ot" value="2" />进行中订单(<span class="count">#{userBean.paidOrderCount}</span>)</h:link>
-
-
-					<h:link class="item" outcome="listorder">
-						<f:param name="ot" value="3" />已完成订单(<span class="count">#{userBean.finishedOrderCount}</span>)</h:link>
-
-					<div class="item item-divider">帐户管理</div>
-					<h:commandLink class="item" action="#{userBean.logout}"
-						value="退出系统"></h:commandLink>
-				</div>
-			</h:form>
 		</div>
+
+
+
+
+		<script type="text/javascript" src="javascript/jquery-1.js"></script>
+		<script type="text/javascript" src="javascript/jquery_002.js"></script>
+		<script type="text/javascript">
+$(document).ready(function() {
+	$('nav#menu').mmenu();
+});
+</script>
 
 
 
@@ -132,5 +219,7 @@ ng\:form {
 	<script type="text/javascript" src="javascript/tabs.js"></script>
 
 
+
+	<div style="opacity: 0;" id="mm-blocker"></div>
 </body>
 </html>

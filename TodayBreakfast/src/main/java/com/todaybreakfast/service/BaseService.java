@@ -1,6 +1,8 @@
 package com.todaybreakfast.service;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -34,5 +36,15 @@ public class BaseService {
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+	
+	
+	protected Session openSession() {
+		return getSessionFactory().openSession();
+	}
+	
+	protected Transaction beginTransaction(Session session) {
+		return session.beginTransaction();
+	}
+	
 
 }

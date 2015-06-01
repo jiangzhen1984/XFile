@@ -40,8 +40,11 @@ public class CartBean {
 		this.userBean = userBean;
 	}
 
-	public void removeItem(long id) {
+	public void removeItem(long id, int itemType) {
 		BreakfastWrapper bw = new BreakfastWrapper();
+		bw.setType(itemType == BreakfastWrapper.Type.SINGLE
+						.ordinal() ? BreakfastWrapper.Type.SINGLE
+						: BreakfastWrapper.Type.COMBO);
 		bw.setId(id);
 		cart.removeBreakfastItem(bw);
 	}

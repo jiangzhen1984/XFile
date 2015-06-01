@@ -105,7 +105,7 @@ public class BreakfastBasicService extends BaseService {
 	public BreakfastWrapper findBreakfast(long id, BreakfastWrapper.Type type) {
 		for (int i = 0; i < cacheList.size(); i++) {
 			BreakfastWrapper bw = cacheList.get(i);
-			if (bw.getId() == id) {
+			if (bw.getId() == id && bw.getType() == type) {
 				return bw;
 			}
 		}

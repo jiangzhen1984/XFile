@@ -108,7 +108,7 @@ ng\:form {
 												href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=3"
 												title="#{item.value.wr.name}"> <img
 												src="#{global.imageHost}#{item.value.wr.url}"
-												id="pdt_img#{item.value.wr.id}_#{item.value.wr.typeOrdinal}"
+												id="pdt_img#{item.value.wr.id}_#{item.value.wr.typeOrdinal}_#{item.value.wr.typeString}"
 												alt="#{item.value.wr.name}" />
 
 											</a>
@@ -120,22 +120,19 @@ ng\:form {
 									</div>
 									<div class="ix-u-sm-3 quantity tc">
 										<h:commandButton
-											action="#{cartBean.updateCart(item.value.wr.id, 1,item.value.wr.typeOrdinal)}"
+											actionListener="#{cartBean.updateCart(item.value.wr.id, 1,item.value.wr.typeOrdinal)}"
 											class="btn" style="width: 36px;" value=" - "
-											disabled="disabled" onclick="minus('quantity[120:]');"
+											disabled="disabled" 
 											alt="-1" title="-1" />
 
-										<input
-											style="width: 25px; padding: 0 2px 0 2px; height: 28px; line-height: 18px;"
-											onchange="$('#basket').submit();" name="quantity[120:]"
-											value="#{item.value.count}" size="2" type="text" />
+										<h:inputText value="#{item.value.count}" size="2" style="width: 25px; padding: 0 2px 0 2px; height: 28px; line-height: 18px;"/>
 										<h:commandButton class="btn"
-											action="#{cartBean.updateCart(item.value.wr.id, 2,item.value.wr.typeOrdinal)}"
+											actionListener="#{cartBean.updateCart(item.value.wr.id, 2,item.value.wr.typeOrdinal)}"
 											style="width: 36px;" value=" + " alt="+1" title="+1" />
 									</div>
 									<div class="ix-u-sm-2 remove tc">
 										<h:commandButton
-											action="#{cartBean.removeItem(item.value.wr.id)}"
+											action="#{cartBean.removeItem(item.value.wr.id,item.value.wr.typeOrdinal)}"
 											image="css/graphic/remove.png" alt="删除">
 										</h:commandButton>
 									</div>

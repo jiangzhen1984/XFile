@@ -29,10 +29,25 @@ public class OrderItem {
 	@Column(name = "PRICE", columnDefinition =  "NUMERIC(6,2)")
 	private Float price;
 	
+	@Column(name = "ITEM_COUNT", columnDefinition =  "NUMERIC(3)")
+	private int count;
+	
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Order order;
 
 	
+	public OrderItem() {
+		
+	}
+	
+	
+	public OrderItem(OrderItem item) {
+		this.id = item.id;
+		this.name = item.name;
+		this.picUrl = item.picUrl;
+		this.price = item.price;
+		this.order = item.order;
+	}
 	
 	public long getId() {
 		return id;
@@ -72,6 +87,14 @@ public class OrderItem {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 	
 	

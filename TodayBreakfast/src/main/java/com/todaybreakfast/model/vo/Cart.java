@@ -11,11 +11,11 @@ public class Cart {
 	
 	private float totalPrice;
 	
-	private Map<Long, InnerBox> cache;
+	private Map<Key, InnerBox> cache;
 
 	
 	public Cart() {
-		cache = new HashMap<Long, InnerBox>();
+		cache = new HashMap<Key, InnerBox>();
 		count = 0;
 		totalPrice = 0F;
 	}
@@ -25,11 +25,12 @@ public class Cart {
 		if (bw == null) {
 			return;
 		}
-		InnerBox box = cache.get(Long.valueOf(bw.getId()));
+		Key key = new Key(bw.getType().toString(), bw.getId());
+		InnerBox box = cache.get(key);
 		if (box == null) {
 			box = new InnerBox();
 			box.wr = bw;
-			cache.put(Long.valueOf(bw.getId()), box);
+			cache.put(key, box);
 		}
 		box.count ++; 
 		count ++;
@@ -40,7 +41,8 @@ public class Cart {
 		if (bw == null) {
 			return;
 		}
-		InnerBox box = cache.get(Long.valueOf(bw.getId()));
+		Key key = new Key(bw.getType().toString(), bw.getId());
+		InnerBox box = cache.get(key);
 		if (box == null) {
 			return;
 		}
@@ -48,13 +50,17 @@ public class Cart {
 		count --;
 		totalPrice -= bw.getPrice();
 		if (box.count == 0) {
-			cache.remove(Long.valueOf(bw.getId()));
+			cache.remove(key);
 		}
 	}
 	
 	
 	public void removeBreakfastItem(BreakfastWrapper bw) {
-		InnerBox box = cache.remove(Long.valueOf(bw.getId()));
+		if (bw == null) {
+			return;
+		}
+		Key key = new Key(bw.getType().toString(), bw.getId());
+		InnerBox box = cache.remove(key);
 		if (box != null) {
 			count -= box.count;
 			totalPrice -= (box.wr.getPrice() * box.count);
@@ -75,8 +81,53 @@ public class Cart {
 		return totalPrice;
 	}
 	
-	public Set<Entry<Long, InnerBox>> getItems() {
+	public Set<Entry<Key, InnerBox>> getItems() {
 		return cache.entrySet();
+	}
+	
+	
+	public class Key {
+		String type;
+		long id;
+		public Key(String type, long id) {
+			super();
+			this.type = type;
+			this.id = id;
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + (int) (id ^ (id >>> 32));
+			result = prime * result + ((type == null) ? 0 : type.hashCode());
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Key other = (Key) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (id != other.id)
+				return false;
+			if (type == null) {
+				if (other.type != null)
+					return false;
+			} else if (!type.equals(other.type))
+				return false;
+			return true;
+		}
+		private Cart getOuterType() {
+			return Cart.this;
+		}
+		
+		
 	}
 	
 	public class InnerBox {
@@ -119,6 +170,10 @@ public class Cart {
 		
 		public int getCount(){
 			return count;
+		}
+		
+		public void setCount(int count) {
+			
 		}
 	}
 }

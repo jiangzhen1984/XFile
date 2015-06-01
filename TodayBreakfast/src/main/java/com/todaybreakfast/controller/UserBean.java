@@ -6,7 +6,9 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import com.todaybreakfast.model.Order.OrderState;
 import com.todaybreakfast.model.User;
+import com.todaybreakfast.service.OrderService;
 import com.todaybreakfast.service.UserService;
 
 @ManagedBean(name="userBean", eager=true)
@@ -23,6 +25,12 @@ public class UserBean {
 	private User user;
 	private UserService userService;
 	private String route;
+	
+	
+	boolean queryed;
+	private int unPaidOrderCount;
+	private int paidOrderCount;
+	private int finishedOrderCount;
 	
 	public UserBean() {
 		userService = new UserService();
@@ -82,6 +90,37 @@ public class UserBean {
 	
 	
 	
+	public int getUnPaidOrderCount() {
+		if (!queryed) {
+			queryCount();
+		}
+		return unPaidOrderCount;
+	}
+
+	public int getPaidOrderCount() {
+		if (!queryed) {
+			queryCount();
+		}
+		return paidOrderCount;
+	}
+
+	public int getFinishedOrderCount() {
+		if (!queryed) {
+			queryCount();
+		}
+		return finishedOrderCount;
+	}
+	
+	
+	private void queryCount() {
+		OrderService service = new OrderService();
+		unPaidOrderCount = service.getUserOrderCount(getLoggedInUser(), OrderState.NOT_PAIED);
+		paidOrderCount = service.getUserOrderCount(getLoggedInUser(), OrderState.PAIED);
+		finishedOrderCount = service.getUserOrderCount(getLoggedInUser(), OrderState.COMPLETED);
+		
+		queryed = true;
+	}
+
 	public String getRoute() {
 		String httpGetRoute = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("route");
 		if (httpGetRoute != null) {

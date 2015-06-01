@@ -43,8 +43,8 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
+
+
 	<navigation-rule>
 		<from-view-id>/mobile/cart.xhtml</from-view-id>
 		<navigation-case>
@@ -66,8 +66,8 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
+
+
 	<navigation-rule>
 		<from-view-id>/mobile/personel.xhtml</from-view-id>
 		<navigation-case>
@@ -77,13 +77,13 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
-		<navigation-rule>
+
+
+	<navigation-rule>
 		<from-view-id>/mobile/register.xhtml</from-view-id>
 		<navigation-case>
 			<from-action>#{userBean.register}</from-action>
-			<from-outcome>faile</from-outcome>
+			<from-outcome>failed</from-outcome>
 			<to-view-id>/mobile/register.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
@@ -91,6 +91,21 @@
 			<from-outcome>personel</from-outcome>
 			<to-view-id>/mobile/personel.xhtml</to-view-id>
 			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>/mobile/order.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{orderBean.pay}</from-action>
+			<from-outcome>failed</from-outcome>
+			<to-view-id>/mobile/order.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{orderBean.pay}</from-action>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/mobile/login.xhtml?route=/mobile/order.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
