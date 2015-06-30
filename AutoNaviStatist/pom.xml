@@ -76,7 +76,7 @@
 
 	<build>
 		<finalName>AutoNaviStatist</finalName>
-		<sourceDirectory>${basedir}/src</sourceDirectory>
+		<!-- sourceDirectory>${basedir}/src</sourceDirectory -->
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

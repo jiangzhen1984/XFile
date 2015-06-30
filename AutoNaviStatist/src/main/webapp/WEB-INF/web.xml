@@ -29,7 +29,7 @@
 
 	<servlet>
 		<servlet-name>AJAXHandler</servlet-name>
-		<servlet-class>com.autonavi.servlet.AJAXHandler</servlet-class>
+		<servlet-class>com.autonavi.servlet.AjaxServlet</servlet-class>
 	</servlet>
 
 
