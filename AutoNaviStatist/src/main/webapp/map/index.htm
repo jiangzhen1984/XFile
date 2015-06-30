@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Highmaps Example</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<style type="text/css">
+#container {
+	height: 500px; 
+	min-width: 310px; 
+	max-width: 800px; 
+	margin: 0 auto; 
+}
+.loading {
+	margin-top: 10em;
+	text-align: center;
+	color: gray;
+}
+		</style>
+		<script type="text/javascript">
+$(function () {
+
+    //$.getJSON('test.json', function (data) {
+
+        // Initiate the chart
+        $('#container').highcharts('Map', {
+
+            title : {
+                text : 'Population density by country (/km²)'
+            },
+
+            mapNavigation: {
+                enabled: false,
+                buttonOptions: {
+                    verticalAlign: 'bottom'
+                }
+            },
+
+         //   colorAxis: {
+          //      min: 1,
+           //     max: 1000,
+            //    type: 'logarithmic'
+            //},
+ 		//plotOptions: {
+                //series: {
+                 //   point: {
+                  //  }
+                //}
+            //},
+
+            series : [{
+
+                data : 
+			[
+				{ 
+				"code": "ZJ",
+				"value" : "51",
+				"dataLabels":"浙江",
+				},
+				{ 
+				"code": "SH",
+				"value" : "99",
+				"name" : "浙江",
+				"woe-label" : "sh",
+				"dataLabels":"上海",
+				},
+				{ 
+				"code": "BJ",
+				"value" : "51",
+				"dataLabels" : "北京"
+				}
+			]
+		 ,
+
+                        events: {
+                            click: function () {
+                                alert(this.name);
+                            },
+			    mouseOver: function() {
+				alert(this.data);
+			    }
+                        },
+  		dataLabels: {
+                        enabled: true,
+                        format: '{point.dataLabels}'
+                    },
+		cursor: 'pointer',
+
+                mapData: Highcharts.maps['custom/world'],
+                joinBy: ['hc-a2', 'code'],
+                name: 'Population density',
+                states: {
+                    hover: {
+                        color: '#BADA95'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: '/km²'
+                }
+            }]
+        });
+   // });
+});
+		</script>
+	</head>
+	<body>
+<script src="../js/highmaps.js"></script>
+<script src="../js/modules/data.js"></script>
+<script src="cn-all.geo.json.js"></script>
+
+
+
+<div id="container" style="max-width: 1000px"></div>
+
+	</body>
+</html>
