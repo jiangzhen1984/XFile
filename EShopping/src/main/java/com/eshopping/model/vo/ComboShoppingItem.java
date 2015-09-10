@@ -49,4 +49,8 @@ public class ComboShoppingItem extends AbsShoppingItem {
 	public SingleShoppingItem removeItem(int index) {
 		return items.remove(index);
 	}
+	
+	public List<SingleShoppingItem> getItemList() {
+		return items;
+	}
 }

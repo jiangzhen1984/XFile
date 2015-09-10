@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 
 @Entity
 @Table(name = "ES_CATEGORY")
@@ -28,42 +30,11 @@ public class ESCategory {
 	protected long parentId;
 	
 	
-	
-	protected ESCategory parent;
-	protected List<ESCategory> subCategory;
-	
-	
-	
 
 	public ESCategory() {
-		subCategory = new ArrayList<ESCategory>();
+		
 	}
 	
-	public void addSubCategory(ESCategory cate) {
-		if (cate == null) {
-			throw new RuntimeException(" category is null");
-		}
-		cate.updateParent(this);
-		subCategory.add(cate);
-	}
-	
-	public boolean removeSubCategory(ESCategory subCate) {
-		return this.subCategory.remove(subCate);
-	}
-	
-	public void updateParent(ESCategory parent) {
-		this.parent = parent;
-	}
-
-	
-	
-	public ESCategory getParent() {
-		return parent;
-	}
-
-	public List<ESCategory> getSubCategory() {
-		return subCategory;
-	}
 
 	public String getName() {
 		return name;
@@ -97,7 +68,8 @@ public class ESCategory {
 	public void setParentId(long parentId) {
 		this.parentId = parentId;
 	}
-
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

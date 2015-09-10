@@ -93,7 +93,7 @@ public class ESComboItem {
 		this.description = description;
 	}
 
-	public void addBreakfast(ESItem bf) {
+	public void addItem(ESItem bf) {
 		if (list == null) {
 			list = new HashSet<ESItem>();
 		}

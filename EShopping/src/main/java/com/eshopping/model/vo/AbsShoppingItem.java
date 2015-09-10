@@ -63,11 +63,11 @@ public abstract class AbsShoppingItem {
 		this.id = id;
 	}
 
-	public Float getPrice() {
-		return price;
+	public float getPrice() {
+		return this.price;
 	}
 
-	public void setPrice(Float price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 

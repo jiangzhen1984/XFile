@@ -31,12 +31,12 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 
-        <mapping class="com.todaybreakfast.model.BFBreakFastCombo" />
-        <mapping class="com.todaybreakfast.model.BFBreakfast" />
-        <mapping class="com.todaybreakfast.model.User" />
-        <mapping class="com.todaybreakfast.model.Place" />
-        <mapping class="com.todaybreakfast.model.OrderItem" />
-        <mapping class="com.todaybreakfast.model.Order" />
+        <mapping class="com.eshopping.model.po.ESCategory" />
+        <mapping class="com.eshopping.model.po.ESComboItem" />
+        <mapping class="com.eshopping.model.po.ESItem" />
+        <mapping class="com.eshopping.model.po.OrderItem" />
+        <mapping class="com.eshopping.model.po.Order" />
+        <mapping class="com.eshopping.model.po.User" />
     </session-factory>
 
 </hibernate-configuration>
