@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html style=""
+	class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths"
+	data-useragent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0"
+	lang="en" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Foundation Template | Feed</title>
+<meta name="description"
+	content="Documentation and reference library for ZURB Foundation. JavaScript, CSS, components, grid and more." />
+<meta name="author"
+	content="ZURB, inc. ZURB network also includes zurb.com" />
+<meta name="copyright" content="ZURB, inc. Copyright (c) 2015" />
+<link rel="stylesheet" href="css/foundation.css" />
+<script src="javascript/modernizr.js"></script>
+<meta class="foundation-data-attribute-namespace" />
+<meta class="foundation-mq-xxlarge" />
+<meta class="foundation-mq-xlarge-only" />
+<meta class="foundation-mq-xlarge" />
+<meta class="foundation-mq-large-only" />
+<meta class="foundation-mq-large" />
+<meta class="foundation-mq-medium-only" />
+<meta class="foundation-mq-medium" />
+<meta class="foundation-mq-small-only" />
+<meta class="foundation-mq-small" />
+<style></style>
+<meta class="foundation-mq-topbar" />
+<script src="javascript/foundation.js"></script>
+<script src="javascript/jquery.js"></script>
+</head>
+<body>
+
+	<div class="row">
+		<div class="large-12 columns">
+			<div class="panel">
+				<h1>管理界面</h1>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="row">
+
+
+		<div class="large-3 columns ">
+
+			<div class="panel">
+				<h:form>
+					<h4>
+
+						<h:commandLink value="添加早餐"
+							action="#{breakfastManagementBean.forward(1)}" />
+					</h4>
+					<h4>
+						<h:commandLink value="添加套餐"
+							action="#{breakfastManagementBean.forward(2)}" />
+					</h4>
+					<h4>
+						<h:commandLink value="查看早餐"
+							action="#{breakfastManagementBean.forward(3)}" />
+					</h4>
+					<h4>
+						<h:commandLink value="订单管理"
+							action="#{breakfastManagementBean.forward(4)}" />
+					</h4>
+					<h4>
+						<h:commandLink value="提货地点"
+							action="#{breakfastManagementBean.forward(5)}" />
+					</h4>
+				</h:form>
+			</div>
+
+
+			<div class="panel">
+				<div class="section-container vertical-nav" data-section=""
+					data-options="deep_linking: false; one_up: true"></div>
+			</div>
+		</div>
+
+
+
+
+
+		<div class="large-8 columns">
+			<c:if test="#{breakfastManagementBean.optType == 1}">
+				<div class="panel">
+					<h1>添加早餐:</h1>
+					<h:message for="name" errorClass="error" />
+					<h:message for="stuff" errorClass="error" />
+					<h:message for="picture" errorClass="error" />
+					<h:form id="createBFForm" enctype="multipart/form-data">
+					早餐名称：<h:inputText id="name" value="#{breakfastManagementBean.name}"
+							name="名称" />
+					早餐价格：	<h:inputText id="price"
+							value="#{breakfastManagementBean.price}" name="价格" />
+					
+					早餐配料：<h:inputText id="stuff"
+							value="#{breakfastManagementBean.stuff}" name="配料" />
+							
+							早餐描述：<h:inputText id="desc"
+							value="#{breakfastManagementBean.desc}" name="描述" />
+					早餐图片：<h:inputFile id="picture"
+							value="#{breakfastManagementBean.picture}" name="早餐图片" />
+
+						<h:commandButton value="创建"
+							actionListener="#{breakfastManagementBean.create()}" />
+					</h:form>
+				</div>
+			</c:if>
+
+
+			<c:if test="#{breakfastManagementBean.optType == 2}">
+				<h:form enctype="multipart/form-data" id="createComboBFForm">
+					<div class="panel large-5 columns ">
+						<h:message for="name" errorClass="error" />
+						<h:message for="stuff" errorClass="error" />
+						<h:message for="file" errorClass="error" />
+						<h3>添加套餐:</h3>
+						套餐名称：
+						<h:inputText id="name" value="#{breakfastManagementBean.name}"
+							name="名称" />
+						套餐价格：
+						<h:inputText id="price" value="#{breakfastManagementBean.price}"
+							name="价格" />
+
+						套餐配料：
+						<h:inputText id="stuff" value="#{breakfastManagementBean.stuff}"
+							name="配料" />
+						套餐描述：
+						<h:inputText id="desc" value="#{breakfastManagementBean.desc}"
+							name="描述" />
+						套餐图片：
+						<h:inputFile id="file" value="#{breakfastManagementBean.picture}"
+							name="早餐图片" />
+						<h:commandButton value="创建"
+							actionListener="#{breakfastManagementBean.createCombo()}" />
+
+					</div>
+
+					<div class=" large-5 columns">
+
+						<!-- 
+						<c:forEach items="${breakfastManagementBean.BFList}" var="b">
+							<div class="row">
+								<div class="large-2 columns">
+									<h:selectManyCheckbox 
+										value="#{breakfastManagementBean.comboFBList}"
+										layout="pageDirection">
+										<f:selectItem itemValue="#{b.id}" />
+									</h:selectManyCheckbox>
+								</div>
+								<div class="large-2 columns">#{b.name}</div>
+								<div class="large-2 columns">#{b.price}</div>
+							</div>
+						</c:forEach>
+ -->
+						<h:selectManyCheckbox
+							value="#{breakfastManagementBean.comboFBList}"
+							layout="pageDirection" var="n">
+							<div class="row">
+								<div class="large-2 columns">
+									<f:selectItems value="#{breakfastManagementBean.BFSingleList}"
+										var="n" itemLabel="#{n.name}" itemValue="#{n.id}">
+										    #{n.price}
+										</f:selectItems>
+								</div>
+							</div>
+						</h:selectManyCheckbox>
+
+					</div>
+
+				</h:form>
+			</c:if>
+
+
+
+			<c:if test="#{breakfastManagementBean.optType == 3}">
+				<h:messages style="color:red;margin:8px;" />
+				<h:form id="form_delete">
+					<c:forEach items="${breakfastManagementBean.BFList}" var="b">
+						<div class="row">
+							<div class="large-4 columns">
+								<img src="#{global.imageHost}#{b.url}" />
+							</div>
+							<div class="large-8 columns1">
+								<p>
+									<strong>#{b.name}</strong>
+								</p>
+								<p>#{b.stuff}</p>
+								<p>#{b.description}</p>
+								<p>#{b.price}</p>
+								<ul class="inline-list">
+
+									<c:if test="#{b.type == 'COMBO'}">
+										<li><h:commandLink value="删除"
+												action="#{breakfastManagementBean.deleteComboBF(b.id)}" /></li>
+									</c:if>
+									<c:if test="#{b.type == 'SINGLE'}">
+										<li><h:commandLink value="删除"
+												action="#{breakfastManagementBean.deleteBF(b.id)}" /></li>
+									</c:if>
+
+								</ul>
+
+								<c:if test="#{b.type == 'COMBO'}">
+									<c:forEach var="combo" items="${b.items}">
+
+										<div class="row">
+											<div class="large-4 columns">
+												<img src="#{global.imageHost}#{combo.url}" />
+											</div>
+											<div class="large-6 columns1">
+												<p>
+													<strong>#{combo.name}</strong>
+												</p>
+												<p>#{combo.stuff}</p>
+												<p>#{combo.description}</p>
+												<p>#{combo.price}</p>
+											</div>
+										</div>
+									</c:forEach>
+								</c:if>
+							</div>
+						</div>
+					</c:forEach>
+				</h:form>
+			</c:if>
+
+
+
+
+			<c:if test="#{breakfastManagementBean.optType == 5}">
+				<div class="panel">
+					<h1>提货地点管理:</h1>
+					<h:message for="address" errorClass="error" />
+					<h:message for="district" errorClass="error" />
+					<h:form id="placeForm">
+					地区：<h:inputText id="district"
+							value="#{breakfastManagementBean.district}" name="地区" />
+					详细地址：	<h:inputText id="address"
+							value="#{breakfastManagementBean.address}" name="详细地址" />
+
+						<h:commandButton value="创建"
+							actionListener="#{breakfastManagementBean.createPlace()}" />
+					</h:form>
+				</div>
+
+				<h:form id="deletePlaceForm">
+					<div class="panel">
+						<c:forEach items="${global.places}" var="b">
+							<div class="row">
+								<div class="large-8 columns">
+									<ul class="inline-list right">
+										<li>#{b.district}#{b.address}</li>
+										<li><h:commandLink value="删除"
+												action="#{breakfastManagementBean.deletePlace(b.id)}" /></li>
+									</ul>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				</h:form>
+			</c:if>
+
+
+		</div>
+
+
+		<aside class="large-1 columns hide-for-small"></aside>
+	</div>
+
+	<footer class="row">
+		<div class="large-12 columns">
+			<div class="row">
+				<div class="large-5 columns">
+					<p>© Copyright no one at all. Go to town.</p>
+				</div>
+				<div class="large-7 columns">
+					<ul class="inline-list right">
+						<li><a href="#">Section 1</a></li>
+						<li><a href="#">Section 2</a></li>
+						<li><a href="#">Section 3</a></li>
+						<li><a href="#">Section 4</a></li>
+						<li><a href="#">Section 5</a></li>
+						<li><a href="#">Section 6</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

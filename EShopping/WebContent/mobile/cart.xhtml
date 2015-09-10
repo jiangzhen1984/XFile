@@ -1,0 +1,246 @@
+<html style=""
+	class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope"
+	ng-app="app" lang="en-us" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<!--[if lt IE 7 ]> <html lang="en-us" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-us" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-us" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-us" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<!--<![endif]-->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+@charset "UTF-8";
+
+[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide
+	{
+	display: none !important;
+}
+
+ng\:form {
+	display: block;
+}
+
+.ng-animate-block-transitions {
+	transition: 0s all !important;
+	-webkit-transition: 0s all !important;
+}
+
+.ng-hide-add-active,.ng-hide-remove {
+	display: block !important;
+}
+</style>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+<meta charset="utf-8" />
+<title>我的购物车</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<base href="#{global.globalUrl}" />
+<!-- base href="http://www.qingniancaijun.com.cn/" -->
+<link href="http://www.qingniancaijun.com.cn/image/data/logo/fav.png"
+	rel="icon" />
+<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
+
+<!-- RESET USER AGENT -->
+<link rel="stylesheet" type="text/css" href="css/ionic.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+
+<link rel="stylesheet" type="text/css" href="css/mobile_v2.css" />
+
+<!-- script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.6.1.min.js"></script-->
+<script type="text/javascript" src="javascript/jquery-1.js"></script>
+
+<!--<script type="text/javascript" src="catalog/view/javascript/jquery/jquery.min.js"></script>-->
+
+<script src="javascript/modernizr.js"></script>
+
+<script type="text/javascript" src="javascript/jquery-ui-1.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.css" />
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/lodash-2.js"></script>
+
+<!-- Fixes for IE -->
+<!--[if lt IE 9]>
+<script src="assets/libs/dist/html5shiv.js"></script>
+<![endif]-->
+<!--[if (gte IE 6)&(lte IE 8)]>
+  <script type="text/javascript" src="assets/libs/selectivizr/1.0.2/selectivizr.js"></script>
+  <noscript><link rel="stylesheet" href="[fallback css]" /></noscript>
+<![endif]-->
+<script type="text/javascript" src="javascript/angular.js"></script>
+<script type="text/javascript" src="javascript/angular-ui-router.js"></script>
+<script>
+        angular.module('app', ['ui.router']);
+    </script>
+</head>
+<body class="ionic">
+	<img src="css/graphic/hm.gif" height="0" width="0" />
+	<div id="page" class="page">
+		<div id="header" class="bar bar-header bar-positive">
+			<h1 class="title">我的购物车</h1>
+		</div>
+		<div id="content" class="content">
+
+
+			<h:form class="ng-pristine ng-valid" method="post"
+				enctype="multipart/form-data" id="basket">
+				<div class="cart-info">
+
+					<div class="list">
+						<div class="item item-title">
+							<div class="ix-row">
+								<div class="ix-u-sm-6">菜品信息</div>
+								<div class="ix-u-sm-3">数量</div>
+								<div class="ix-u-sm-2">删除</div>
+							</div>
+						</div>
+						<c:forEach items="#{cartBean.cart.items}" var="item">
+							<div class="item f12" data-id="120">
+								<div class="ix-row">
+									<div class="ix-u-sm-6">
+										<div class="image fl mr10">
+											<a
+												href="http://www.qingniancaijun.com.cn/index.php?route=product/product&amp;product_id=3"
+												title="#{item.value.wr.name}"> <img
+												src="#{global.imageHost}#{item.value.wr.url}"
+												id="pdt_img#{item.value.wr.id}_#{item.value.wr.typeOrdinal}_#{item.value.wr.typeString}"
+												alt="#{item.value.wr.name}" />
+
+											</a>
+										</div>
+										<div class="item-product-detail ">
+											#{item.value.wr.name} <br /> <span class="f14 mt10">￥#{item.value.wr.price}</span>
+											<br />
+										</div>
+									</div>
+									<div class="ix-u-sm-3 quantity tc">
+										<h:commandButton
+											actionListener="#{cartBean.updateCart(item.value.wr.id, 1,item.value.wr.typeOrdinal)}"
+											class="btn" style="width: 36px;" value=" - "
+											disabled="disabled" 
+											alt="-1" title="-1" />
+
+										<h:inputText value="#{item.value.count}" size="2" style="width: 25px; padding: 0 2px 0 2px; height: 28px; line-height: 18px;"/>
+										<h:commandButton class="btn"
+											actionListener="#{cartBean.updateCart(item.value.wr.id, 2,item.value.wr.typeOrdinal)}"
+											style="width: 36px;" value=" + " alt="+1" title="+1" />
+									</div>
+									<div class="ix-u-sm-2 remove tc">
+										<h:commandButton
+											action="#{cartBean.removeItem(item.value.wr.id,item.value.wr.typeOrdinal)}"
+											image="css/graphic/remove.png" alt="删除">
+										</h:commandButton>
+									</div>
+								</div>
+
+							</div>
+						</c:forEach>
+					</div>
+
+
+					<!-- 
+					<div class="pick-date-select clearfix mb10">
+						<div class="ix-row">
+							<div class="ix-u-sm-5">配送时间选择：</div>
+							<div class="ix-u-sm-7">
+								<select style="width: 100%;" name="date" thevalue="2015-05-26"
+									data-init-val="2015-05-26" onchange="$('#basket').submit();">
+									<option value="2015-05-26" selected="selected">2015-05-26</option>
+									<option value="2015-05-27">2015-05-27</option>
+									<option value="2015-05-28">2015-05-28</option>
+									<option value="2015-05-29">2015-05-29</option>
+									<option value="2015-05-30">2015-05-30</option>
+									<option value="2015-05-31">2015-05-31</option>
+									<option value="2015-06-01">2015-06-01</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					 -->
+				</div>
+
+				<div class="cart_submit card">
+
+					<div class="cart-total tr">
+						<ul>
+							<li class="ilex sub_total"><span class="zebiaoti">商品总金额</span>
+								<span class="zonge">￥#{cartBean.cart.totalPrice}</span></li>
+							<li class="ilex total"><span class="zebiaoti">应付总额</span> <span
+								class="zonge">￥#{cartBean.cart.totalPrice}</span></li>
+						</ul>
+					</div>
+
+					<div class="submit">
+						<h:form>
+								<h:commandButton value="去结帐"
+								class="button button-block button-positive"
+								action="#{cartBean.checkout}" />
+						</h:form>
+					</div>
+				</div>
+			</h:form>
+		</div>
+
+
+
+
+
+		<div class="bar bar-footer bar-light">
+			<div class="tabs tabs-icon-top tabs-default">
+				<a class="tab-item" href="mobile/bflist.xhtml"> <i
+					class="icon ion-home" id="home_icon">首页</i>
+				</a> <a class="tab-item" href="mobile/personel.xhtml"> <i
+					class="icon ion-person" id="person_icon">个人中心</i>
+				</a> <a class="tab-item tab-item-cart" href="mobile/cart.xhtml">
+					<div class="tab-item-cart-total">
+						<span id="cart_total" class="ix-badge ix-radius">
+							#{cartBean.totalCount} </span>
+					</div> <i class="icon ion-bag select" id="cart_icon">购物车</i>
+
+				</a>
+			</div>
+		</div>
+		<!--END .bar-footer-->
+
+	</div>
+
+	<script type="text/javascript" src="javascript/common.js"></script>
+	<script type="text/javascript" src="javascript/tabs.js"></script>
+
+	<script type="text/javascript"><!--
+$('.cart-module .cart-heading').bind('click', function() {
+	if ($(this).hasClass('active')) {
+		$(this).removeClass('active');
+	} else {
+		$(this).addClass('active');
+	}
+		
+	$(this).parent().find('.cart-content').slideToggle('slow');
+});
+
+function plus(name){
+	var number=parseInt($('.cart-info input[name=\''+name+'\']').val())+ 1
+	$('.cart-info input[name=\''+name+'\']').val(number);
+
+	//$('#basket').submit();
+}
+
+function minus(name){
+	var number=parseInt($('.cart-info input[name=\''+name+'\']').val())- 1
+	$('.cart-info input[name=\''+name+'\']').val(number);
+
+	//$('#basket').submit();
+}
+//--></script>
+
+
+
+	<!--END .bar-footer-->
+
+</body>
+</html>
