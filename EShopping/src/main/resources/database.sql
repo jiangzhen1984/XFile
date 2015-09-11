@@ -19,7 +19,16 @@
 	primary key (id)
 );
 
- create table ES_CATEGORY (
+
+create table ES_COMBO_ITEM_M (
+	ES_COMBO_ITEM_ID bigint not null, 
+	ES_ITEM_ID bigint not null,
+	primary key (ES_COMBO_ITEM_ID, ES_ITEM_ID)
+);
+
+
+
+create table ES_CATEGORY (
 	id bigint not null auto_increment,
 	NAME VARCHAR(100), 
 	SEQ_NUMBER NUMERIC(2), 
@@ -27,11 +36,15 @@
 	primary key (id)
 );
 
-create table ES_COMBO_ITEM_M (
-	ES_COMBO_ITEM_ID bigint not null, 
+
+create table ES_CATEGORY_ITEM (
+	ES_CATEGORY_ID bigint not null, 
 	ES_ITEM_ID bigint not null,
-	primary key (ES_COMBO_ITEM_ID, ES_ITEM_ID)
+	ITEM_TYPE NUMERIC(1, 0),
+	primary key (ES_CATEGORY_ID, ES_ITEM_ID)
 );
+
+
 
 create table TB_USER (
 	id bigint not null auto_increment, 
@@ -70,4 +83,12 @@ alter table ES_COMBO_ITEM_M add constraint FK_rq0h09mi3q7i3um10xr4t8v0i foreign 
 alter table ES_COMBO_ITEM_M add constraint UK_2d3wi5c7ydy3nq1pm4o2tql9a  unique (ES_COMBO_ITEM_ID, ES_ITEM_ID);
 
 alter table ES_ORDER_ITEM add constraint FK_74aytr1c15gudg9yltny49y5a foreign key (ORDER_ID) references ES_ORDER (id);
+
+
+alter table ES_CATEGORY_ITEM add constraint FK_rq0h09mi3q7i3um10xr4t8v0b foreign key (ES_CATEGORY_ID) references ES_CATEGORY (id);
+
+alter table ES_CATEGORY_ITEM add constraint UK_2d3wi5c7ydy3nq1pm4o2tql9c  unique (ES_CATEGORY_ID, ES_ITEM_ID);
+
+
+
 

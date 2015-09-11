@@ -5,11 +5,11 @@ import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name = "sessionConfigBean", eager = true)
 @SessionScoped
-public class SessionGlobalBean {
+public class SessionConfigBean {
 	
 	private boolean mobileBrowserFlag;
 
-	public SessionGlobalBean() {
+	public SessionConfigBean() {
 	}
 
 	public String getBrowserCssConfig() {

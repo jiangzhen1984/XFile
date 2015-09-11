@@ -22,9 +22,10 @@ public class GlobalCache {
 	public static final int UPDATE_LIST_TYPE_NEW = 2;
 	public static final int UPDATE_LIST_TYPE_RECOMMAND = 3;
 
-	private Map<String, Object> mLocalCategoryCache;
+	private Map<Long, Category> mLocalCategoryMap;
 	private Map<Category, List<AbsShoppingItem>> mLocalCategoryItemsCache;
 
+	private List<Category> mTopLevelCategoryList;
 	private List<AbsShoppingItem> mRecommandList;
 	private List<AbsShoppingItem> mHotList;
 	private List<AbsShoppingItem> mNewList;
@@ -32,25 +33,60 @@ public class GlobalCache {
 	private static GlobalCache instance;
 
 	private GlobalCache() {
-		mLocalCategoryCache = new ConcurrentHashMap<String, Object>();
+		mLocalCategoryMap = new ConcurrentHashMap<Long, Category>();
 		mLocalCategoryItemsCache = new ConcurrentHashMap<Category, List<AbsShoppingItem>>();
 
+		mTopLevelCategoryList = new ArrayList<Category>();
 		mRecommandList = new ArrayList<AbsShoppingItem>();
 		mHotList = new ArrayList<AbsShoppingItem>();
 		mNewList = new ArrayList<AbsShoppingItem>();
 	}
 
-	public synchronized GlobalCache getInstance() {
+	public static synchronized GlobalCache getInstance() {
 		if (instance == null) {
 			instance = new GlobalCache();
 		}
 		return instance;
 	}
 
-	public List<ESCategory> getTopLiveCategoryList() {
-		return (List<ESCategory>) mLocalCategoryCache.get(KEY_CATEGORY);
+	public List<Category> getTopLevelCategoryList() {
+		return mTopLevelCategoryList;
+	}
+	
+	public void addTopLevelCategory(Category cate) {
+		if (cate == null) {
+			return;
+		}
+		this.mTopLevelCategoryList.add(cate);
+	}
+	public void removeTopLevelCategory(Category cate) {
+		if (cate == null) {
+			return;
+		}
+		mTopLevelCategoryList.remove(cate);
+	}
+	
+	public Category getCategory(long id) {
+		return mLocalCategoryMap.get(id);
 	}
 
+	
+	public void putCategoryToCache(Category cate) {
+		if (cate == null) {
+			return;
+		}
+		mLocalCategoryMap.put(Long.valueOf(cate.getId()), cate);
+	}
+	
+	public void removeCategoryFromCache(Category cate) {
+		if (cate == null) {
+			return;
+		}
+		mLocalCategoryMap.remove(Long.valueOf(cate.getId()));
+		mLocalCategoryItemsCache.remove(cate);
+	}
+	
+	
 	public List<AbsShoppingItem> getCategoryItemList(Category cate, int start,
 			int fetchCont) {
 		List<AbsShoppingItem> list = mLocalCategoryItemsCache.get(cate);

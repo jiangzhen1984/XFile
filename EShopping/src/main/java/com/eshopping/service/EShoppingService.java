@@ -1,5 +1,7 @@
 package com.eshopping.service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,5 +156,52 @@ public class EShoppingService extends BaseService {
 		sess.close();
 		return queryList;
 	}
+	
+	
+	
+	
+	public List<AbsShoppingItem> queryItemList(long cateId, int start, int fetchCount) {
+		
+		Session sess = openSession();
+		List<AbsShoppingItem> queryList =  null;
+		
+		String sql = " select eci.es_category_id, eci.es_item_id, eci.item_type, esi.name as iname, esi.price as iprice, esi.pic_path as ipic_path, esci.name as ciname, esci.price as ciprice, esci.pic_path as cipic_path "+
+					 " from ES_CATEGORY_ITEM eci " +
+					 " left join ES_ITEM esi on eci.es_item_id = esi.id "+
+					 " left join ES_Combo_Item esci on esci.id = eci.es_item_id" +
+					 " where eci.es_category_id =:cid";
+			Query query = sess.createSQLQuery(sql);
+			query.setFirstResult(start);
+			query.setMaxResults(fetchCount);
+			query.setLong("cid", cateId);
+			
+			List list = query.list();
+			int size = list.size();
+			if (size > 0) {
+				queryList = new ArrayList<AbsShoppingItem>(size);
+				for (int i = 0; i < size; i++) {
+					Object[] key = (Object[]) list.get(i);
+					int type = ((BigDecimal)key[2]).intValue();
+					if (type == AbsShoppingItem.TYPE_SINGLE) {
+						SingleShoppingItem ss = new SingleShoppingItem();
+						ss.setId(((BigInteger)key[1]).longValue());
+						ss.setName((String)key[3]);
+						ss.setPrice(((BigDecimal)key[4]).floatValue());
+						ss.setPicUrl((String)key[5]);
+						queryList.add(ss);
+					} else if (type == AbsShoppingItem.TYPE_COMBO) {
+						ComboShoppingItem combo = new ComboShoppingItem();
+						combo.setId(((BigInteger)key[1]).longValue());
+						combo.setName((String)key[6]);
+						combo.setPrice(((BigDecimal)key[7]).floatValue());
+						queryList.add(combo);
+					}
+				}
+			}
+			
+		
+		sess.close();
+		return queryList;
+	} 
 
 }

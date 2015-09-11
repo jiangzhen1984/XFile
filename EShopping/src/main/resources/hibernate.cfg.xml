@@ -32,6 +32,7 @@
         <property name="hbm2ddl.auto">update</property>
 
         <mapping class="com.eshopping.model.po.ESCategory" />
+        <mapping class="com.eshopping.model.po.ESCategoryItem" />
         <mapping class="com.eshopping.model.po.ESComboItem" />
         <mapping class="com.eshopping.model.po.ESItem" />
         <mapping class="com.eshopping.model.po.OrderItem" />

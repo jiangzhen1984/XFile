@@ -19,10 +19,10 @@ public class BrowserFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest hreq = (HttpServletRequest) request;
-		SessionGlobalBean configBean = (SessionGlobalBean) hreq.getSession().getAttribute(
+		SessionConfigBean configBean = (SessionConfigBean) hreq.getSession().getAttribute(
 				"sessionConfigBean");
 		if (configBean == null) {
-			configBean = new SessionGlobalBean();
+			configBean = new SessionConfigBean();
 			 hreq.getSession().setAttribute(
 						"sessionConfigBean", configBean);
 		}

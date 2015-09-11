@@ -45,25 +45,6 @@ public class EShoppingServiceTest extends TestCase  {
 	}
 	
 	
-	
-	@Test
-	public void testDeleteShoppingItem() {
-		Session session = mService.getSessionFactory().openSession();
-		Query query = session.createQuery(" from ESComboItem ");
-		List l = query.list();
-		if (l.size() < 0) {
-			assertTrue(false);
-		}
-		ESComboItem esi = (ESComboItem)l.get(0);
-		
-		mService.deleteShoppingItem(new ComboShoppingItem(esi));
-		assertTrue(true);
-		session.close();
-		
-	}
-	
-	
-	
 	@Test
 	public void testQueryItemList() {
 		List<AbsShoppingItem> list = mService.queryItemList(AbsShoppingItem.TYPE_SINGLE, 0, 1);
@@ -79,6 +60,28 @@ public class EShoppingServiceTest extends TestCase  {
 		list = mService.queryItemList(AbsShoppingItem.TYPE_COMBO, 110, 10);
 		assertTrue(list == null);
 	}
+	
+	
+	
+	@Test
+	public void testDeleteShoppingItem() {
+		Session session = mService.getSessionFactory().openSession();
+		Query query = session.createQuery(" from ESComboItem ");
+		List l = query.list();
+		if (l.size() <= 0) {
+			assertTrue(false);
+		}
+		ESComboItem esi = (ESComboItem)l.get(0);
+		
+		mService.deleteShoppingItem(new ComboShoppingItem(esi));
+		assertTrue(true);
+		session.close();
+		
+	}
+	
+	
+	
+
 	
 	
 	@Test
@@ -115,6 +118,12 @@ public class EShoppingServiceTest extends TestCase  {
 		assertTrue(list != null);
 		assertTrue(list.size() > 0);
 		
+	}
+	
+	
+	public void testQueryItemListByCategory() {
+		List<AbsShoppingItem> list = mService.queryItemList(1L, 0, 10);
+		assertTrue(list  != null);
 	}
 	
 	
