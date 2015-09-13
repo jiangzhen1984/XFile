@@ -25,7 +25,7 @@ public class ESComboItem {
 	private long id;
 
 	@Column(name = "PRICE", columnDefinition = "NUMERIC(6,2)")
-	private Float price;
+	private float price;
 
 	@Column(name = "PIC_PATH", columnDefinition = "VARCHAR(200)")
 	private String picUrl;
@@ -54,7 +54,7 @@ public class ESComboItem {
 
 
 	public float getPrice() {
-		return price == null ? 0 : price;
+		return price;
 	}
 
 	public void setPrice(float price) {

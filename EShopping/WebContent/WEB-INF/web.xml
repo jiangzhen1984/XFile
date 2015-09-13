@@ -25,6 +25,12 @@
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>StartupServlet</servlet-name>
+		<servlet-class>com.eshopping.controller.StartupServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
 	<servlet>
 		<servlet-name>AJAXHandler</servlet-name>

@@ -10,11 +10,18 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.eshopping.model.po.ESCategory;
+import com.eshopping.model.po.ESCategoryItem;
+import com.eshopping.model.po.ESCatgoryItemSpecialType;
 import com.eshopping.model.po.ESComboItem;
+import com.eshopping.model.po.ESImage;
 import com.eshopping.model.po.ESItem;
+import com.eshopping.model.po.EShoppingItemConfigDetail;
+import com.eshopping.model.po.EStemSpecialTypeMapping;
 import com.eshopping.model.vo.AbsShoppingItem;
 import com.eshopping.model.vo.Category;
+import com.eshopping.model.vo.CategoryItemSpecialType;
 import com.eshopping.model.vo.ComboShoppingItem;
+import com.eshopping.model.vo.Image;
 import com.eshopping.model.vo.SingleShoppingItem;
 
 public class EShoppingService extends BaseService {
@@ -105,7 +112,7 @@ public class EShoppingService extends BaseService {
 			query.setFirstResult(start);
 			query.setMaxResults(fetchCount);
 			List list = query.list();
-			int size = list.size();
+			int size = list.size(); 
 			if (size > 0) {
 				queryList = new ArrayList<Category>(size);
 				for (int i = 0; i < size; i++) {
@@ -198,10 +205,226 @@ public class EShoppingService extends BaseService {
 					}
 				}
 			}
-			
 		
 		sess.close();
 		return queryList;
-	} 
+	}
+	
+	
+	public List<AbsShoppingItem> queryItemListLazy(long cateId, int start, int fetchCount) {
+		
+		Session sess = openSession();
+		List<AbsShoppingItem> queryList =  null;
+		
+		String hql = "   from ESCategoryItem " + 
+					 " where categoryId =:cid";
+			Query query = sess.createQuery(hql);
+			query.setFirstResult(start);
+			query.setMaxResults(fetchCount);
+			query.setLong("cid", cateId);
+			
+			List<ESCategoryItem> list = query.list();
+			int size = list.size();
+			if (size > 0) {
+				queryList = new ArrayList<AbsShoppingItem>(size);
+				for (int i = 0; i < size; i++) {
+					ESCategoryItem cateItem = (ESCategoryItem) list.get(i);
+					int type = cateItem.getType();
+					if (type == AbsShoppingItem.TYPE_SINGLE) {
+						SingleShoppingItem ss = new SingleShoppingItem();
+						ss.setId(cateItem.getItemId());
+						queryList.add(ss);
+					} else if (type == AbsShoppingItem.TYPE_COMBO) {
+						ComboShoppingItem combo = new ComboShoppingItem();
+						combo.setId(cateItem.getItemId());
+						queryList.add(combo);
+					}
+				}
+			}
+		
+		sess.close();
+		return queryList;
+	}
+	
+	
+	public List<EShoppingItemConfigDetail>  getRecommandationList(int start, int fetchCount) {
+		return getConfigDetailList(1, start, fetchCount);
+	}
+	
+	
+	public List<EShoppingItemConfigDetail>  getNewList(int start, int fetchCount) {
+		return getConfigDetailList(2, start, fetchCount);
+	}
+	
+	public List<EShoppingItemConfigDetail>  getHotList(int start, int fetchCount) {
+		return getConfigDetailList(3, start, fetchCount);
+	}
+	
+	public List<EShoppingItemConfigDetail>  getSaleList(int start, int fetchCount) {
+		return getConfigDetailList(4, start, fetchCount);
+	}
+	
+	private List<EShoppingItemConfigDetail> getConfigDetailList(int type, int start, int fetchCount) {
+		Session sess = openSession();
+		List<EShoppingItemConfigDetail> queryList =  null;
+		StringBuffer hql = new StringBuffer("from EShoppingItemConfigDetail ");
+		switch (type) {
+		case 1:
+			hql.append(" where isRecommand = true");
+			break;
+		case 2:
+			hql.append(" where isNew = true");
+			break;
+		case 3:
+			hql.append(" where isHot = true");
+			break;
+		case 4:
+			hql.append(" where isSale = true");
+			break;
+			
+		}
+		Query query = sess.createQuery(hql.toString());
+		query.setFirstResult(start);
+		query.setMaxResults(fetchCount);
+		List<EShoppingItemConfigDetail>  list = query.list();
+		int size = list.size();
+		if (size > 0) {
+			queryList = new ArrayList<EShoppingItemConfigDetail>(size);
+			for (int i = 0; i < size; i++) {
+				EShoppingItemConfigDetail configDetail = (EShoppingItemConfigDetail) list.get(i);
+				EShoppingItemConfigDetail copyDetail = new EShoppingItemConfigDetail();
+				copyDetail.setId(configDetail.getId());
+				copyDetail.setHot(configDetail.isHot());
+				copyDetail.setSale(configDetail.isSale());
+				copyDetail.setRecommand(configDetail.isRecommand());
+				copyDetail.setNew(configDetail.isNew());
+				copyDetail.setSaledCounts(configDetail.getSaledCounts());
+				copyDetail.setRank(configDetail.getRank());
+				copyDetail.setStockDate(configDetail.getStockDate());
+				copyDetail.setItemType(configDetail.getItemType());
+				queryList.add(copyDetail);
+			}
+		}
+		sess.close();
+		return queryList;
+	}
+	
+	
+	
+	public List<CategoryItemSpecialType> getCategorySpecialType(Category cate) {
+		if (cate == null) {
+			return null;
+		}
+		
+		List<CategoryItemSpecialType> list = null;
+		Session sess = openSession();
+		Query query = sess.createQuery(" from ESCatgoryItemSpecialType st where st.categoryId =:ci order by type_group ");
+		query.setLong("ci", cate.getId());
+		List<ESCatgoryItemSpecialType> queryList = query.list();
+		if (queryList.size() > 0) {
+			list = new ArrayList<CategoryItemSpecialType>(queryList.size());
+			for (ESCatgoryItemSpecialType escit : queryList) {
+				CategoryItemSpecialType cit = new CategoryItemSpecialType(escit);
+				cit.setCategory(cate);
+				cate.addType(cit);
+				list.add(cit);
+			}
+		}
+		
+		cate.setLoadTypes(true);
+		
+		sess.close();
+		
+		return list;
+	}
+	
+	
+	public void addESCatgoryItemSpecialType(CategoryItemSpecialType  type) {
+		if (type == null || type.getCategory() == null) {
+			return;
+		}
+		Session session = openSession();
+		Transaction t = beginTransaction(session);
+		ESCatgoryItemSpecialType esType = new ESCatgoryItemSpecialType();
+		esType.setCategoryId(type.getCategory().getId());
+		esType.setGroup(type.getGroup());
+		esType.setGroupName(type.getGroupName());
+		esType.setName(type.getName());
+		esType.setShow(type.isShow());
+		
+		session.saveOrUpdate(esType);
+		type.setId(esType.getId());
+		t.commit();
+		session.close();
+	}
+	
+	public void deleteESCatgoryItemSpecialType(CategoryItemSpecialType type) {
+		Session session = openSession();
+		Transaction t = beginTransaction(session);
+		ESCatgoryItemSpecialType esitem = new ESCatgoryItemSpecialType();
+		esitem.setId(type.getId());
+		session.delete(esitem);
+		t.commit();
+		session.close();
+	}
+	
+	
+	public List<EStemSpecialTypeMapping> querySpecialTypeMapping(Category cate, int start, int fetchCount) {
+		Session sess = openSession();
+		List<EStemSpecialTypeMapping> queryList =  null;
+		
+		String hql = "   from EStemSpecialTypeMapping " + 
+					 " where categoryId =:cid";
+			Query query = sess.createQuery(hql);
+			query.setFirstResult(start);
+			query.setMaxResults(fetchCount);
+			query.setLong("cid", cate.getId());
+			
+			List<EStemSpecialTypeMapping> list = query.list();
+			int size = list.size();
+			if (size > 0) {
+				queryList = new ArrayList<EStemSpecialTypeMapping>(size);
+				for (int i = 0; i < size; i++) {
+					EStemSpecialTypeMapping mapping = (EStemSpecialTypeMapping) list.get(i);
+					EStemSpecialTypeMapping esiTypeMapping = new EStemSpecialTypeMapping();
+					esiTypeMapping.setTypeId(mapping.getTypeId());
+					esiTypeMapping.setCategoryId(mapping.getCategoryId());
+					esiTypeMapping.setItemId(mapping.getItemId());
+					esiTypeMapping.setItemType(mapping.getItemType());
+					queryList.add(esiTypeMapping);
+				}
+			}
+		
+		sess.close();
+		return queryList;
+	}
+	
+	
+	public List<Image> queryImageList(AbsShoppingItem item) {
+		Session sess = openSession();
+		List<Image> queryList =  null;
+		
+		String hql = "   from ESImage " + 
+					 " where itemId =:itemid and itemType =:itemType ";
+			Query query = sess.createQuery(hql);
+			query.setLong("itemid", item.getId());
+			query.setInteger("itemType", item.getType());
+			
+			List<ESImage> list = query.list();
+			int size = list.size();
+			if (size > 0) {
+				queryList = new ArrayList<Image>(size);
+				for (int i = 0; i < size; i++) {
+					ESImage esimage = (ESImage) list.get(i);
+					Image newImage = new Image(esimage.getId(), esimage.getUri(), esimage.getImageType());
+					queryList.add(newImage);
+					item.addImage(newImage);
+				}
+			}
+			item.setLoadImages(true);
+		
+		sess.close();
+		return queryList;
+	}
 
 }

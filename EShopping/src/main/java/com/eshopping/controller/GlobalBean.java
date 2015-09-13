@@ -5,6 +5,9 @@ import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
+import com.eshopping.model.vo.Category;
+import com.eshopping.service.GlobalCache;
+
 
 @ManagedBean(name="global", eager=true)
 @ApplicationScoped
@@ -24,6 +27,12 @@ public class GlobalBean {
 	
 	public String getImageHost() {
 		return GLOBAL_IMAGE_HOST;
+	}
+	
+	
+	
+	public List<Category> getTopCategoryList() {
+		return GlobalCache.getInstance().getTopLevelCategoryList();
 	}
 	
 

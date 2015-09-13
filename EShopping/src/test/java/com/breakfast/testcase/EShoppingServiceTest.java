@@ -120,7 +120,7 @@ public class EShoppingServiceTest extends TestCase  {
 		
 	}
 	
-	
+	 
 	public void testQueryItemListByCategory() {
 		List<AbsShoppingItem> list = mService.queryItemList(1L, 0, 10);
 		assertTrue(list  != null);

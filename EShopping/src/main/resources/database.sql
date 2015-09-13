@@ -9,6 +9,22 @@
 );
 
 
+ create table ESHOPPING_ITEM_CONFIG_DETAIL (
+	id bigint not null,
+	ITEM_TYPE INT(1),
+	IS_SALE BOOL default false,
+	IS_NEW BOOL default false,
+	IS_RECOMMAND BOOL default false,
+	IS_HOT BOOL default false,
+	ITEM_RANK NUMERIC(3,1) default 0, 
+	ITEM_STOCK_COUNTS INT(6) default 0,
+	SALED_COUNTS INT(6) default 0,
+	STOCK_DATE  DATETIME,
+	primary key (id)
+);
+
+
+
  create table ES_COMBO_ITEM (
 	id bigint not null auto_increment, 
 	DESCRIPTION VARCHAR(1000), 
@@ -28,6 +44,16 @@ create table ES_COMBO_ITEM_M (
 
 
 
+create table ES_IMAGE (
+	id bigint not null  auto_increment, 
+	ES_ITEM_ID bigint not null,
+	ITEM_TYPE int(2),
+	IMAGE_TYPE int(2),
+	IMAGE_URI  VARCHAR(200),
+	primary key (id)
+);
+
+
 create table ES_CATEGORY (
 	id bigint not null auto_increment,
 	NAME VARCHAR(100), 
@@ -37,12 +63,35 @@ create table ES_CATEGORY (
 );
 
 
+
+create table ES_CATEGORY_ITEM_SPECIAL_TYPE (
+	ID bigint not null auto_increment,
+	TYPE_GROUP  int(2),
+	GROUP_NAME  VARCHAR(100),
+	TYPE_NAME   VARCHAR(100),
+	CATEGORY_ID  bigint not null,
+	IS_SHOW   BOOL,
+	primary key (ID)
+);
+
+
+create table ES_ITEM_SPECIAL_TYPE_M (
+	ES_ITEM_ID bigint not null,
+	ES_SPECIAL_TYPE_ID  bigint not null,
+	ES_CATEGORY_ID  bigint not null,
+	ES_ITEM_TYPE int(2) default 1,
+	primary key (ES_ITEM_ID, ES_SPECIAL_TYPE_ID, ES_ITEM_TYPE)
+);
+
 create table ES_CATEGORY_ITEM (
 	ES_CATEGORY_ID bigint not null, 
 	ES_ITEM_ID bigint not null,
 	ITEM_TYPE NUMERIC(1, 0),
 	primary key (ES_CATEGORY_ID, ES_ITEM_ID)
 );
+
+
+
 
 
 
@@ -88,6 +137,8 @@ alter table ES_ORDER_ITEM add constraint FK_74aytr1c15gudg9yltny49y5a foreign ke
 alter table ES_CATEGORY_ITEM add constraint FK_rq0h09mi3q7i3um10xr4t8v0b foreign key (ES_CATEGORY_ID) references ES_CATEGORY (id);
 
 alter table ES_CATEGORY_ITEM add constraint UK_2d3wi5c7ydy3nq1pm4o2tql9c  unique (ES_CATEGORY_ID, ES_ITEM_ID);
+
+alter table ES_CATEGORY_ITEM_SPECIAL_TYPE add constraint FK_74aytr1c15gudg9yltny49y43 foreign key (CATEGORY_ID) references ES_CATEGORY (id);
 
 
 

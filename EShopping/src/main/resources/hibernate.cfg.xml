@@ -31,13 +31,19 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 
+        
+        <mapping class="com.eshopping.model.po.ESCatgoryItemSpecialType" />
         <mapping class="com.eshopping.model.po.ESCategory" />
         <mapping class="com.eshopping.model.po.ESCategoryItem" />
         <mapping class="com.eshopping.model.po.ESComboItem" />
         <mapping class="com.eshopping.model.po.ESItem" />
+        <mapping class="com.eshopping.model.po.ESImage" />
+        <mapping class="com.eshopping.model.po.EStemSpecialTypeMapping" />
+        <mapping class="com.eshopping.model.po.EShoppingItemConfigDetail" />
         <mapping class="com.eshopping.model.po.OrderItem" />
         <mapping class="com.eshopping.model.po.Order" />
         <mapping class="com.eshopping.model.po.User" />
     </session-factory>
 
 </hibernate-configuration>
+

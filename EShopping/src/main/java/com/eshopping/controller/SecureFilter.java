@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(urlPatterns = { "/mobile/personel.xhtml", "/mobile/order.xhtml" })
+@WebFilter(urlPatterns = { })
 public class SecureFilter implements Filter {
 
 	@Override
@@ -29,7 +29,7 @@ public class SecureFilter implements Filter {
 		if (userBean == null || userBean.getLoggedInUser() == null) {
 			((HttpServletResponse) response).sendRedirect(hreq.getContextPath()
 
-			+ "/mobile/login.xhtml?route=" + hreq.getServletPath());
+			+ "/login.xhtml?route=" + hreq.getServletPath());
 		} else {
 			chain.doFilter(request, response);
 		}

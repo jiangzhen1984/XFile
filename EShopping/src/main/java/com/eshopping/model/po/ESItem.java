@@ -28,7 +28,7 @@ public class ESItem {
 	private String picUrl;
 	
 	@Column(name = "PRICE", columnDefinition =  "NUMERIC(6,2)")
-	private Float price;
+	private float price;
 
 
 	public long getId() {
@@ -57,7 +57,7 @@ public class ESItem {
 
 
 	public float getPrice() {
-		return price == null? 0 : price;
+		return price;
 	}
 
 	public void setPrice(float price) {

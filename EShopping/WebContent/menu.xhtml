@@ -1,0 +1,95 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+	<head>
+<!-- start menu -->
+<link href="#{sessionConfigBean.browserCssConfig}/css/megamenu.css"
+	rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript"
+	src="#{sessionConfigBean.browserCssConfig}/js/megamenu.js"></script>
+<script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
+<!-- end menu -->
+</head>
+<body>
+	<div class="header-top">
+		<div class="wrap">
+			<div class="logo">
+				<a href="index.xhtml"><img src="web/images/logo.png" alt="" /></a>
+			</div>
+			<div class="cssmenu">
+				<ul>
+					<li class="active"><a href="register.xhtml">Sign up Save</a></li>
+					<li><a href="shop.xhtml">Store Locator</a></li>
+					<li><a href="login.xhtml">My Account</a></li>
+					<li><a href="checkout.xhtml">CheckOut</a></li>
+				</ul>
+			</div>
+			<ul class="icon2 sub-icon2 profile_img">
+				<li><a class="active-icon c2" href="#"> </a>
+					<ul class="sub-icon2 list">
+						<li><h3>Products</h3> <a href=""></a></li>
+						<li><p>
+								Lorem ipsum dolor sit amet, consectetuer <a href="">adipiscing
+									elit, sed diam</a>
+							</p></li>
+					</ul></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="header-bottom">
+		<div class="wrap">
+			<!-- start header menu -->
+			<ul class="megamenu skyblue">
+				<li><a class="color1" href="index.xhtml">Home</a></li>
+				
+				<c:forEach  var="item" items="#{global.topCategoryList}"
+					varStatus="itemStatus">
+					
+				<li class="grid">
+					<h:outputText value="&lt;a class='color#{itemStatus.index}' href='shop.xhtml?category=#{item.id}'&gt;#{item.name}&lt;/a&gt;" escape="false" />
+					<c:if test="#{item.isExistSubCategory == true}">
+					<div class="megapanel">
+						<div class="row">
+							<div class="col1">
+								<div class="h_nav">
+									<h4>
+										<h:outputLink value="shop.xhtml">    
+												<h:outputText value="#{item.firstSubCategory.name}"/>    
+												<f:param name="category" value="#{item.firstSubCategory.id}"/>    
+										</h:outputLink> 
+									</h4>
+									<ul>
+										<c:forEach  var="thirItem" items="#{item.firstSubCategory.subCategory}" varStatus="thirItemStatus">
+											<li>
+											<h:outputLink value="shop.xhtml">    
+												<h:outputText value="#{thirItem.name}"/>    
+												<f:param name="category" value="#{thirItem.id}"/>    
+												</h:outputLink>  
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+							<img src="web/images/nav_img.jpg" alt="" />
+						</div>
+					</div>
+					</c:if>
+				</li>
+					
+			 </c:forEach>
+				
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+</body>
+</html>

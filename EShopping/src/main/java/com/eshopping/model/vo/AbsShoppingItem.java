@@ -1,6 +1,7 @@
 package com.eshopping.model.vo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -11,7 +12,7 @@ public abstract class AbsShoppingItem {
 	
 	protected long id;
 
-	protected Float price;
+	protected float price;
 
 	protected String name;
 
@@ -30,11 +31,27 @@ public abstract class AbsShoppingItem {
 	protected boolean isRecommand;
 	
 	protected boolean isHot;
-
+	
+	protected float rank;
+	
+	protected int counts;
+	
+	protected int saledCounts;
+	
+	protected Date stockDate;
+	
+	protected List<CategoryItemSpecialType> specialTypeList;
+	
+	protected boolean loadImages;
+	
+	protected List<Image> imageList;
+	
 	public AbsShoppingItem(int type) {
 		super();
 		this.type = type;
 		categorys = new ArrayList<Category>();
+		specialTypeList = new ArrayList<CategoryItemSpecialType>();
+		imageList = new ArrayList<Image>();
 	}
 	
 	
@@ -145,6 +162,19 @@ public abstract class AbsShoppingItem {
 	public void setType(int type) {
 		this.type = type;
 	}
+	
+	
+	public void addSpecialType(CategoryItemSpecialType sType) {
+		this.specialTypeList.add(sType);
+	}
+	
+	public void removeSpecialType(CategoryItemSpecialType sType) {
+		this.specialTypeList.remove(sType);
+	}
+	
+	public List<CategoryItemSpecialType> getSpecialTypeList() {
+		return this.specialTypeList;
+	}
 
 
 	@Override
@@ -170,6 +200,32 @@ public abstract class AbsShoppingItem {
 		return true;
 	}
 
+
+	public boolean isLoadImages() {
+		return loadImages;
+	}
+
+
+	public void setLoadImages(boolean loadImages) {
+		this.loadImages = loadImages;
+	}
+
+
+	public List<Image> getImageList() {
+		return imageList;
+	}
+
+
+	public void addImage(Image image) {
+		if (image == null) {
+			return;
+		}
+		this.imageList.add(image);
+	}
+	
+	public void removeImage(Image image) {
+		this.imageList.remove(image);
+	}
 
 	
 	
