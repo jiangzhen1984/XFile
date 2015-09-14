@@ -17,19 +17,46 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	src="#{sessionConfigBean.browserCssConfig}/js/jquery.min.js"></script>
 </head>
 <body>
- <ui:include src="menu.xhtml" />
+ <ui:include src="include/menu.xhtml" />
        <div class="register_account">
           	<div class="wrap">
     	      <h4 class="title">Create an Account</h4>
-    		   <form>
-    			 <div class="col_1_of_2 span_1_of_2">
-		   			 <div><input type="text" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" /></div>
-		    			<div><input type="text" value="Company Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Company Name';}" /></div>
-		    			<div><input type="text" value="E-Mail" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-Mail';}" /></div>
-		    			<div><input type="text" value="password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}" /></div>
-		    	 </div>
-		    	  <div class="col_1_of_2 span_1_of_2">	
-		    		<div><input type="text" value="Address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Address';}" /></div>
+    		   <h:form onsubmit="return true;">
+				<div class="col_1_of_2 span_1_of_2">
+					<div>
+						<h:inputText id="name" value="#{registerDataBean.name}"
+							oninit="aaaa"
+							onfocus="if (this.value =='User Name') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'User Name';}" /><br />
+							<h:outputText value="#{registerDataBean.nameErrorMessage}" style="color:red;" />
+					</div>
+					<div>
+						<h:inputText id="mail" value="#{registerDataBean.mail}"
+							onfocus="if (this.value =='Email') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Email';}" /><br />
+							<h:outputText value="#{registerDataBean.mailErrorMessage}" style="color:red;" />
+					</div>
+					<div>
+						<h:inputText value="#{registerDataBean.passwd}"
+							onfocus="if (this.value =='Password') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Password';}" /><br />
+							<h:outputText value="#{registerDataBean.passwordErrorMessage}" style="color:red;" />
+					</div>
+					<div>
+						<h:inputText value="#{registerDataBean.passwdConfirm}"
+							onfocus="if (this.value =='Password Confirm') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Password Confirm';}" /><br />
+					</div>
+					<div>
+					<h:commandButton action="#{registerDataBean.register}" value="注 册"
+											class="grey" />
+						<p class="terms">
+							By clicking 'Create Account' you agree to the <a href="#">Terms
+								&amp; Conditions</a>.
+						</p>
+					</div>
+				</div>
+				<div class="col_1_of_2 span_2_of_2">	
 		    		<div><select id="country" name="country" onchange="change_country(this.value)" class="frm-field required">
 		            <option value="null">Select a Country</option>         
 		            <option value="AX">Åland Islands</option>
@@ -226,17 +253,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		            <option value="ST">Sao Tome and Principe</option>
 		            <option value="SA">Saudi Arabia</option>
 		            <option value="SN">Senegal</option>
-		         </select></div>		        
-		          <div><input type="text" value="City" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'City';}" /></div>
-		             <input type="text" value="" class="code" /> - <input type="text" value="" class="number" />
-		          	 <p class="code">Country Code + Phone Number</p>
-		          </div>
-		         <button class="grey">Submit</button>
-		         <p class="terms">By clicking 'Create Account' you agree to the <a href="#">Terms &amp; Conditions</a>.</p>
+		         </select></div>
+					<div>
+						<input type="text" value="City" onfocus="this.value = '';"
+							onblur="if (this.value == '') {this.value = 'City';}" />
+					</div>
+					<div>
+						<input type="text" value="" class="code" /> - 
+						<h:inputText value="#{registerDataBean.phone}" class="number"/>
+							<br />
+							<h:outputText value="#{registerDataBean.phoneErrorMessage}" style="color:red;" />
+						<p class="code">Country Code + Phone Number</p>
+					</div>
+				</div>
+		    
 		         <div class="clear"></div>
-		    </form>
+		    </h:form>
     	  </div> 
         </div>
-	<ui:include src="footer.xhtml" />
+	<ui:include src="include/footer.xhtml" />
 </body>
 </html>

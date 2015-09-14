@@ -24,15 +24,15 @@ public class SecureFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest hreq = (HttpServletRequest) request;
-		UserBean userBean = (UserBean) hreq.getSession().getAttribute(
-				"userBean");
-		if (userBean == null || userBean.getLoggedInUser() == null) {
-			((HttpServletResponse) response).sendRedirect(hreq.getContextPath()
-
-			+ "/login.xhtml?route=" + hreq.getServletPath());
-		} else {
+//		UserBean userBean = (UserBean) hreq.getSession().getAttribute(
+//				"userBean");
+//		if (userBean == null || userBean.getLoggedInUser() == null) {
+//			((HttpServletResponse) response).sendRedirect(hreq.getContextPath()
+//
+//			+ "/login.xhtml?route=" + hreq.getServletPath());
+//		} else {
 			chain.doFilter(request, response);
-		}
+		//}
 	}
 
 	@Override

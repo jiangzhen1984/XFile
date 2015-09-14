@@ -8,6 +8,8 @@ import javax.faces.bean.SessionScoped;
 public class SessionConfigBean {
 	
 	private boolean mobileBrowserFlag;
+	
+	private boolean isLogedIn;
 
 	public SessionConfigBean() {
 	}
@@ -23,6 +25,14 @@ public class SessionConfigBean {
 	
 	public void setBrowserConfig(boolean isMobile) {
 		mobileBrowserFlag = isMobile;
+	}
+	
+	public boolean isLogin() {
+		return isLogedIn;
+	}
+	
+	public void setLogin(boolean flag) {
+		this.isLogedIn = true;
 	}
 	
 	

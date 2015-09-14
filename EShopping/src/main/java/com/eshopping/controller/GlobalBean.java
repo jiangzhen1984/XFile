@@ -14,11 +14,11 @@ import com.eshopping.service.GlobalCache;
 public class GlobalBean {
 
 	
-	public static String GLOBAL_HOST = "http://10.147.6.103:8080/";
+	public static String GLOBAL_HOST = "http://127.0.0.1:8080/";
 	
-	public static String GLOBAL_CONTEXT = "TodayBreakfast/";
+	public static String GLOBAL_CONTEXT = "";
 	
-	public static String GLOBAL_IMAGE_HOST = "http://10.147.6.103:8080/TodayBreakfast/";
+	public static String GLOBAL_IMAGE_HOST = GLOBAL_HOST + GLOBAL_CONTEXT;
 	
 	
 	public String getGlobalUrl() {
@@ -29,6 +29,10 @@ public class GlobalBean {
 		return GLOBAL_IMAGE_HOST;
 	}
 	
+	
+	public String getContext() {
+		return GLOBAL_CONTEXT;
+	}
 	
 	
 	public List<Category> getTopCategoryList() {

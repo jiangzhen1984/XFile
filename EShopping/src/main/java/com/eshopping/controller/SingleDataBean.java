@@ -37,7 +37,7 @@ public class SingleDataBean {
 		
 		item = GlobalCache.getInstance().getShoppingItem(type, itemId);
 		
-		if (!item.isLoadImages()) {
+		if (item != null && !item.isLoadImages()) {
 			EShoppingService service = new EShoppingService();
 			service.queryImageList(item);
 		}

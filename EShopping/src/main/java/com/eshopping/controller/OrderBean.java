@@ -21,8 +21,8 @@ public class OrderBean {
 	private CartBean cartBean;
 	
 	
-	@ManagedProperty(value="#{userBean}")
-	private UserBean userBean;
+	@ManagedProperty(value="#{sessionConfigBean}")
+	private SessionConfigBean serssionConfigBean;
 	
 	private String retrievePlace;
 	
@@ -39,13 +39,13 @@ public class OrderBean {
 
 
 
+	
 
-	public void setUserBean(UserBean userBean) {
-		this.userBean = userBean;
+
+
+	public void setSerssionConfigBean(SessionConfigBean serssionConfigBean) {
+		this.serssionConfigBean = serssionConfigBean;
 	}
-
-
-
 
 	public String getRetrievePlace() {
 		return retrievePlace;
@@ -68,19 +68,20 @@ public class OrderBean {
 
 		}
 		
-		if (userBean == null || userBean.getLoggedInUser() == null) {
+		if (serssionConfigBean == null || !serssionConfigBean.isLogin()) {
 			return "login";
 		}
 		
-		Order order= service.checkoutCart(cartBean.getCart(), userBean.getLoggedInUser(), retrievePlace);
-		if (order != null) {
-			//TODO redirect pay page
-			return "";
-		} else {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage("order", new FacesMessage("创建订单信息失败。。"));
-			return "failed";
-		}
+//		Order order= service.checkoutCart(cartBean.getCart(), userBean.getLoggedInUser(), retrievePlace);
+//		if (order != null) {
+//			//TODO redirect pay page
+//			return "";
+//		} else {
+//			FacesContext facesContext = FacesContext.getCurrentInstance();
+//			facesContext.addMessage("order", new FacesMessage("创建订单信息失败。。"));
+//			return "failed";
+//		}
+		return "";
 	}
 	
 	
@@ -90,37 +91,42 @@ public class OrderBean {
 	
 	
 	public List<Order> getUnPaidOrderList() {
-		if (userBean == null || userBean.getLoggedInUser() == null) {
+		if (!checkLogin()) {
 			return null;
 		}
 		
-		if (unPaidList == null) {
-			unPaidList = service.getUserOrderList(userBean.getLoggedInUser(), Order.OrderState.NOT_PAIED);
-		}
+//		if (unPaidList == null) {
+//			unPaidList = service.getUserOrderList(userBean.getLoggedInUser(), Order.OrderState.NOT_PAIED);
+//		}
 		return unPaidList;
 	}
 	
 	
 	public List<Order> getPaidOrderList() {
-		if (userBean == null || userBean.getLoggedInUser() == null) {
+		if (!checkLogin()) {
 			return null;
 		}
 		
-		if (paidList == null) {
-			paidList = service.getUserOrderList(userBean.getLoggedInUser(), Order.OrderState.PAIED);
-		}
+//		if (paidList == null) {
+//			paidList = service.getUserOrderList(userBean.getLoggedInUser(), Order.OrderState.PAIED);
+//		}
 		return paidList;
 	}
 	
 	
 	public List<Order> getFinishedOrderList() {
-		if (userBean == null || userBean.getLoggedInUser() == null) {
+		if (!checkLogin()) {
 			return null;
 		}
 		
-		if (finishedList == null) {
-			finishedList = service.getUserOrderList(userBean.getLoggedInUser(), Order.OrderState.COMPLETED);
-		}
+//		if (finishedList == null) {
+//			finishedList = service.getUserOrderList(userBean.getLoggedInUser(), Order.OrderState.COMPLETED);
+//		}
 		return finishedList;
+	}
+	
+	
+	private boolean checkLogin() {
+		return !(serssionConfigBean == null || !serssionConfigBean.isLogin());
 	}
 }

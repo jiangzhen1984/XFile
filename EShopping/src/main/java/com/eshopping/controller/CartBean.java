@@ -13,9 +13,6 @@ import com.eshopping.model.vo.Cart;
 public class CartBean {
 
 	
-	@ManagedProperty(value="#{userBean}")
-	private UserBean userBean;
-	
 	private Cart cart;
 	private String retrieveDate;
 	
@@ -34,9 +31,7 @@ public class CartBean {
 	
 	
 
-	public void setUserBean(UserBean userBean) {
-		this.userBean = userBean;
-	}
+
 
 	public void removeItem(long id, int itemType) {
 		
@@ -62,18 +57,5 @@ public class CartBean {
 		this.retrieveDate = retrieveDate;
 	}
 	
-
-
-	public String checkout() {
-		if (userBean.getLoggedInUser() != null) {
-			if (cart.getItemCount() <= 0 || cart.getTotalPrice() <= 0) {
-				return "bflist";
-			} else {
-				return "order";
-			}
-		} else {
-			return "login";
-		}
-	}
 	
 }

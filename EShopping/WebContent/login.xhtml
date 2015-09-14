@@ -16,7 +16,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script type="text/javascript" src="#{sessionConfigBean.browserCssConfig}/js/jquery.min.js"></script>
 </head>
 <body>
-  	<ui:include src="menu.xhtml" />
+  	<ui:include src="include/menu.xhtml" />
        <div class="login">
           <div class="wrap">
 				<div class="col_1_of_login span_1_of_login">
@@ -32,30 +32,32 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				  <div class="login-title">
 	           		<h4 class="title">Registered Customers</h4>
 					 <div class="comments-area">
-						<form>
+					 <h:outputText value="#{loginDataBean.commonErr}" style="color:red;" />
+						<h:form>
 							<p>
 								<label>Name</label>
-								<span>*</span>
-								<input type="text" value="" />
+								<span>*</span> <h:outputText value="#{loginDataBean.userNameErr}" style="color:red;" />
+								<h:inputText  value="#{loginDataBean.userName}" />
 							</p>
 							<p>
 								<label>Password</label>
-								<span>*</span>
-								<input type="password" value="" />
+								<span>*</span><h:outputText value="#{loginDataBean.passwordErr}" style="color:red;" />
+								<h:inputSecret value="#{loginDataBean.password}" />
 							</p>
 							 <p id="login-form-remember">
 								<label><a href="#">Forget Your Password ? </a></label>
 							 </p>
 							 <p>
-								<input type="submit" value="Login" />
+							 	<h:commandButton action="#{loginDataBean.login}" value="Log in"
+											class="grey" />
 							</p>
-						</form>
+						</h:form>
 					</div>
 			      </div>
 				</div>
 				<div class="clear"></div>
 			</div>
 		</div>
-        <ui:include src="footer.xhtml" />
+        <ui:include src="include/footer.xhtml" />
 </body>
 </html>

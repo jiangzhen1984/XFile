@@ -9,14 +9,15 @@ import org.hibernate.Transaction;
 import com.eshopping.model.po.User;
 
 
-public class UserService extends BaseService {
+public class ESUserService extends BaseService {
 
 	
-	public User selectUser(String userName, String password) {
+	public User selectUser(String userName, String mail, String password) {
 		Session session = this.getSessionFactory().openSession();
-		Query query = session.createQuery(" from User where cellPhone=? and password=?");
+		Query query = session.createQuery(" from User where (cellPhone=? or mail =?) and password=?");
 		query.setString(0, userName);
-		query.setString(1, password);
+		query.setString(1, mail);
+		query.setString(2, password);
 		List<User> list = (List<User>)query.list();
 		User user = null;
 		if (list.size() > 0) {
@@ -27,10 +28,11 @@ public class UserService extends BaseService {
 	}
 	
 	
-	public User selectUser(String userName) {
+	public User selectUser(String phone, String mail) {
 		Session session = this.getSessionFactory().openSession();
-		Query query = session.createQuery(" from User where cellPhone=?");
-		query.setString(0, userName);
+		Query query = session.createQuery(" from User where (cellPhone=? or mail =?) ");
+		query.setString(0, phone);
+		query.setString(1, mail);
 		List<User> list = (List<User>)query.list();
 		User user = null;
 		if (list.size() > 0) {
@@ -41,7 +43,7 @@ public class UserService extends BaseService {
 	}
 	
 	public int addUser(User user) {
-		User u = selectUser(user.getCellPhone());
+		User u = selectUser(user.getCellPhone(), user.getMail());
 		if (u != null) {
 			return -1;
 		}
