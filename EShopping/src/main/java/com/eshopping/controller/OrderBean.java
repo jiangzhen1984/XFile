@@ -18,7 +18,7 @@ import com.eshopping.service.OrderService;
 public class OrderBean {
 
 	@ManagedProperty(value="#{cartBean}")
-	private CartBean cartBean;
+	private CheckoutDataBean cartBean;
 	
 	
 	@ManagedProperty(value="#{sessionConfigBean}")
@@ -33,7 +33,7 @@ public class OrderBean {
 		
 	}
 	
-	public void setCartBean(CartBean cartBean) {
+	public void setCartBean(CheckoutDataBean cartBean) {
 		this.cartBean = cartBean;
 	}
 

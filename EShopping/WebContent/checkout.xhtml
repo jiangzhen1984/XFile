@@ -21,13 +21,50 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <body>
 	<ui:include src="include/menu.xhtml" />
 	<div class="login">
+		<c:if test="#{checkoutBean.totalCount lt 0}"  >
 		<div class="wrap">
+			<div class="rsidebar span_1_of_left">
+				 <ul class="sub_list2">
+				 	<h4 class="m_10">All Settings >></h4>
+					<li><a href="shop.html">My Cart</a></li>
+					<li><a href="shop.html">My Address</a></li>
+					<li><a href="shop.html">My Toys</a></li>
+					<li><a href="shop.html">My Order</a></li>
+					
+				</ul>
+			</div>
+			<div class="cont span_2_of_3">
+			
+			
 			<h4 class="title">Shopping cart is empty</h4>
 			<p class="cart">
 				You have no items in your shopping cart.<br />Click<a
 					href="index.xhtml"> here</a> to continue shopping
 			</p>
+			</div>
 		</div>
+		</c:if>
+		<c:if test="#{checkoutBean.totalCount gt 0}" >
+		<div class="wrap">
+		<div class="rsidebar span_1_of_left">
+				 <ul class="sub_list2">
+				 	<h4 class="m_10">All Settings >></h4>
+					<li><a href="shop.xhtml">My Cart</a></li>
+					<li><a href="shop.xhtml">My Address</a></li>
+					<li><a href="shop.xhtml">My Toys</a></li>
+					<li><a href="shop.xhtml">My Order</a></li>
+					
+				</ul>
+			</div>
+			<div class="cont span_2_of_3">
+			
+			<c:forEach items="#{checkoutBean.cart.items}" var="item">ss
+				<h:outputText value="#{item.value.wr.name}"  />dd<br />
+			</c:forEach>
+			</div>
+		</div>
+		</c:if>
+		<div class="clear"></div>
 	</div>
 	<ui:include src="include/footer.xhtml" />
 

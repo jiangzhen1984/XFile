@@ -52,7 +52,7 @@ public class AJAXHandler extends HttpServlet {
 			throws ServletException, IOException {
 		JSONObject ret = new JSONObject();
 		HttpSession session = req.getSession();
-		CartBean cartBean = (CartBean)session.getAttribute("cartBean");
+		CheckoutDataBean cartBean = (CheckoutDataBean)session.getAttribute("cartBean");
 		if (cartBean == null) {
 			ret.put("errcode", 2);
 			ret.put("msg", "No Bean");

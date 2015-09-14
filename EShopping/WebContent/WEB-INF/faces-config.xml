@@ -6,46 +6,6 @@
 
 
 	<navigation-rule>
-		<from-view-id>/mobile/login.xhtml</from-view-id>
-		<navigation-case>
-			<from-action>#{userBean.login}</from-action>
-			<from-outcome>list</from-outcome>
-			<to-view-id>/mobile/bflist.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-action>#{userBean.login}</from-action>
-			<from-outcome>failed</from-outcome>
-			<to-view-id>/mobile/login.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-action>#{userBean.login}</from-action>
-			<from-outcome>/mobile/cart.xhtml</from-outcome>
-			<to-view-id>/mobile/cart.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-action>#{userBean.login}</from-action>
-			<from-outcome>/mobile/order.xhtml</from-outcome>
-			<to-view-id>/mobile/order.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-action>#{userBean.login}</from-action>
-			<from-outcome>/mobile/personel.xhtml</from-outcome>
-			<to-view-id>/mobile/personel.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-action>#{userBean.logout}</from-action>
-			<from-outcome>login</from-outcome>
-			<to-view-id>/mobile/login.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-
-
-	<navigation-rule>
 		<from-view-id>/mobile/cart.xhtml</from-view-id>
 		<navigation-case>
 			<from-action>#{cartBean.checkout}</from-action>
@@ -109,6 +69,19 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	
+	
+	
+	<navigation-rule>
+		<from-view-id>/single.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{singleDataBean.addToCart}</from-action>
+			<from-outcome>checkout</from-outcome>
+			<to-view-id>/checkout.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
 	
 	
 	<navigation-rule>

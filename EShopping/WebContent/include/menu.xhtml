@@ -22,13 +22,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<div class="header-top">
 		<div class="wrap">
 			<div class="logo">
-				<a href="index.xhtml"><img src="web/images/logo.png" alt="" /></a>
+				<a href="index.xhtml"><img src="/#{global.context}/#{sessionConfigBean.browserCssConfig}/images/logo.png" alt="" /></a>
 			</div>
 			<div class="cssmenu">
 				<ul>
-					<li class="active"><a href="/#{global.context}/register.xhtml">Sign up Save</a></li>
+					<c:if test="#{sessionConfigBean.isLogin() == false}" >
+						<li class="active"><a href="/#{global.context}/register.xhtml">Sign up Save</a></li>
+					</c:if>
 					<li><a href="/#{global.context}/shop.xhtml">Store Locator</a></li>
-					<li><a href="/#{global.context}/login.xhtml">My Account</a></li>
+					<c:if test="#{sessionConfigBean.isLogin() == true}" >
+						<li><a href="/#{global.context}/personel/personel.xhtml">My Account</a></li>
+					</c:if>
+					<c:if test="#{sessionConfigBean.isLogin() == false}" >
+						<li><a href="/#{global.context}/login.xhtml">My Account</a></li>
+					</c:if>
 					<li><a href="/#{global.context}/checkout.xhtml">CheckOut</a></li>
 				</ul>
 			</div>
@@ -55,7 +62,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					varStatus="itemStatus">
 					
 				<li class="grid">
-					<h:outputText value="&lt;a class='color#{itemStatus.index}' href='shop.xhtml?category=#{item.id}'&gt;#{item.name}&lt;/a&gt;" escape="false" />
+					<h:outputText value="&lt;a class='color#{itemStatus.index}' href='/#{global.context}/shop.xhtml?category=#{item.id}'&gt;#{item.name}&lt;/a&gt;" escape="false" />
 					<c:if test="#{item.isExistSubCategory == true}">
 					<div class="megapanel">
 						<div class="row">

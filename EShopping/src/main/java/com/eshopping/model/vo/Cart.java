@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.eshopping.model.Key;
+
 public class Cart {
 	
 	private int count;
@@ -25,7 +27,7 @@ public class Cart {
 		if (bw == null) {
 			return;
 		}
-		Key key = new Key(bw.getType()+"", bw.getId());
+		Key key = Key.getKey(bw.getType(), bw.getId());
 		InnerBox box = cache.get(key);
 		if (box == null) {
 			box = new InnerBox();
@@ -37,11 +39,11 @@ public class Cart {
 		totalPrice += bw.getPrice();
 	}
 	
-	public void minusBreakfast(AbsShoppingItem bw) {
+	public void minusItem(AbsShoppingItem bw) {
 		if (bw == null) {
 			return;
 		}
-		Key key = new Key(bw.getType()+"", bw.getId());
+		Key key = Key.getKey(bw.getType(), bw.getId());
 		InnerBox box = cache.get(key);
 		if (box == null) {
 			return;
@@ -55,11 +57,11 @@ public class Cart {
 	}
 	
 	
-	public void removeBreakfastItem(AbsShoppingItem bw) {
+	public void removeItem(AbsShoppingItem bw) {
 		if (bw == null) {
 			return;
 		}
-		Key key = new Key(bw.getType() +"", bw.getId());
+		Key key = Key.getKey(bw.getType(), bw.getId());
 		InnerBox box = cache.remove(key);
 		if (box != null) {
 			count -= box.count;
@@ -85,51 +87,7 @@ public class Cart {
 		return cache.entrySet();
 	}
 	
-	
-	public class Key {
-		String type;
-		long id;
-		public Key(String type, long id) {
-			super();
-			this.type = type;
-			this.id = id;
-		}
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + getOuterType().hashCode();
-			result = prime * result + (int) (id ^ (id >>> 32));
-			result = prime * result + ((type == null) ? 0 : type.hashCode());
-			return result;
-		}
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Key other = (Key) obj;
-			if (!getOuterType().equals(other.getOuterType()))
-				return false;
-			if (id != other.id)
-				return false;
-			if (type == null) {
-				if (other.type != null)
-					return false;
-			} else if (!type.equals(other.type))
-				return false;
-			return true;
-		}
-		private Cart getOuterType() {
-			return Cart.this;
-		}
-		
-		
-	}
-	
+
 	public class InnerBox {
 		AbsShoppingItem wr;
 		int count;

@@ -98,14 +98,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	    	</h:form>
      	    <div class="clear"></div>
 	       </div>
-	       			<ui:repeat id="item" var="item" value="#{shopDataBean.categoryList}"
+	       			<ui:repeat id="item" var="item" value="#{shopDataBean.categoryItemList}"
 					varStatus="itemStatus">
 					
 					
 					<h:outputText value="&lt;div class='box1' &gt;" escape="false"
 						rendered="#{itemStatus.index % 3 == 0}" />
 						
-				   <div class="col_1_of_single1 span_1_of_single1"><a href="single.xhtml">
+				   <div class="col_1_of_single1 span_1_of_single1">
+				   <h:outputLink value="single.xhtml">
+				   	<f:param name="itemid" value="#{item.id}"  />
+				   	<f:param name="itemtype" value="#{item.type}"  />
 				     <div class="view1 view-fifth1">
 				  	  <div class="top_box">
 					  	<h3 class="m_1">Lorem ipsum dolor sit amea</h3>
@@ -146,7 +149,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						   </li>
 					     </ul>
 			    	    <div class="clear"></div>
-			    	</a></div>
+			    	</h:outputLink>
+			    	</div>
 
 				  <h:outputText
 						value=" &lt;div class='clear'&gt;&lt;/div&gt; &lt;/div&gt;"

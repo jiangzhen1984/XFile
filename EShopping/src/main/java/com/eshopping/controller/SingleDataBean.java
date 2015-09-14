@@ -1,6 +1,7 @@
 package com.eshopping.controller;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
@@ -12,8 +13,8 @@ import com.eshopping.service.GlobalCache;
 @RequestScoped
 public class SingleDataBean {
 
-	
-	
+	@ManagedProperty(value="#{checkoutBean}")
+	private CheckoutDataBean checkDataBean;
 	private AbsShoppingItem item;
 	
 	
@@ -46,8 +47,25 @@ public class SingleDataBean {
 	
 	
 	
+	
+	
+	public void setCheckDataBean(CheckoutDataBean checkDataBean) {
+		this.checkDataBean = checkDataBean;
+	}
+
+
+
+
+
+
 	public AbsShoppingItem getViewedItem() {
 		return item;
+	}
+	
+	
+	public String addToCart() {
+		checkDataBean.updateCart(item.getId(), 2, item.getType());
+		return "checkout";
 	}
 	
 }

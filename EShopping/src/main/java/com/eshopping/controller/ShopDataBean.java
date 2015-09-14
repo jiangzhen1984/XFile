@@ -55,7 +55,7 @@ public class ShopDataBean {
 	}
 	
 	
-	public List<AbsShoppingItem> getCategoryList() {
+	public List<AbsShoppingItem> getCategoryItemList() {
 		return itemList;
 	}
 	
