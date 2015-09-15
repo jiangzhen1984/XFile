@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(urlPatterns = { })
+@WebFilter(urlPatterns = {"/personel/addressselection.xhtml", "/checkout.xhtml" })
 public class SecureFilter implements Filter {
 
 	@Override
@@ -24,15 +24,15 @@ public class SecureFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest hreq = (HttpServletRequest) request;
-//		UserBean userBean = (UserBean) hreq.getSession().getAttribute(
-//				"userBean");
-//		if (userBean == null || userBean.getLoggedInUser() == null) {
-//			((HttpServletResponse) response).sendRedirect(hreq.getContextPath()
-//
-//			+ "/login.xhtml?route=" + hreq.getServletPath());
-//		} else {
+		SessionConfigBean userBean = (SessionConfigBean) hreq.getSession().getAttribute(
+				"sessionConfigBean");
+		if (userBean == null || !userBean.isLogin()) {
+			((HttpServletResponse) response).sendRedirect(hreq.getContextPath()
+
+			+ "/login.xhtml?route=" + hreq.getServletPath());
+		} else {
 			chain.doFilter(request, response);
-		//}
+		}
 	}
 
 	@Override

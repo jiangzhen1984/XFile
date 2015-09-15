@@ -9,7 +9,7 @@ import com.eshopping.service.GlobalCache;
 
 
 
-@ManagedBean(name = "checkoutBean", eager = false)
+@ManagedBean(name = "checkoutDataBean", eager = false)
 @SessionScoped
 public class CheckoutDataBean {
 
@@ -47,5 +47,8 @@ public class CheckoutDataBean {
 	}
 
 
+	public String checkout() {
+		return "addressselection";
+	}
 	
 }

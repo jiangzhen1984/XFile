@@ -42,7 +42,8 @@
         <mapping class="com.eshopping.model.po.EShoppingItemConfigDetail" />
         <mapping class="com.eshopping.model.po.OrderItem" />
         <mapping class="com.eshopping.model.po.Order" />
-        <mapping class="com.eshopping.model.po.User" />
+        <mapping class="com.eshopping.model.po.ESUser" />
+        <mapping class="com.eshopping.model.po.ESUserAddress" />
     </session-factory>
 
 </hibernate-configuration>

@@ -5,38 +5,6 @@
 	version="2.1">
 
 
-	<navigation-rule>
-		<from-view-id>/mobile/cart.xhtml</from-view-id>
-		<navigation-case>
-			<from-action>#{cartBean.checkout}</from-action>
-			<from-outcome>login</from-outcome>
-			<to-view-id>/mobile/login.xhtml?route=/mobile/order.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-action>#{cartBean.checkout}</from-action>
-			<from-outcome>order</from-outcome>
-			<to-view-id>/mobile/order.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-action>#{cartBean.checkout}</from-action>
-			<from-outcome>order</from-outcome>
-			<to-view-id>/mobile/bflist.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-
-
-	<navigation-rule>
-		<from-view-id>/mobile/personel.xhtml</from-view-id>
-		<navigation-case>
-			<from-action>#{userBean.logout}</from-action>
-			<from-outcome>logout</from-outcome>
-			<to-view-id>/mobile/login.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
 
 
 	<navigation-rule>
@@ -83,19 +51,14 @@
 	</navigation-rule>
 	
 	
-	
 	<navigation-rule>
-		<from-view-id>/mobile/order.xhtml</from-view-id>
+		<from-view-id>/checkout.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{orderBean.pay}</from-action>
-			<from-outcome>failed</from-outcome>
-			<to-view-id>/mobile/order.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-action>#{orderBean.pay}</from-action>
-			<from-outcome>login</from-outcome>
-			<to-view-id>/mobile/login.xhtml?route=/mobile/order.xhtml</to-view-id>
+			<from-action>#{checkoutDataBean.checkout}</from-action>
+			<from-outcome>addressselection</from-outcome>
+			<to-view-id>/personel/addressselection.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
 
 </faces-config>

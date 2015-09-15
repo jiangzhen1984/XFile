@@ -17,8 +17,8 @@ import com.eshopping.model.Key;
 import com.eshopping.model.po.Order;
 import com.eshopping.model.po.Order.OrderState;
 import com.eshopping.model.po.OrderItem;
-import com.eshopping.model.po.User;
 import com.eshopping.model.vo.Cart;
+import com.eshopping.model.vo.User;
 import com.eshopping.model.vo.Cart.InnerBox;
 
 

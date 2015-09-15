@@ -4,7 +4,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import com.eshopping.model.po.User;
+import com.eshopping.model.vo.User;
 import com.eshopping.service.ESUserService;
 
 @ManagedBean(name = "loginDataBean", eager = true)
@@ -97,7 +97,7 @@ public class LoginDataBean {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			SessionConfigBean configBean = (SessionConfigBean)facesContext.getExternalContext().getSessionMap().get("sessionConfigBean");
 			configBean.setLogin(true);
-			//TODO add User to config
+			configBean.setUser(user);
 			return "personel";
 		}
 	}

@@ -5,7 +5,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import com.eshopping.model.po.User;
+import com.eshopping.model.vo.User;
 import com.eshopping.service.ESUserService;
 
 

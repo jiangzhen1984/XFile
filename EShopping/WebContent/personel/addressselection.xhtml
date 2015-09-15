@@ -7,6 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <title>Free Adidas Website Template | Checkout :: w3layouts</title>
@@ -14,12 +15,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	content="width=device-width, initial-scale=1, maximum-scale=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript"
-	src="#{sessionConfigBean.browserCssConfig}/js/jquery.min.js"></script>
-<link href="#{sessionConfigBean.browserCssConfig}/css/style.css?aa"
+	src="/#{global.context}//#{sessionConfigBean.browserCssConfig}/js/jquery.min.js"></script>
+<link href="/#{global.context}/#{sessionConfigBean.browserCssConfig}/css/style.css?aa"
 	rel="stylesheet" type="text/css" media="all" />
 </head>
 <body>
-	<ui:include src="include/menu.xhtml" />
+	<ui:include src="../include/menu.xhtml" />
 	<div class="login">
 	<div class="wrap">
 		<c:if test="#{sessionConfigBean.isLogin() == true}" >
@@ -32,69 +33,56 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				</ul>
 			</div>
 		</c:if>
-		<c:if test="#{checkoutDataBean.totalCount le 0}"  >
+		<c:if test="#{addressSelectionDataBean.addressCount le 0}"  >
 			<div class="cont span_2_of_3">
 			
-			<h4 class="title">Shopping cart is empty</h4>
+			<h4 class="title">No available address</h4>
 			<p class="cart">
-				You have no items in your shopping cart.<br />Click<a
-					href="index.xhtml"> here</a> to continue shopping
+				
 			</p>
 			</div>
 		</c:if>
 		<div class="cont span_2_of_3">
 		<div class="in-check" >
 			<ul class="unit">
-				<li><span>Item</span></li>
-				<li><span>Product Name</span></li>		
-				<li><span>Unit Price</span></li>
-				<li><span>Delivery Details</span></li>
+				<li><span>Address</span></li>
+				<li><span>Name</span></li>		
+				<li><span>Zip Code</span></li>
+				<li><span>Phone</span></li>
 				<li> </li>
 				<li></li>
 				<div class="clear"> </div>
-			</ul>
-			<h:form>
-			<c:forEach items="#{checkoutDataBean.cart.items}" var="item">
-				<script type="text/javascript">
-					$(document).ready(function(c) {
-							$('##{item.value.wr.id}').on('click', function(c){
-								$('##{item.value.wr.id}h').fadeOut('slow', function(c){
-									$('##{item.value.wr.id}h').remove();
-								});
-								});	  
-							});
-				</script>
-				
+			</ul>s
+			<c:forEach items="#{addressSelectionDataBean.addressList}" var="item">
 					
-					<ul class="cart-header" id="#{item.value.wr.id}h">
-						<div class="close" id="#{item.value.wr.id}"> </div>
-							<li class="ring-in"><a href="single.html" ><img src="web/images/c-1.jpg" class="img-responsive" alt="" /></a>
+					<ul class="cart-header">
+							<li class="ring-in"><h:outputText value="#{item.address}" />
 							</li>
-							<li><span class="name">Analog Watches</span></li>
-							<li><span class="cost">$ 290.00</span></li>
-							<li><span>Free</span>
-							<p>Delivered in 2-3 business days</p></li>
+							<li><span class="name"><h:outputText value="#{item.name}" /></span></li>
+							<li><span class="cost"><h:outputText value="#{item.postCode}" /></span></li>
+							<li><span><h:outputText value="#{item.phoneNumber}" /></span></li>
+							<li><span></span></li>
 							<li><span></span></li>
 						<div class="clear"> </div>
 					</ul>
 				
 			</c:forEach>
+
 				<ul class="cart-header" >
 					<li><span></span></li>
 					<li><span></span></li>
-					<li><span class="name"><h:outputText value="#{checkoutDataBean.cart.totalPrice}" /></span></li>
+					<li><span class="name"></span></li>
 					<li><span></span></li>
-					<li><span><h:commandButton action="#{checkoutDataBean.checkout}" value="Continue"
+					<li><span><h:commandButton  value="Next"
 												class="grey" /></span></li>
 					<div class="clear"> </div>
 				</ul>
-				</h:form>
 		</div>
 		</div>
 	</div>
 	<div class="clear"></div>
 	</div>
-	<ui:include src="include/footer.xhtml" />
+	<ui:include src="../include/footer.xhtml" />
 
 </body>
 </html>

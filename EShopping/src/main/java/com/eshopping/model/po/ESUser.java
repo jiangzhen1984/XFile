@@ -9,13 +9,13 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table( name = "TB_USER" )
-public class User {
+@Table( name = "ES_USER" )
+public class ESUser {
 	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
+	protected long id;
 	
 	@Column(name="CELL_PHONE", columnDefinition="VARCHAR(40)")
 	private String cellPhone;
@@ -31,13 +31,14 @@ public class User {
 	
 	@Column(name="MAIL", columnDefinition="VARCHAR(100)")
 	private String mail;
+
 	
 	
-	public User() {
+	public ESUser() {
 		
 	}
 	
-	public User(User u) {
+	public ESUser(ESUser u) {
 		this.setAddress(u.getAddress());
 		this.setCellPhone(u.getCellPhone());
 		this.setName(u.getName());
@@ -91,10 +92,6 @@ public class User {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-	
-	
-	
-	
 	
 
 }

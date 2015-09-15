@@ -1,24 +1,18 @@
-<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<!DOCTYPE HTML>
-<html xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
-	<head>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
 <!-- start menu -->
-<link href="#{sessionConfigBean.browserCssConfig}/css/megamenu.css"
+<link href="/#{global.context}/#{sessionConfigBean.browserCssConfig}/css/megamenu.css"
 	rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="/#{global.context}/#{sessionConfigBean.browserCssConfig}/css/etalage.css" />
 <script type="text/javascript"
-	src="#{sessionConfigBean.browserCssConfig}/js/megamenu.js"></script>
+	src="/#{global.context}/#{sessionConfigBean.browserCssConfig}/js/megamenu.js"></script>
 <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
 <!-- end menu -->
-</head>
-<body>
+
 	<div class="header-top">
 		<div class="wrap">
 			<div class="logo">
@@ -98,5 +92,4 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="clear"></div>
 		</div>
 	</div>
-</body>
-</html>
+</ui:composition>

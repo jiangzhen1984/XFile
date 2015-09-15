@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.eshopping.model.vo.User;
+
 @Entity
 @Table(name = "ES_ORDER")
 public class Order {
@@ -52,7 +54,7 @@ public class Order {
 	
 	@ManyToOne
 	@JoinColumn(name = "USER_ID", referencedColumnName = "ID", unique = false)
-	private User user;
+	private ESUser user;
 
 	@OneToMany
 	@JoinColumn(name = "ORDER_ID",  unique = false)
@@ -160,7 +162,7 @@ public class Order {
 	}
 	
 	
-	public User getUser() {
+	public ESUser getUser() {
 		return user;
 	}
 

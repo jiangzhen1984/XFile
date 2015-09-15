@@ -95,7 +95,7 @@ create table ES_CATEGORY_ITEM (
 
 
 
-create table TB_USER (
+create table ES_USER (
 	id bigint not null auto_increment, 
 	ADDRESS VARCHAR(200), 
 	CELL_PHONE VARCHAR(40), 
@@ -104,6 +104,22 @@ create table TB_USER (
 	MAIL VARCHAR(100),
 	primary key (id)
 );
+
+
+create table ES_USER_ADDRESS (
+	id bigint not null auto_increment, 
+	ADDR_COUNTRY VARCHAR(200), 
+	ADDR_STATE VARCHAR(200), 
+	ADDR_CITY VARCHAR(200), 
+	ADDR_DETAIL VARCHAR(200), 
+	ADDR_POST_CODE VARCHAR(200),
+	NAME VARCHAR(200),
+	PHONE_NUMBER VARCHAR(200),
+	ADDR_DEF  BOOL default FALSE,
+	ES_USER_ID bigint,
+	primary key (id)
+);
+
 
 
 create table ES_ORDER (
@@ -139,6 +155,9 @@ alter table ES_CATEGORY_ITEM add constraint FK_rq0h09mi3q7i3um10xr4t8v0b foreign
 alter table ES_CATEGORY_ITEM add constraint UK_2d3wi5c7ydy3nq1pm4o2tql9c  unique (ES_CATEGORY_ID, ES_ITEM_ID);
 
 alter table ES_CATEGORY_ITEM_SPECIAL_TYPE add constraint FK_74aytr1c15gudg9yltny49y43 foreign key (CATEGORY_ID) references ES_CATEGORY (id);
+
+alter table ES_USER_ADDRESS add constraint FK_74aytr1c15gudg9yltny49y41 foreign key (ES_USER_ID) references ES_USER (id);
+
 
 
 

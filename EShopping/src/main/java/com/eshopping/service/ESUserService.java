@@ -1,20 +1,23 @@
 package com.eshopping.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.eshopping.model.po.User;
+import com.eshopping.model.po.ESUserAddress;
+import com.eshopping.model.vo.Address;
+import com.eshopping.model.vo.User;
 
 
 public class ESUserService extends BaseService {
 
 	
 	public User selectUser(String userName, String mail, String password) {
-		Session session = this.getSessionFactory().openSession();
-		Query query = session.createQuery(" from User where (cellPhone=? or mail =?) and password=?");
+		Session session = openSession();
+		Query query = session.createQuery(" from ESUser where (cellPhone=? or mail =?) and password=?");
 		query.setString(0, userName);
 		query.setString(1, mail);
 		query.setString(2, password);
@@ -29,8 +32,8 @@ public class ESUserService extends BaseService {
 	
 	
 	public User selectUser(String phone, String mail) {
-		Session session = this.getSessionFactory().openSession();
-		Query query = session.createQuery(" from User where (cellPhone=? or mail =?) ");
+		Session session = openSession();
+		Query query = session.createQuery(" from ESUser where (cellPhone=? or mail =?) ");
 		query.setString(0, phone);
 		query.setString(1, mail);
 		List<User> list = (List<User>)query.list();
@@ -47,11 +50,87 @@ public class ESUserService extends BaseService {
 		if (u != null) {
 			return -1;
 		}
-		Session session = this.getSessionFactory().openSession();
+		Session session = openSession();
 		Transaction t = session.beginTransaction();
 		session.save(user);
 		t.commit();
 		session.close();
 		return 0;
 	}
+	
+	
+	public void addAddress(Address addr) {
+		if (addr == null) {
+			return;
+		}
+		
+		Session session = openSession();
+		Transaction t = session.beginTransaction();
+		session.save(addr);
+		t.commit();
+		session.close();
+	}
+	
+	public void removeAddress(Address addr) {
+		if (addr == null) {
+			return;
+		}
+		Session session = openSession();
+		Transaction t = session.beginTransaction();
+		ESUserAddress  ea = new ESUserAddress();
+		ea.setId(addr.getId());
+		session.delete(ea);
+		t.commit();
+		session.close();
+		
+	}
+	
+	
+	public void updateDefaultAddress(Address addr, boolean flag) {
+		if (addr == null) {
+			return;
+		}
+		
+		Session session = openSession();
+		Query query = session.createQuery(" from ESUserAddress where isDefault =:de ");
+		query.setBoolean("de", true);
+		List<ESUserAddress> list = query.list();
+		ESUserAddress  ea = (ESUserAddress)session.load(ESUserAddress.class, addr.getId());
+		ea.setDefault(flag);
+		
+		Transaction t = session.beginTransaction();
+		for (ESUserAddress eua : list) {
+			eua.setDefault(false);
+			session.update(eua);
+		}
+		session.update(ea);
+		t.commit();
+		
+		session.close();
+	}
+	
+	
+	public List<Address> queryUserAddress(User user) {
+		if (user == null) {
+			return null;
+		}
+		Session session = openSession();
+		Query query = session.createQuery(" from ESUserAddress where userId =:uid order by isDefault desc");
+		query.setLong("uid", user.getId());
+		
+		List<ESUserAddress> list = query.list();
+		List<Address> queryList = null;
+		if (list != null && list.size() > 0) {
+			queryList = new  ArrayList<Address>(list.size()); 
+			for (ESUserAddress eua : list) {
+				Address addr = new Address(eua);
+				addr.setUser(user);
+				queryList.add(addr);
+			}
+		}
+		session.close();
+		
+		return queryList;
+	}
+	
 }
