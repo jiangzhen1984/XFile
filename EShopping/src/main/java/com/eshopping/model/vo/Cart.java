@@ -20,11 +20,6 @@ public class Cart {
 		cache = new HashMap<Key, InnerBox>();
 		count = 0;
 		totalPrice = 0F;
-		for (int i = 1; i < 10; i++) {
-			SingleShoppingItem s = new SingleShoppingItem();
-			s.setId(i);
-			addItem(s);
-		}
 	}
 	
 	

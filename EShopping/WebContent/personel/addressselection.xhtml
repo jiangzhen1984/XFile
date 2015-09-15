@@ -37,12 +37,56 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="cont span_2_of_3">
 			
 			<h4 class="title">No available address</h4>
-			<p class="cart">
-				
-			</p>
 			</div>
 		</c:if>
 		<div class="cont span_2_of_3">
+		<div class="register_account">
+		
+				   <h:form onsubmit="return true;">
+					<div>
+						<input type="text" id="Country" value="Country"
+							onfocus="if (this.value =='Country') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Country';}" /><br />
+					</div>
+					<div>
+						<input type="text"  id="State" value="State"
+							onfocus="if (this.value =='State') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'State';}" /><br />
+					</div>
+					<div>
+						<input type="text"  value="City" id="City"
+							onfocus="if (this.value =='City') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'City';}" /><br />
+					</div>
+					<div>
+						<input type="text"  value="Address" id="Address"
+							onfocus="if (this.value =='Address') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Address';}" /><br />
+					</div>
+					
+					<div>
+						<input type="text"  value="Receipt" id="Receipt"
+							onfocus="if (this.value =='Receipt') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Receipt';}" /><br />
+					</div>
+					
+					<div>
+						<input type="text"  value="Phone Number"  id="PhoneNumber"
+							onfocus="if (this.value =='Phone Number') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Phone Number';}" /><br />
+					</div>
+					
+					<div>
+					<input type="button" id="addressbutton" value="Add New Address"
+											class="grey" />
+					</div>
+				</h:form>
+		
+		</div>
+		
+		<br />
+		<br />
+		
 		<div class="in-check" >
 			<ul class="unit">
 				<li><span>Address</span></li>
@@ -52,7 +96,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<li> </li>
 				<li></li>
 				<div class="clear"> </div>
-			</ul>s
+			</ul>
 			<c:forEach items="#{addressSelectionDataBean.addressList}" var="item">
 					
 					<ul class="cart-header">
@@ -83,6 +127,39 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<div class="clear"></div>
 	</div>
 	<ui:include src="../include/footer.xhtml" />
-
+<script type="text/javascript">
+	console.log("eeeee");
+	console.log($("#addressbutton"));
+$("#addressbutton").on('click',function(){
+	var address = {
+            Country:$("#Country").val(),
+            State:$("#State").val(),
+            City:$("#City").val(),
+            Address:$("#Address").val(),
+            Receipt:$("#Receipt").val(),
+            PhoneNumber:$("#PhoneNumber").val()
+        };
+	$.ajax({ 
+	         type: "post", 
+	         url: "/#{global.context}/AjaxRequest?action=addAddress", 
+	         dataType: "json", 
+	         data: address,
+	         success: function (data) { 
+	         		 console.log('eeee');;
+	         		 console.log(data);;
+	                 console.log(data['errcode']);
+	                 if (data['errcode'] ==1) {
+	                 	console.log('success');
+	                 } else {
+	                 	console.log('errrrr');
+	                 }
+	         }, 
+	         error: function (XMLHttpRequest, textStatus, errorThrown) { 
+	                 alert(errorThrown); 
+	                 console.log("bbb");
+	         } 
+	 })
+ });
+</script>
 </body>
 </html>

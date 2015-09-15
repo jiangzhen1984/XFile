@@ -34,7 +34,7 @@
 
 	<servlet>
 		<servlet-name>AJAXHandler</servlet-name>
-		<servlet-class>com.todaybreakfast.controller.AJAXHandler</servlet-class>
+		<servlet-class>com.eshopping.controller.AJAXHandler</servlet-class>
 	</servlet>
 
 

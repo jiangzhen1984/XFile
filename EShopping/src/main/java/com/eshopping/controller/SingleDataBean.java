@@ -13,10 +13,10 @@ import com.eshopping.service.GlobalCache;
 @RequestScoped
 public class SingleDataBean {
 
-	@ManagedProperty(value="#{checkoutBean}")
+	@ManagedProperty(value="#{checkoutDataBean}")
 	private CheckoutDataBean checkDataBean;
 	private AbsShoppingItem item;
-	
+	private String errMsgAddtoCart;
 	
 	public SingleDataBean() {
 		String strItemid = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("itemid");
@@ -58,12 +58,23 @@ public class SingleDataBean {
 
 
 
+	public String getErrMsgAddtoCart() {
+		return errMsgAddtoCart;
+	}
+
+
+
+
 	public AbsShoppingItem getViewedItem() {
 		return item;
 	}
 	
 	
 	public String addToCart() {
+		if (checkDataBean == null || item == null) {
+			errMsgAddtoCart = "Add to cart failed";
+			return "fail";
+		}
 		checkDataBean.updateCart(item.getId(), 2, item.getType());
 		return "checkout";
 	}

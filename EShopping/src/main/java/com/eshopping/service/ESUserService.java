@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.eshopping.model.po.ESUser;
 import com.eshopping.model.po.ESUserAddress;
 import com.eshopping.model.vo.Address;
 import com.eshopping.model.vo.User;
@@ -52,7 +53,13 @@ public class ESUserService extends BaseService {
 		}
 		Session session = openSession();
 		Transaction t = session.beginTransaction();
-		session.save(user);
+		ESUser esu = new ESUser();
+		esu.setCellPhone(user.getCellPhone());
+		esu.setMail(user.getMail());
+		esu.setName(user.getName());
+		esu.setPassword(user.getPassword());
+		session.save(esu);
+		user.setId(esu.getId());
 		t.commit();
 		session.close();
 		return 0;
@@ -66,7 +73,17 @@ public class ESUserService extends BaseService {
 		
 		Session session = openSession();
 		Transaction t = session.beginTransaction();
-		session.save(addr);
+		ESUserAddress ea = new ESUserAddress();
+		ea.setAddress(addr.getAddress());
+		ea.setCity(addr.getCity());
+		ea.setPhoneNumber(addr.getPhoneNumber());
+		ea.setCountry(addr.getCountry());
+		ea.setPhoneNumber(addr.getPhoneNumber());
+		ea.setName(addr.getName());
+		ea.setState(addr.getState());
+		ea.setUserId(addr.getUser().getId());
+		addr.setId(ea.getId());
+		session.save(ea);
 		t.commit();
 		session.close();
 	}
