@@ -1,0 +1,150 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<head>
+<title>Free Adidas Website Template | Home :: w3layouts</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="#{sessionConfigBean.browserCssConfig}/css/style.css"
+	rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript"
+	src="#{sessionConfigBean.browserCssConfig}/js/jquery.min.js"></script>
+
+
+<script type="text/javascript"
+	src="#{sessionConfigBean.browserCssConfig}/js/easing.js"></script>
+</head>
+<body>
+	<ui:include src="include/menu.xhtml" />
+	<div class="index-banner">
+		<div class="wmuSlider example1" style="height: 560px;">
+			<div class="wmuSliderWrapper">
+			<c:forEach  var="item" items="#{indexDataBean.recommandList}"
+					varStatus="itemStatus">
+				<article style="position: relative; width: 100%; opacity: 1;">
+					<div class="banner-wrap">
+						<div class="slider-left">
+							<img src="web/images/banner1.jpg" alt="" />
+						</div>
+						<div class="slider-right">
+							<h1>Classic</h1>
+							<h2><h:outputText value="#{item.name}" /></h2>
+							<p><h:outputText value="#{item.description}" /></p>
+							<div class="btn">
+								<a href="shop.xhtml">Shop Now</a>
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</article>
+				</c:forEach>
+			</div>
+			<ul class="wmuSliderPagination">
+				<c:forEach  var="item" items="#{indexDataBean.recommandList}"
+					varStatus="itemStatus">
+				<li><a href="#" class="wmuActive" ><h:outputText value="#{itemStatus.index}" /></a></li>
+				</c:forEach>
+			</ul>
+		</div>
+		<script src="#{sessionConfigBean.browserCssConfig}/js/jquery.wmuSlider.js"></script>
+		<script>
+       						 $('.example1').wmuSlider();         
+   						</script>
+	</div>
+	<div class="main">
+		<div class="wrap">
+			<div class="content-top">
+				<div class="lsidebar span_1_of_c1">
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing</p>
+				</div>
+				<div class="cont span_2_of_c1">
+					<div class="social">
+						<ul>
+							<li class="facebook"><a href="#"><span> </span></a>
+								<div class="radius">
+									<img src="web/images/radius.png" /><a href="#"> </a>
+								</div>
+								<div class="border hide">
+									<p class="num">1.51K</p>
+								</div></li>
+						</ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="content-bottom">
+				<ui:repeat id="item" var="item" value="#{indexDataBean.newList}"
+					varStatus="itemStatus">
+
+					<h:outputText value="&lt;div class='box1' &gt;" escape="false"
+						rendered="#{itemStatus.index % 3 == 0}" />
+
+					<div class="col_1_of_3 span_1_of_3">
+						<h:outputLink value="single.xhtml">
+						<f:param name="itemid" value="#{item.id}" />
+						<f:param name="itemtype" value="#{item.type}" />
+							<div class="view view-fifth">
+								<div class="top_box">
+									<h3 class="m_1"><h:outputText value="#{item.name}" /></h3>
+									<p class="m_2">Lorem ipsum</p>
+									<div class="grid_img">
+										<div class="css3">
+											<img src="web/images/pic2.jpg" alt="" />
+										</div>
+										<div class="mask">
+											<div class="info">Quick View</div>
+										</div>
+									</div>
+									<div class="price"><h:outputText value="#{item.price}" escape="false" /></div>
+								</div>
+							</div> <span class="rating"> 
+								<input type="radio"	class="rating-input" id="rating-input-1-5" name="rating-input-1" />
+								<label for="rating-input-1-5" class="rating-star1"></label>
+								<input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1" />
+								<label for="rating-input-1-4"	class="rating-star1"></label>
+								<input type="radio"	class="rating-input" id="rating-input-1-3" name="rating-input-1" />
+								<label for="rating-input-1-3" class="rating-star1"></label>
+								<input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1" />
+								<label for="rating-input-1-2"	class="rating-star1"></label>
+								<input type="radio"	class="rating-input" id="rating-input-1-1" name="rating-input-1" />
+								<label for="rating-input-1-1" class="rating-star"></label>
+						</span>
+							<ul class="list">
+								<li><img src="web/images/plus.png" alt="" />
+									<ul class="icon1 sub-icon1 profile_img">
+										<li><a class="active-icon c1" href="#">Add To Bag </a>
+											<ul class="sub-icon1 list">
+												<li><h3><h:outputText value="#{item.name}" /></h3> <a href=""></a></li>
+												<li><p>
+														Lorem ipsum dolor sit amet, consectetuer <a href="">adipiscing
+															elit, sed diam</a>
+													</p></li>
+											</ul></li>
+									</ul></li>
+							</ul>
+							<div class="clear"></div>
+							</h:outputLink>
+					</div>
+					<h:outputText
+						value=" &lt;div class='clear'&gt;&lt;/div&gt; &lt;/div&gt;"
+						escape="false"
+						rendered="#{itemStatus.last || (itemStatus.index + 1) % 3 == 0}" />
+
+				</ui:repeat>
+			</div>
+		</div>
+	</div>
+	<ui:include src="include/footer.xhtml" />
+</body>
+</html>
