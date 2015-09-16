@@ -1,4 +1,4 @@
-package com.eshopping.controller;
+package com.eshopping.controller.order;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

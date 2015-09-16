@@ -82,9 +82,9 @@ public class ESUserService extends BaseService {
 		ea.setName(addr.getName());
 		ea.setState(addr.getState());
 		ea.setUserId(addr.getUser().getId());
-		addr.setId(ea.getId());
 		session.save(ea);
 		t.commit();
+		addr.setId(ea.getId());
 		session.close();
 	}
 	

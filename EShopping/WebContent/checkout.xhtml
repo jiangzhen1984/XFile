@@ -27,7 +27,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				 <ul class="sub_list2">
 				 	<h4 class="m_10">All Settings >></h4>
 					<li><a href="checkout.xhtml">My Cart</a></li>
-					<li><a href="personel/address.xhtml">My Address</a></li>
+					<li><a href="personel/personeladdress.xhtml">My Address</a></li>
 					<li><a href="personel/order.xhtml">My Order</a></li>
 				</ul>
 			</div>
@@ -42,6 +42,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</p>
 			</div>
 		</c:if>
+		<c:if test="#{checkoutDataBean.totalCount gt 0}"  >
 		<div class="cont span_2_of_3">
 		<div class="in-check" >
 			<ul class="unit">
@@ -91,6 +92,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				</h:form>
 		</div>
 		</div>
+		</c:if>
 	</div>
 	<div class="clear"></div>
 	</div>

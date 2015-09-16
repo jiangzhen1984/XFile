@@ -61,7 +61,18 @@
 		<navigation-case>
 			<from-action>#{checkoutDataBean.checkout}</from-action>
 			<from-outcome>addressselection</from-outcome>
-			<to-view-id>/personel/addressselection.xhtml</to-view-id>
+			<to-view-id>/order/addressselection.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>/personel/personeladdress.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{addressSelectionDataBean.confirmAddress}</from-action>
+			<from-outcome>orderconfirm</from-outcome>
+			<to-view-id>/order/orderconfirm.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

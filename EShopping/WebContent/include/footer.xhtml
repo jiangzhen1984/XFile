@@ -6,7 +6,7 @@
     xmlns:ui="http://java.sun.com/jsf/facelets">
 	<!-- top scrolling -->
 <script type="text/javascript"
-	src="#{sessionConfigBean.browserCssConfig}/js/move-top.js"></script>
+	src="/#{global.context}/#{sessionConfigBean.browserCssConfig}/js/move-top.js"></script>
 <script type="text/javascript">
         $(document).ready(function() {
             $(".dropdown img.flag").addClass("flagvisibility");
@@ -71,17 +71,17 @@
 							<dd>
 								<ul>
 									<li><a href="#">Australia<img class="flag"
-											src="web/images/as.png" alt="" /><span class="value">AS</span></a></li>
+											src="/#{global.context}/web/images/as.png" alt="" /><span class="value">AS</span></a></li>
 									<li><a href="#">Sri Lanka<img class="flag"
-											src="web/images/srl.png" alt="" /><span class="value">SL</span></a></li>
+											src="/#{global.context}/web/images/srl.png" alt="" /><span class="value">SL</span></a></li>
 									<li><a href="#">Newziland<img class="flag"
-											src="web/images/nz.png" alt="" /><span class="value">NZ</span></a></li>
+											src="/#{global.context}/web/images/nz.png" alt="" /><span class="value">NZ</span></a></li>
 									<li><a href="#">Pakistan<img class="flag"
-											src="web/images/pk.png" alt="" /><span class="value">Pk</span></a></li>
+											src="/#{global.context}/web/images/pk.png" alt="" /><span class="value">Pk</span></a></li>
 									<li><a href="#">United Kingdom<img class="flag"
-											src="web/images/uk.png" alt="" /><span class="value">UK</span></a></li>
+											src="/#{global.context}/web/images/uk.png" alt="" /><span class="value">UK</span></a></li>
 									<li><a href="#">United States<img class="flag"
-											src="web/images/us.png" alt="" /><span class="value">US</span></a></li>
+											src="/#{global.context}/web/images/us.png" alt="" /><span class="value">US</span></a></li>
 								</ul>
 							</dd>
 						</dl>

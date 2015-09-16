@@ -40,8 +40,8 @@
         <mapping class="com.eshopping.model.po.ESImage" />
         <mapping class="com.eshopping.model.po.EStemSpecialTypeMapping" />
         <mapping class="com.eshopping.model.po.EShoppingItemConfigDetail" />
-        <mapping class="com.eshopping.model.po.OrderItem" />
-        <mapping class="com.eshopping.model.po.Order" />
+        <mapping class="com.eshopping.model.po.ESOrderItem" />
+        <mapping class="com.eshopping.model.po.ESOrder" />
         <mapping class="com.eshopping.model.po.ESUser" />
         <mapping class="com.eshopping.model.po.ESUserAddress" />
     </session-factory>

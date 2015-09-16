@@ -14,12 +14,15 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.eshopping.model.Key;
-import com.eshopping.model.po.Order;
-import com.eshopping.model.po.Order.OrderState;
-import com.eshopping.model.po.OrderItem;
+import com.eshopping.model.po.ESOrder;
+import com.eshopping.model.po.ESOrderItem;
 import com.eshopping.model.vo.Cart;
-import com.eshopping.model.vo.User;
 import com.eshopping.model.vo.Cart.InnerBox;
+import com.eshopping.model.vo.DeliveryInfo;
+import com.eshopping.model.vo.Order;
+import com.eshopping.model.vo.Order.OrderState;
+import com.eshopping.model.vo.Order.PaymentType;
+import com.eshopping.model.vo.User;
 
 
 public class OrderService extends BaseService {
@@ -27,7 +30,7 @@ public class OrderService extends BaseService {
 	
 	
 	
-	public Order checkoutCart(Cart cart, User user, String retrievePlace) {
+	public Order checkoutCart(Cart cart, User user, String retrievePlace, PaymentType pType) {
 		if (cart == null || user == null) {
 			return null;
 		}
@@ -35,11 +38,12 @@ public class OrderService extends BaseService {
 			return null;
 		}
 		
-		Order order = new Order();
-		order.setOrderDate(new Date(System.currentTimeMillis()));
-		order.setState(OrderState.NOT_PAIED);
+		ESOrder order = new ESOrder();
+		order.setLastUpdateDate(new Date(System.currentTimeMillis()));
+		order.setState(Order.OrderState.NOT_PAIED_YET.ordinal());
 		order.setRetrievePlace(retrievePlace);
 		order.setUser(user);
+		order.setPayType(pType.ordinal());
 		Calendar c = Calendar.getInstance();
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH)+1;
@@ -57,11 +61,13 @@ public class OrderService extends BaseService {
 		session.save(order);
 		session.flush();
 		
+		
+		
 		Set<Entry<Key, InnerBox>> sets = cart.getItems();
 		Iterator<Entry<Key, InnerBox>> itr= sets.iterator();
 		while(itr.hasNext()) {
 			Entry<Key, InnerBox> entry = itr.next();
-			OrderItem item = new OrderItem();
+			ESOrderItem item = new ESOrderItem();
 			item.setCount(entry.getValue().getCount());
 			item.setPrice(entry.getValue().getWr().getPrice());
 			//TODO update
@@ -72,26 +78,92 @@ public class OrderService extends BaseService {
 			session.save(item);
 		}
 		
+		Order vOrder = new Order(order);
 		
 		
 		t.commit();
 		session.close();
-		return order;
+		return vOrder;
+	}
+	
+	
+	public void handleOrderForDelivery(Order order, DeliveryInfo dinfo) {
+		Session session = openSession();
+		Transaction t = beginTransaction(session);
+		ESOrder cacheOrder = (ESOrder)session.get(ESOrder.class, order.getId());
+		cacheOrder.setLastUpdateDate(new Date(System.currentTimeMillis()));
+		cacheOrder.setState(OrderState.DELIVERING.ordinal());
+		cacheOrder.setDeliverDate(cacheOrder.getDeliverDate());
+		session.update(cacheOrder);
+		
+		//TODO add delivery info
+		session.update(cacheOrder);
+		t.commit();
+		session.close();
+		order.setState(Order.OrderState.DELIVERING);
+		order.setLastUpdateDate(cacheOrder.getPaidDate());
+		order.setDeliverDate(cacheOrder.getDeliverDate());
+	}
+	
+	
+	
+	public void payOrder(Order order) {
+		Session session = openSession();
+		Transaction t = session.beginTransaction();
+		ESOrder cacheOrder = (ESOrder)session.get(ESOrder.class, order.getId());
+		cacheOrder.setPaidDate(new Date(System.currentTimeMillis()));
+		cacheOrder.setLastUpdateDate(cacheOrder.getPaidDate());
+		cacheOrder.setState(Order.OrderState.PAIED.ordinal());
+		session.update(cacheOrder);
+		t.commit();
+		session.close();
+		order.setState(Order.OrderState.PAIED);
+		order.setPaidDate(cacheOrder.getPaidDate());
+		order.setLastUpdateDate(cacheOrder.getPaidDate());
 	}
 	
 	
 	
 	
+	public void finishOrder(Order order) {
+		Session session = openSession();
+		Transaction t = session.beginTransaction();
+		ESOrder cacheOrder = (ESOrder)session.get(ESOrder.class, order.getId());
+		cacheOrder.setState(Order.OrderState.COMPLETED.ordinal());
+		cacheOrder.setLastUpdateDate(cacheOrder.getPaidDate());
+		session.update(cacheOrder);
+		t.commit();
+		session.close();
+		order.setState(Order.OrderState.COMPLETED);
+		order.setLastUpdateDate(cacheOrder.getLastUpdateDate());
+	}
 	
 	
-	public List<Order> getUserOrderList(User user) {
-		List<Order> list = new ArrayList<Order>();
+	public void cancelOrder(Order order) {
+		Session session = openSession();
+		Transaction t = session.beginTransaction();
+		ESOrder cacheOrder = (ESOrder)session.get(ESOrder.class, order.getId());
+		cacheOrder.setState(Order.OrderState.CANCELED.ordinal());
+		cacheOrder.setLastUpdateDate(new Date(System.currentTimeMillis()));
+		session.update(cacheOrder);
+		t.commit();
+		session.close();
+		order.setState(Order.OrderState.CANCELED);
+		order.setLastUpdateDate(cacheOrder.getLastUpdateDate());
+	}
+	
+
+	
+	
+	
+	public List<ESOrder> getUserOrderList(User user) {
+		List<ESOrder> list = new ArrayList<ESOrder>();
 		Session session = openSession();
 		Query query = session.createQuery(" from Order where user.id=? order by transaction desc");
 		query.setLong(0, user.getId());
-		List<Order> dbList = query.list();
+		List<ESOrder> dbList = query.list();
 		for(int i = 0; i<dbList.size(); i++) {
-			list.add(new Order(dbList.get(i)));
+			list.add(new ESOrder(dbList.get(i)));
 		}
 		session.close();
 		return list;
@@ -99,15 +171,15 @@ public class OrderService extends BaseService {
 	
 	
 	
-	public List<Order> getUserOrderList(User user, Order.OrderState state) {
-		List<Order> list = new ArrayList<Order>();
+	public List<ESOrder> getUserOrderList(User user, Order.OrderState state) {
+		List<ESOrder> list = new ArrayList<ESOrder>();
 		Session session = openSession();
 		Query query = session.createQuery(" from Order where user.id=? and state = ? order by transaction desc");
 		query.setLong(0, user.getId());
 		query.setInteger(1, state.ordinal());
-		List<Order> dbList = query.list();
+		List<ESOrder> dbList = query.list();
 		for(int i = 0; i<dbList.size(); i++) {
-			list.add(new Order(dbList.get(i)));
+			list.add(new ESOrder(dbList.get(i)));
 		}
 		session.close();
 		return list;
@@ -125,39 +197,6 @@ public class OrderService extends BaseService {
 	}
 	
 	
-	
-	public void payOrder(Order order) {
-		Session session = openSession();
-		Transaction t = session.beginTransaction();
-		order.setState(OrderState.PAIED);
-		order.setPaidDate(new Date(System.currentTimeMillis()));
-		session.update(order);
-		t.commit();
-		session.close();
-	}
-	
-	
-	
-	
-	public void finishOrder(Order order) {
-		Session session = openSession();
-		Transaction t = session.beginTransaction();
-		order.setState(OrderState.COMPLETED);
-		order.setPaidDate(new Date(System.currentTimeMillis()));
-		session.update(order);
-		t.commit();
-		session.close();
-	}
-	
-	
-	public void cancelOrder(Order order) {
-		Session session = openSession();
-		Transaction t = session.beginTransaction();
-		order.setState(OrderState.CANCELED);
-		order.setPaidDate(new Date(System.currentTimeMillis()));
-		session.update(order);
-		t.commit();
-		session.close();
-	}
+
 
 }

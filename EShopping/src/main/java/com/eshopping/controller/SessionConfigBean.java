@@ -47,6 +47,9 @@ public class SessionConfigBean {
 		this.user = user;
 	}
 	
-	
+	public void logout() {
+		this.user = null;
+		this.isLogedIn = false;
+	}
 	
 }

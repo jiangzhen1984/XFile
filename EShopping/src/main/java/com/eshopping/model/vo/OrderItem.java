@@ -1,36 +1,21 @@
-package com.eshopping.model.po;
+package com.eshopping.model.vo;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.eshopping.model.po.ESOrderItem;
 
-@Entity
-@Table(name="ES_ORDER_ITEM")
+
 public class OrderItem {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	
-	@Column(name="NAME", columnDefinition="VARCHAR(40)")
 	private String name;
 	
-	@Column(name="PIC_PATH", columnDefinition="VARCHAR(200)")
 	private String picUrl;
 	
-	@Column(name = "PRICE", columnDefinition =  "NUMERIC(6,2)")
 	private Float price;
 	
-	@Column(name = "ITEM_COUNT", columnDefinition =  "NUMERIC(3)")
 	private int count;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
 	private Order order;
 
 	
@@ -45,6 +30,13 @@ public class OrderItem {
 		this.picUrl = item.picUrl;
 		this.price = item.price;
 		this.order = item.order;
+	}
+	
+	public OrderItem(ESOrderItem item) {
+		this.id = item.getId();
+		this.name = item.getName();
+		this.picUrl = item.getPicUrl();
+		this.price = item.getPrice();
 	}
 	
 	public long getId() {

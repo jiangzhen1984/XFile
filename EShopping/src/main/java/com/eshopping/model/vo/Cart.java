@@ -1,5 +1,6 @@
 package com.eshopping.model.vo;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -85,6 +86,10 @@ public class Cart {
 	
 	public Set<Entry<Key, InnerBox>> getItems() {
 		return cache.entrySet();
+	}
+	
+	public Collection<InnerBox> getItemValues() {
+		return cache.values();
 	}
 	
 

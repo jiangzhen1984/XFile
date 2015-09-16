@@ -6,8 +6,6 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,26 +18,26 @@ import com.eshopping.model.vo.User;
 
 @Entity
 @Table(name = "ES_ORDER")
-public class Order {
+public class ESOrder {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(name = "ORDER_DATE", columnDefinition = "DATETIME")
-	private Date orderDate;
-
 	@Column(name = "TRANSACTION_ID", columnDefinition = "NUMERIC(30)")
 	private long transaction;
 
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "ORDER_STATE", columnDefinition = "NUMERIC(2)")
-	private OrderState state;
+	@Column(name = "ORDER_STATE", columnDefinition = "INT(2)")
+	private int state;
+	
+	
+	@Column(name = "PAYMENT_TYPE", columnDefinition = "INT(1)")
+	private int payType;
 
 	@Column(name = "PRICE", columnDefinition = "NUMERIC(6,2)")
 	private float price;
 	
-	@Column(name = "RETRIEVE_PLACE", columnDefinition = "VARCHAR(200)")
+	@Column(name = "RETRIEVE_PLACE", columnDefinition = "VARCHAR(1000)")
 	private String retrievePlace;
 	
 	@Column(name = "PAID_DATE", columnDefinition = "DATETIME")
@@ -52,30 +50,37 @@ public class Order {
 	@Column(name = "CANCEL_DATE", columnDefinition = "DATETIME")
 	private Date cancelDate;
 	
+	@Column(name = "DELIVERY_DATE", columnDefinition = "DATETIME")
+	private Date deliverDate;
+	
+	@Column(name = "LAST_UPDATE_DATE", columnDefinition = "DATETIME")
+	private Date lastUpdateDate;
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "USER_ID", referencedColumnName = "ID", unique = false)
 	private ESUser user;
 
 	@OneToMany
 	@JoinColumn(name = "ORDER_ID",  unique = false)
-	private Set<OrderItem> items;
+	private Set<ESOrderItem> items;
 	
 	
-	public Order() {
+	public ESOrder() {
 		
 	}
 	
-	public Order(Order order) {
+	public ESOrder(ESOrder order) {
 		this.id = order.getId();
-		this.orderDate = order.orderDate;
 		this.price = order.price;
 		this.transaction = order.transaction;
 		this.retrievePlace = order.retrievePlace;
 		this.user = order.user;
 		this.paidDate = order.paidDate;
-		Set<OrderItem>  items = order.items;
-		for(OrderItem item : items) {
-			this.addItem(new OrderItem(item));
+		this.payType = order.payType;
+		Set<ESOrderItem>  items = order.items;
+		for(ESOrderItem item : items) {
+			this.addItem(new ESOrderItem(item));
 		}
 	}
 
@@ -87,13 +92,6 @@ public class Order {
 		this.id = id;
 	}
 
-	public Date getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
-	}
 
 	public long getTransaction() {
 		return transaction;
@@ -103,13 +101,7 @@ public class Order {
 		this.transaction = transaction;
 	}
 
-	public OrderState getState() {
-		return state;
-	}
 
-	public void setState(OrderState state) {
-		this.state = state;
-	}
 
 	public float getPrice() {
 		return price;
@@ -152,12 +144,51 @@ public class Order {
 	public void setPrice(float price) {
 		this.price = price;
 	}
+	
+	
+	
 
-	public Set<OrderItem> getItems() {
+	public Date getDeliverDate() {
+		return deliverDate;
+	}
+
+	public void setDeliverDate(Date deliverDate) {
+		this.deliverDate = deliverDate;
+	}
+
+	public Date getLastUpdateDate() {
+		return lastUpdateDate;
+	}
+
+	public void setLastUpdateDate(Date lastUpdateDate) {
+		this.lastUpdateDate = lastUpdateDate;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public int getPayType() {
+		return payType;
+	}
+
+	public void setPayType(int payType) {
+		this.payType = payType;
+	}
+
+	public void setUser(ESUser user) {
+		this.user = user;
+	}
+
+	public Set<ESOrderItem> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<OrderItem> items) {
+	public void setItems(Set<ESOrderItem> items) {
 		this.items = items;
 	}
 	
@@ -170,15 +201,12 @@ public class Order {
 		this.user = user;
 	}
 
-	public void addItem(OrderItem item) {
+	public void addItem(ESOrderItem item) {
 		if (items == null) {
-			items = new HashSet<OrderItem>();
+			items = new HashSet<ESOrderItem>();
 		}
 		items.add(item);
 	}
 
-	public enum OrderState {
-		CANCELED, NOT_PAIED, PAIED, COMPLETED
-	}
 
 }

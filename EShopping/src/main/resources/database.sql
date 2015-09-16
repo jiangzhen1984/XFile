@@ -124,10 +124,17 @@ create table ES_USER_ADDRESS (
 
 create table ES_ORDER (
 	id bigint not null auto_increment,
-	ORDER_DATE DATETIME, 
+	TRANSACTION_ID NUMERIC(30), 
 	PRICE NUMERIC(6,2), 
-	ORDER_STATE NUMERIC(2), 
-	TRANSACTION_ID NUMERIC(20), 
+	ORDER_STATE INT(2), 
+	PAYMENT_TYPE INT(2),
+	RETRIEVE_PLACE VARCHAR(1000),
+	PAID_DATE  DATETIME, 
+	FINISH_DATE DATETIME, 
+	CANCEL_DATE DATETIME,
+	DELIVERY_DATE DATETIME,
+	LAST_UPDATE_DATE DATETIME,
+	USER_ID bigint not null,
 	primary key (id)
 );
 
@@ -136,7 +143,7 @@ create table ES_ORDER_ITEM (
 	NAME VARCHAR(40), 
 	PIC_PATH VARCHAR(200), 
 	PRICE NUMERIC(6,2), 
-	ORDER_ID bigint not null,
+	ES_ORDER_ID bigint not null,
 	primary key (id)
 );
 
@@ -147,7 +154,7 @@ alter table ES_COMBO_ITEM_M add constraint FK_rq0h09mi3q7i3um10xr4t8v0i foreign 
 
 alter table ES_COMBO_ITEM_M add constraint UK_2d3wi5c7ydy3nq1pm4o2tql9a  unique (ES_COMBO_ITEM_ID, ES_ITEM_ID);
 
-alter table ES_ORDER_ITEM add constraint FK_74aytr1c15gudg9yltny49y5a foreign key (ORDER_ID) references ES_ORDER (id);
+alter table ES_ORDER_ITEM add constraint FK_74aytr1c15gudg9yltny49y5a foreign key (ES_ORDER_ID) references ES_ORDER (id);
 
 
 alter table ES_CATEGORY_ITEM add constraint FK_rq0h09mi3q7i3um10xr4t8v0b foreign key (ES_CATEGORY_ID) references ES_CATEGORY (id);

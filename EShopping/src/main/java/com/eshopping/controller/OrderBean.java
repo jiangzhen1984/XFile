@@ -8,7 +8,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import com.eshopping.model.po.Order;
+import com.eshopping.controller.order.CheckoutDataBean;
+import com.eshopping.model.po.ESOrder;
 import com.eshopping.service.OrderService;
 
 
@@ -85,12 +86,12 @@ public class OrderBean {
 	}
 	
 	
-	private List<Order> unPaidList;
-	private List<Order> paidList;
-	private List<Order> finishedList;
+	private List<ESOrder> unPaidList;
+	private List<ESOrder> paidList;
+	private List<ESOrder> finishedList;
 	
 	
-	public List<Order> getUnPaidOrderList() {
+	public List<ESOrder> getUnPaidOrderList() {
 		if (!checkLogin()) {
 			return null;
 		}
@@ -102,7 +103,7 @@ public class OrderBean {
 	}
 	
 	
-	public List<Order> getPaidOrderList() {
+	public List<ESOrder> getPaidOrderList() {
 		if (!checkLogin()) {
 			return null;
 		}
@@ -114,7 +115,7 @@ public class OrderBean {
 	}
 	
 	
-	public List<Order> getFinishedOrderList() {
+	public List<ESOrder> getFinishedOrderList() {
 		if (!checkLogin()) {
 			return null;
 		}

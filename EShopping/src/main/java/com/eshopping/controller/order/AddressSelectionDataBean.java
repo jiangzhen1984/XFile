@@ -1,14 +1,17 @@
-package com.eshopping.controller;
+package com.eshopping.controller.order;
 
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
+import com.eshopping.controller.SessionConfigBean;
 import com.eshopping.model.vo.Address;
 import com.eshopping.model.vo.User;
 import com.eshopping.service.ESUserService;
+import com.eshopping.service.ServiceFactory;
 
 @ManagedBean(name = "addressSelectionDataBean")
 @RequestScoped
@@ -41,7 +44,7 @@ public class AddressSelectionDataBean {
 
 	public List<Address>  getAddressList() {
 		if (!isLoad) {
-			ESUserService service = new ESUserService();
+			ESUserService service = ServiceFactory.getESUserService();
 			addressList = service.queryUserAddress(user);
 			isLoad = true;
 			addressCount = addressList == null ? 0 : addressList.size();
@@ -50,7 +53,17 @@ public class AddressSelectionDataBean {
 	}
 	
 	
+	
+	public void addAddress() {
+		
+	}
+	
+	public void removeAddress() {
+		
+	}
+	
 	public String confirmAddress() {
+		String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("useAddress");
 		return "orderconfirm";
 	}
 }

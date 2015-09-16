@@ -1,0 +1,85 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<title>Free Adidas Website Template | Checkout :: w3layouts</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript"
+	src="/#{global.context}//#{sessionConfigBean.browserCssConfig}/js/jquery.min.js"></script>
+<link href="/#{global.context}/#{sessionConfigBean.browserCssConfig}/css/style.css?aa"
+	rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+	<ui:include src="../include/menu.xhtml" />
+	<div class="login">
+	<div class="wrap">
+		<c:if test="#{sessionConfigBean.isLogin() == true}" >
+			 <ui:include src="../include/personelmenu.xhtml" />
+		</c:if>
+		<div class="cont span_2_of_3">
+		<c:if test="#{orderConfirmDataBean.totalCount le 0}"  >
+			<div class="cont span_2_of_3">
+			<h4 class="title">Shopping cart is empty</h4>
+			<p class="cart">
+				You have no items in your shopping cart.<br />Click<a
+					href="../index.xhtml"> here</a> to continue shopping
+			</p>
+			</div>
+		</c:if>
+			<c:if test="#{orderConfirmDataBean.totalCount gt 0}"  >
+			<div class="in-check" >
+				<ul class="unit">
+					<li><span></span></li>
+					<li><span>Name</span></li>		
+					<li><span>Quantity</span></li>
+					<li><span>Unit Price</span></li>
+					<li> <span>Total Price</span></li>
+					<li></li>
+					<div class="clear"> </div>
+				</ul>
+				<h:form>
+				<div class="in-check" id="ic">
+				<c:forEach items="#{orderConfirmDataBean.cartItems}" var="item">
+						
+						<ul class="cart-header">
+								<li class="ring-in"><a href="single.xhtml" target="_blank"><img src="../web/images/c-1.jpg" class="img-responsive" alt="" /></a>
+								</li>
+								<li><span class="name"><h:outputText value="#{item.wr.name}" /></span></li>
+								<li><span class="cost"><h:outputText value="#{item.wr.count}" /></span></li>
+								<li><span><h:outputText value="#{item.wr.price}" /></span></li>
+								<li><span><h:outputText value="#{item.wr.price * item.wr.count}" /></span></li>
+								<li><span></span></li>
+							<div class="clear"> </div>
+						</ul>
+					
+				</c:forEach>
+				</div>
+					<ul class="cart-header" >
+						<li><span></span></li>
+						<li><span><h:outputText value="#{orderConfirmDataBean.shipAddress}" /></span></li>
+						<li><span></span></li>
+						<li><span><h:outputText value="#{orderConfirmDataBean.totalPrice}" /></span></li>
+						<li><span><h:commandButton  value="Confirm and Pay" action="#{orderConfirmDataBean.confirmOrder}"
+													class="grey" /></span></li>
+						<div class="clear"> </div>
+					</ul>
+				</h:form>
+			</div>
+			</c:if>
+		</div>
+	</div>
+	<div class="clear"></div>
+	</div>
+	<ui:include src="../include/footer.xhtml" />
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<title>Free Adidas Website Template | Checkout :: w3layouts</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript"
+	src="/#{global.context}//#{sessionConfigBean.browserCssConfig}/js/jquery.min.js"></script>
+<link href="/#{global.context}/#{sessionConfigBean.browserCssConfig}/css/style.css?aa"
+	rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+	<ui:include src="../include/menu.xhtml" />
+	<div class="login">
+	<div class="wrap">
+		<c:if test="#{sessionConfigBean.isLogin() == true}" >
+			 <ui:include src="../include/personelmenu.xhtml" />
+		</c:if>
+		<c:if test="#{addressSelectionDataBean.addressCount le 0}"  >
+			<div class="cont span_2_of_3">
+			
+			<h4 class="title">No available address</h4>
+			</div>
+		</c:if>
+		<div class="cont span_2_of_3">
+		<div class="register_account">
+		
+				   <h:form onsubmit="return true;">
+					<div>
+						<input type="text" id="Country" value="Country"
+							onfocus="if (this.value =='Country') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Country';}" /><br />
+					</div>
+					<div>
+						<input type="text"  id="State" value="State"
+							onfocus="if (this.value =='State') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'State';}" /><br />
+					</div>
+					<div>
+						<input type="text"  value="City" id="City"
+							onfocus="if (this.value =='City') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'City';}" /><br />
+					</div>
+					<div>
+						<input type="text"  value="Address" id="Address"
+							onfocus="if (this.value =='Address') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Address';}" /><br />
+					</div>
+					
+					<div>
+						<input type="text"  value="Zip Code" id="zipcode"
+							onfocus="if (this.value =='Zip Code') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Zip Code';}" /><br />
+					</div>
+					
+					
+					<div>
+						<input type="text"  value="Receipt" id="Receipt"
+							onfocus="if (this.value =='Receipt') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Receipt';}" /><br />
+					</div>
+					
+					<div>
+						<input type="text"  value="Phone Number"  id="PhoneNumber"
+							onfocus="if (this.value =='Phone Number') {this.value = '';}"
+							onblur="if (this.value == '') {this.value = 'Phone Number';}" /><br />
+					</div>
+					
+					<div>
+					<input type="button" id="addressbutton" value="Add New Address"
+											class="grey" />
+					</div>
+				</h:form>
+		
+		</div>
+		
+		<br />
+		<br />
+		
+		<div class="in-check" >
+			<ul class="unit">
+				<li><span>Address</span></li>
+				<li><span>Name</span></li>		
+				<li><span>Zip Code</span></li>
+				<li><span>Phone</span></li>
+				<li> </li>
+				<li></li>
+				<div class="clear"> </div>
+			</ul>
+			<h:form>
+			<div class="in-check" id="ic">
+			<c:forEach items="#{addressSelectionDataBean.addressList}" var="item">
+					
+					<ul class="cart-header">
+							<li class="ring-in"><h:outputText value="#{item.address}" />
+							</li>
+							<li><span class="name"><h:outputText value="#{item.name}" /></span></li>
+							<li><span class="cost"><h:outputText value="#{item.postCode}" /></span></li>
+							<li><span><h:outputText value="#{item.phoneNumber}" /></span></li>
+							<li><span></span></li>
+							<li><span>
+								<c:if test="#{item.isDefault == true}" >
+								<input type="radio" name="useAddress"  checked="checked" value="#{item.id}" />
+								</c:if>
+								<c:if test="#{item.isDefault == false}" >
+								<input type="radio" name="useAddress"  value="#{item.id}" />
+								</c:if>								
+							</span></li>
+						<div class="clear"> </div>
+					</ul>
+				
+			</c:forEach>
+			</div>
+				<ul class="cart-header" >
+					<li><span></span></li>
+					<li><span></span></li>
+					<li><span class="name"></span></li>
+					<li><span></span></li>
+					<li><span><h:commandButton  value="Next" action="#{addressSelectionDataBean.confirmAddress}"
+												class="grey" /></span></li>
+					<div class="clear"> </div>
+				</ul>
+				</h:form>
+		</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	</div>
+	<script type="text/javascript">
+  
+$("#addressbutton").on('click',function(){
+	var address = {
+            Country:$("#Country").val(),
+            State:$("#State").val(),
+            City:$("#City").val(),
+            Address:$("#Address").val(),
+            Receipt:$("#Receipt").val(),
+            PhoneNumber:$("#PhoneNumber").val(),
+            zipcode:$("#zipcode").val()
+        };
+        
+    
+     var par = $("#ic");
+	$.ajax({ 
+	         type: "post", 
+	         url: "/#{global.context}/AjaxRequest?action=addAddress", 
+	         dataType: "json", 
+	         data: address,
+	         success: function (data) { 
+	                 if (data['errcode'] == 0) {
+	                 	   var el = '<ul class="cart-header">'+
+								'<li class="ring-in">'+address['Country'] +
+								'</li>'+
+								'<li><span class="name">'+address['Receipt'] +'</span></li>'+
+								'<li><span class="cost">'+address['Country'] +'</span></li>'+
+								'<li><span>'+address['zipcode'] +'</span></li>'+
+								'<li><span></span></li>'+
+								'<li><span>'+
+									'<input type="radio" name="useAddress"  checked="checked" value="'+data['addrId']+'" />'+
+								'</span></li>'+
+							'<div class="clear"> </div>'+
+						'</ul>';
+	                 
+						par.append(el);	                 	
+	                 } else {
+	                 	console.log('errrrr');
+	                 }
+	         }, 
+	         error: function (XMLHttpRequest, textStatus, errorThrown) { 
+	         } 
+	 })
+ });
+</script>
+	
+	<ui:include src="../include/footer.xhtml" />
+</body>
+</html>

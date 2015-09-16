@@ -19,6 +19,7 @@ public class Address extends ESUserAddress {
 		this.userId = eua.getUserId();
 		this.state = eua.getState();
 		this.country = eua.getCountry();
+		this.isDefault = eua.isDefault();
 	}
 
 	public User getUser() {
@@ -32,6 +33,10 @@ public class Address extends ESUserAddress {
 		}
 	}
 	
+	
+	public boolean getIsDefault() {
+		return this.isDefault;
+	}
 	
 
 }

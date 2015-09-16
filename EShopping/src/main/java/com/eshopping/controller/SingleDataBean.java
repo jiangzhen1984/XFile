@@ -5,6 +5,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import com.eshopping.controller.order.CheckoutDataBean;
 import com.eshopping.model.vo.AbsShoppingItem;
 import com.eshopping.service.EShoppingService;
 import com.eshopping.service.GlobalCache;

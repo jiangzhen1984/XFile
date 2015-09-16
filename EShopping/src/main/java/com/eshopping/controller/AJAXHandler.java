@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
+import com.eshopping.controller.order.CheckoutDataBean;
 import com.eshopping.model.vo.Address;
 import com.eshopping.service.ESUserService;
 
@@ -109,6 +110,7 @@ public class AJAXHandler extends HttpServlet {
 		String Address = (String)req.getParameter("Address");
 		String Receipt = (String)req.getParameter("Receipt");
 		String PhoneNumber = (String)req.getParameter("PhoneNumber");
+		String zipcode = (String)req.getParameter("zipcode");
 		
 		int errcode = 0;
 		if (Country == null || Country.isEmpty()) {
@@ -123,6 +125,8 @@ public class AJAXHandler extends HttpServlet {
 			errcode =5;
 		} else if (PhoneNumber == null || PhoneNumber.isEmpty()) {
 			errcode =6;
+		} else if (zipcode == null || zipcode.isEmpty()) {
+			errcode =7;
 		}
 		
 		HttpSession session = req.getSession();
@@ -140,6 +144,7 @@ public class AJAXHandler extends HttpServlet {
 			addr.setName(Receipt);
 			addr.setPhoneNumber(PhoneNumber);
 			addr.setState(State);
+			addr.setPostCode(zipcode);
 			addr.setUser(sessionConfigBean.getUser());
 			servcie.addAddress(addr);
 			addrId = addr.getId();
