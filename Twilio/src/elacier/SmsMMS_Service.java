@@ -6,6 +6,7 @@ public class SmsMMS_Service {
 
 	public static final int ERROR_TWILIO = -1;
 	public static final int ERROR_USER = -2;
+	public static final int ERROR_NONE = 0;
 	public static final int ERROR_RENEW = 1;
 	public static final String LOG_TAG = "SmsMMS_Service";
 	public SmsMMS_Service() {
@@ -45,7 +46,7 @@ public class SmsMMS_Service {
 						+"ToState-"+newSms.ToState
 						+"ToZip-"+newSms.ToZip
 						+"ToCountry-"+newSms.ToCountry);
-		return 0;
+		return ERROR_NONE;
 	}
 	
 	public int smsMMS_handle(HttpServletRequest request,SmsMMS_Info SmsMMS){
@@ -53,8 +54,10 @@ public class SmsMMS_Service {
 		boolean reInQueue = false;
 		int ret = 0;
 		synchronized(SmsMMS.smsMMS_getLock()){
+			
 			switch(SmsMMS.smsMMS_getActionStatus()){
 				case SmsMMS_Info.ACTION_STATUS_PREP:
+					SmsMMS.smsMMS_setTime(System.currentTimeMillis());
 					status = SmsMMS.Body.append(request.getParameter("Body"));
 					if(!status){
 						ret = ERROR_USER;
@@ -65,6 +68,7 @@ public class SmsMMS_Service {
 				break;
 				
 				case SmsMMS_Info.ACTION_STATUS_PARSING:
+					SmsMMS.smsMMS_setTime(System.currentTimeMillis());
 					status = SmsMMS.Body.append(request.getParameter("Body"));
 					if(!status){
 						ret = ERROR_USER;
@@ -76,6 +80,7 @@ public class SmsMMS_Service {
 				break;
 				
 				case SmsMMS_Info.ACTION_STATUS_NEEDMORE:
+					SmsMMS.smsMMS_setTime(System.currentTimeMillis());
 					status = SmsMMS.Body.append(request.getParameter("Body"));
 					if(!status){
 						ret = ERROR_USER;

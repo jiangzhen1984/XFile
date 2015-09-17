@@ -92,26 +92,50 @@ public class TwilioServlet extends HttpServlet {
 			return;
 		}
 		
-		SmsMMS_Info msg,prev_msg;
+		SmsMMS_Info msg;
 		String from_phone = request.getParameter("From");
-		smsLock lock,prev_lock;
+		smsLock lock;
 
 
 		/*make sure one user send smsMMS one by one to our server*/
 		if((lock = mElacierServer.getLock(from_phone))==null){
 			synchronized(smsLock.class){
 				if((lock = mElacierServer.getLock(from_phone))==null){
-					lock  = new smsLock();
+					lock = new smsLock();
 					mElacierServer.putLock(from_phone,lock);
 				}
 			}
 		}
 
+		synchronized(lock){
+			msg = mElacierServer.getMsg(from_phone);
+			if(msg == null){
+				msg = new SmsMMS_Info();
 	
-			synchronized(lock){
-				msg = mElacierServer.getMsg(from_phone);
+				int error = mSmsMMS_Service.smsMMS_new(request,msg);
 
-				if(msg == null){
+				if(error == SmsMMS_Service.ERROR_TWILIO){
+					System.out.println(LOG_TAG + ":" + "smsMMS_parser error");
+					responseTwilioEmpty(request,response);
+					return;
+				}else if(error == SmsMMS_Service.ERROR_USER){
+					System.out.println(LOG_TAG + ":" + "smsMMS_parser user error");
+					responseTwilioEmpty(request,response);
+					return;
+				}
+				mElacierServer.putMsg(from_phone,msg);
+				mElacierServer.handleMsg(msg);
+
+			}else{
+				int ret = mSmsMMS_Service.smsMMS_handle(request,msg);
+				if(ret == SmsMMS_Service.ERROR_USER){
+					System.out.println(LOG_TAG + ":" + "smsMMS_parser user error");
+					mElacierServer.removeSpecifidMsg(from_phone,msg);
+					responseTwilioEmpty(request,response);
+					return;
+				}else if(ret == SmsMMS_Service.ERROR_RENEW ){
+					System.out.println(LOG_TAG + ":" + "Msg has been finished, renew one");
+					mElacierServer.removeSpecifidMsg(from_phone,msg);
 					msg = new SmsMMS_Info();
 					int error = mSmsMMS_Service.smsMMS_new(request,msg);
 			
@@ -124,44 +148,12 @@ public class TwilioServlet extends HttpServlet {
 						responseTwilioEmpty(request,response);
 						return;
 					}
-			
+				
 					mElacierServer.putMsg(from_phone,msg);
 					mElacierServer.handleMsg(msg);
-			
-				}else{
-					int ret = mSmsMMS_Service.smsMMS_handle(request,msg);
-					if(ret == SmsMMS_Service.ERROR_USER){
-						System.out.println(LOG_TAG + ":" + "smsMMS_parser user error");
-						mElacierServer.removeSpecifidMsg(from_phone,msg);
-						responseTwilioEmpty(request,response);
-						return;
-					}else if(ret == SmsMMS_Service.ERROR_RENEW ){
-						System.out.println(LOG_TAG + ":" + "Msg has been finished, renew one");
-						mElacierServer.removeSpecifidMsg(from_phone,msg);
-						msg = new SmsMMS_Info();
-						int error = mSmsMMS_Service.smsMMS_new(request,msg);
-				
-						if(error == SmsMMS_Service.ERROR_TWILIO){
-							System.out.println(LOG_TAG + ":" + "smsMMS_parser error");
-							responseTwilioEmpty(request,response);
-							return;
-						}else if(error == SmsMMS_Service.ERROR_USER){
-							System.out.println(LOG_TAG + ":" + "smsMMS_parser user error");
-							responseTwilioEmpty(request,response);
-							return;
-						}
-				
-						mElacierServer.putMsg(from_phone,msg);
-						mElacierServer.handleMsg(msg);
-					}
-	
-			
 				}
-		
-		
-
 			}
-		
+		}
 		
 		responseTwilioEmpty(request,response);
 		
@@ -190,6 +182,9 @@ public class TwilioServlet extends HttpServlet {
 		mElacierServer.onCreate();
 		
 		mSmsMMS_Service = new SmsMMS_Service();
+		
+		Thread gc = new GCThread("gc thread");
+		gc.start();
 	}
 	
 	public void destroy()

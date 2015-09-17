@@ -47,7 +47,7 @@ public class SmsMMS_Info {
 	
 	/*Elacier create info for this sms/mms*/
 	private Object lock;
-	public long time;
+	private long time;
 	public int action_status;
 	public int data_status;
 	
@@ -66,7 +66,8 @@ public class SmsMMS_Info {
 			if(curLength == BOADYARRAY_SIZE){
 				return false;
 			}else{
-				BodyArray[curLength++] = text;
+				BodyArray[curLength] = text;
+				curLength++;
 				for(int i=0;i<curLength;i++){
 					TotalString = TotalString + BodyArray[i];
 				}
@@ -110,5 +111,13 @@ public class SmsMMS_Info {
 
 	public void smsMMS_setDataStatus(int status){
 		data_status = status;
+	}
+
+	public void smsMMS_setTime(long time){
+		this.time = time;
+	}
+
+	public long smsMMS_getTime(){
+		return time;
 	}
 }
