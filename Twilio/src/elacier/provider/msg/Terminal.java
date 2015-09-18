@@ -57,6 +57,11 @@ public abstract class Terminal {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Terminal [deviceId=" + deviceId + ", type=" + type + "]";
+	}
+
 	
 	
 }

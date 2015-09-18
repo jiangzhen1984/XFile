@@ -92,7 +92,20 @@ public abstract class OrderMessage extends BaseMessage {
 
 
 	public enum OrderState {
-		UNKNOW, PAY_ON_SITE, ONLINE_PAY_NOT_YET, ONLINE_PAID
+		UNKNOW, PAY_ON_SITE, ONLINE_PAY_NOT_YET, ONLINE_PAID;
+		
+		public static OrderState fromInt(int st) {
+			switch (st) {
+			case 1:
+				return PAY_ON_SITE;
+			case 2:
+				return ONLINE_PAY_NOT_YET;
+			case 3:
+				return ONLINE_PAID;
+			default:
+				return UNKNOW;
+			}
+		}
 	}
 	
 }
