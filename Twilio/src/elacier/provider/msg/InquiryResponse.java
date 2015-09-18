@@ -49,21 +49,5 @@ public class InquiryResponse extends InquiryMessage {
 	}
 
 	
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public JSONObject transform(JSONObject json) {
-		if (json == null) {
-			return null;
-		}
-		super.transform(json);
-		JSONObject body = new JSONObject();
-		body.put("opt", this.opt);
-		body.put("trans-id", this.transactionId);
-		body.put("ret", this.result);
-		json.put("body", body);
-		return json;
-	}
-
 
 }

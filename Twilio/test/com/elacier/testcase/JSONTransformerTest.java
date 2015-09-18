@@ -6,6 +6,8 @@ import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import elacier.provider.JsonMessageTransformer;
+import elacier.provider.JsonTransformImpl;
 import elacier.provider.msg.BaseMessage;
 import elacier.provider.msg.InquiryMessage;
 import elacier.provider.msg.InquiryNotification;
@@ -28,6 +30,8 @@ public class JSONTransformerTest extends TestCase{
 	BaseMessage orderRespondNotification;
 	BaseMessage orderResponse;
 	
+	
+	JsonMessageTransformer transformer; 
 
 	@Before
 	public void setUp() throws Exception {
@@ -54,40 +58,30 @@ public class JSONTransformerTest extends TestCase{
 		
 		orderResponse = new OrderResponse(new StringToken("a"),
 				new ServerTerminal(new StringToken("s-a")), 001L, 002L, OrderResponse.RESPONSE_RET_OK);
+		
+		transformer = new JsonTransformImpl();
 
 	}
 
 	@Test
 	public void testMessageTransform() {
-		JSONObject js = inquiryNotification.transform(null);
-		assertTrue(js == null);
-		JSONObject json = new JSONObject();
-		inquiryNotification.transform(json);
+		JSONObject json = transformer.transform(inquiryNotification);
 		String strJson = json.toJSONString();
 		assertTrue( strJson.indexOf("header") != -1);
 		assertTrue( strJson.indexOf("body") != -1);
 		
-		json.clear();
-		js = inquiryRespondNotification.transform(null);
-		assertTrue(js == null);
-		inquiryRespondNotification.transform(json);
+		 json = transformer.transform(inquiryRespondNotification);
 		strJson = json.toJSONString();
 		assertTrue( strJson.indexOf("header") != -1);
 		assertTrue( strJson.indexOf("body") != -1);
 		
-		json.clear();
-		js = inquiryResponse.transform(null);
-		assertTrue(js == null);
-		inquiryResponse.transform(json);
+		 json = transformer.transform(inquiryResponse);
 		strJson = json.toJSONString();
 		assertTrue( strJson.indexOf("header") != -1);
 		assertTrue( strJson.indexOf("body") != -1);
 		
 		
-		json.clear();
-		js = orderNotification.transform(null);
-		assertTrue(js == null);
-		orderNotification.transform(json);
+		 json = transformer.transform(orderNotification);
 		strJson = json.toJSONString();
 		assertTrue( strJson.indexOf("header") != -1);
 		assertTrue( strJson.indexOf("body") != -1);
@@ -95,19 +89,13 @@ public class JSONTransformerTest extends TestCase{
 		assertTrue( strJson.indexOf("sss") != -1);
 		
 		
-		json.clear();
-		js = orderRespondNotification.transform(null);
-		assertTrue(js == null);
-		orderRespondNotification.transform(json);
+		 json = transformer.transform(orderRespondNotification);
 		strJson = json.toJSONString();
 		assertTrue( strJson.indexOf("header") != -1);
 		assertTrue( strJson.indexOf("body") != -1);
 		assertTrue( strJson.indexOf("ret") != -1);
 		
-		json.clear();
-		js = orderResponse.transform(null);
-		assertTrue(js == null);
-		orderResponse.transform(json);
+		 json = transformer.transform(orderResponse);
 		strJson = json.toJSONString();
 		assertTrue( strJson.indexOf("header") != -1);
 		assertTrue( strJson.indexOf("body") != -1);

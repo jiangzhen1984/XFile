@@ -64,6 +64,12 @@ public abstract class InquiryMessage extends BaseMessage {
 	public void setTransactionId(long transactionId) {
 		this.transactionId = transactionId;
 	}
+
+
+
+	public int getOpt() {
+		return opt;
+	}
 	
 	
 }

@@ -44,23 +44,4 @@ public class OrderRespondNotification extends OrderMessage {
 	}
 	
 	
-	
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public JSONObject transform(JSONObject json) {
-		if (json == null) {
-			return null;
-		}
-		super.transform(json);
-		JSONObject body = new JSONObject();
-		body.put("opt", this.opt);
-		body.put("trans-id", this.transactionId);
-		body.put("order-id", this.orderId);
-		body.put("ret", this.ret);
-		json.put("body", body);
-		return json;
-	}
-	
-
 }

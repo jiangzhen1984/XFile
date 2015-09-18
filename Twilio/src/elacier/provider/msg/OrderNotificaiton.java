@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 /**
  * Guest make order notificaiton.
  * @author 28851274
@@ -47,6 +44,14 @@ public class OrderNotificaiton extends OrderMessage {
 		}
 	}
 	
+	public List<Object[]> getMenus() {
+		 List<Object[]> list = new ArrayList<Object[]>();
+		 for (MenuWrapper mw : menus) {
+			 list.add(new Object[]{mw.id, mw.name});
+		 }
+		 return list;
+	}
+	
 	
 	class MenuWrapper {
 		long id;
@@ -61,31 +66,4 @@ public class OrderNotificaiton extends OrderMessage {
 	}
 	
 	
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public JSONObject transform(JSONObject json) {
-		if (json == null) {
-			return null;
-		}
-		super.transform(json);
-		JSONObject body = new JSONObject();
-		body.put("opt", this.opt);
-		body.put("trans-id", this.transactionId);
-		body.put("order-id", this.orderId);
-		body.put("order-state", this.state);
-		JSONArray menusJson = new JSONArray();
-		
-		for (MenuWrapper m : menus) {
-			JSONObject mu = new JSONObject();
-			mu.put("menu-id", m.id);
-			mu.put("mame", m.name);
-			menusJson.add(mu);
-		}
-		
-		body.put("menu", menusJson);
-		json.put("body", body);
-		return json;
-	}
-
 }

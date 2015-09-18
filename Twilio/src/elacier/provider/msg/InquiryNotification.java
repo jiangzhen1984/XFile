@@ -91,32 +91,6 @@ public class InquiryNotification extends InquiryMessage {
 		this.locationLng = locationLng;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public JSONObject transform(JSONObject json) {
-		if (json == null) {
-			return null;
-		}
-		super.transform(json);
-		JSONObject body = new JSONObject();
-		body.put("opt", this.opt);
-		body.put("trans-id", this.transactionId);
-		body.put("inquire-type", this.inquiryType);
-		body.put("guest-phone", this.guestPhone);
-		body.put("guest-name", this.guestName);
-		body.put("num-of-guest", this.numOfPeople);
-		body.put("fav", this.word);
-		JSONObject location = new JSONObject();
-		location.put("lat", this.locationLat);
-		location.put("lng", this.locationLng);
-		body.put("guest-loc", location);
-		
-		json.put("body", body);
-		return json;
-	}
-
-	
-	
 	
 
 }
