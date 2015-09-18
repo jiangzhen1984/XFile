@@ -2,6 +2,8 @@ package elacier.provider.msg;
 
 import java.util.Date;
 
+import elacier.transaction.Token;
+
 /**
  * Inquiry message
  * @author 28851274

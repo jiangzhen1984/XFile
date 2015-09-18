@@ -2,6 +2,8 @@ package elacier.provider.msg;
 
 import java.util.Date;
 
+import elacier.transaction.Token;
+
 public abstract class OrderMessage extends BaseMessage {
 	
 	

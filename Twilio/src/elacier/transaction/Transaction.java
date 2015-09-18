@@ -1,20 +1,27 @@
-package elacier.provider.msg;
+package elacier.transaction;
 
-/**
- * Use to String wrap token id
- * @author 28851274
- *
- */
-public class StringToken extends Token {
+import java.util.Date;
 
-	private String token;
+public abstract class Transaction {
 	
-	public StringToken(String token) {
+	protected Token token;
+	
+	protected Date timestamp;
+
+	public Transaction(Token token, Date timestamp) {
 		this.token = token;
+		if (token == null) {
+			throw new NullPointerException(" Token is null");
+		}
+		this.timestamp = timestamp;
 	}
-	
-	public StringToken(long token) {
-		this.token = String.valueOf(token);
+
+	public Token getToken() {
+		return token;
+	}
+
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
 	@Override
@@ -33,7 +40,7 @@ public class StringToken extends Token {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		StringToken other = (StringToken) obj;
+		Transaction other = (Transaction) obj;
 		if (token == null) {
 			if (other.token != null)
 				return false;
@@ -41,11 +48,9 @@ public class StringToken extends Token {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return token;
-	} 
+	
+	
+	
 	
 	
 

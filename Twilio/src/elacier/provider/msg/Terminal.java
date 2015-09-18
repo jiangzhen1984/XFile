@@ -1,5 +1,7 @@
 package elacier.provider.msg;
 
+import elacier.transaction.Token;
+
 /**
  * Terminal definition
  * @author 28851274

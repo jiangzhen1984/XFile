@@ -18,7 +18,7 @@ import elacier.provider.msg.OrderNotificaiton;
 import elacier.provider.msg.OrderRespondNotification;
 import elacier.provider.msg.OrderResponse;
 import elacier.provider.msg.ServerTerminal;
-import elacier.provider.msg.StringToken;
+import elacier.transaction.StringToken;
 
 public class JSONTransformerTest extends TestCase{
 	

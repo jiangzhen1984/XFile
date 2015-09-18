@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.json.simple.JSONObject;
 
+import elacier.transaction.Token;
+
 public class InquiryNotification extends InquiryMessage {
 	
 	

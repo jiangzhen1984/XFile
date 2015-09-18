@@ -3,6 +3,8 @@ package elacier.provider.msg;
 import java.io.Serializable;
 import java.util.Date;
 
+import elacier.transaction.Token;
+
 
 /**
  * Message for communication with restaurant
