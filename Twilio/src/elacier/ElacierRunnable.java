@@ -123,30 +123,33 @@ public class ElacierRunnable implements Runnable{
 				}
 			}else if(next_status == SmsMMS_Info.ACTION_STATUS_NEEDMORE){
 				/*send need more sms to user*/
-				switch(msg.smsMMS_getDataStatus()){
-					case SmsMMS_Info.DATA_STATUS_MORE_PLACE:
-						ElacierService.getInstance().sendTwilioSMS(msg.From, "Give More Info: where you want to have lunch ??");
-						break;
-
-					case SmsMMS_Info.DATA_STATUS_MORE_PERSON:
-						ElacierService.getInstance().sendTwilioSMS(msg.From, "Give More Info: how many people for lunch ??");
-						break;
-
-					case SmsMMS_Info.DATA_STATUS_MORE_RESTAURANT_NAME:
-					case SmsMMS_Info.DATA_STATUS_MORE_FOOD:
-						ElacierService.getInstance().sendTwilioSMS(msg.From, "Give More Info: which restaurant or  what kind of food for lunch??");
-						break;
-						
-					default:
-						System.out.println(LOG_TAG + ":" + "Never run here !!!!");
-						break;
-
+				String reply = "Give More Info:";
+				int status = msg.smsMMS_getDataStatus();
+				
+				if((status & SmsMMS_Info.DATA_STATUS_MORE_PLACE) > 0){
+					reply = reply + "where?";
 				}
+				
+				if((status & SmsMMS_Info.DATA_STATUS_MORE_PERSON) > 0){
+					reply = reply + "how many people?";
+				}
+				
+				if((status & SmsMMS_Info.DATA_STATUS_MORE_RESTAURANT_NAME)>0){
+					if((status & SmsMMS_Info.DATA_STATUS_MORE_FOOD)>0){
+						reply = reply + "which restaurant or  what kind of food?";
+					}
+				}
+				
+				ElacierService.getInstance().sendTwilioSMS(msg.From, reply);
+				
+				
 				
 			}else if(parse_result == PARSE_RESULT_EXCEPTION){
 				ElacierService.getInstance().removeSpecifidMsg(msg.From,msg);
+				ElacierService.getInstance().sendTwilioSMS(msg.From, "Elaicer server is down now, please try later");
 			} else if(parse_result == PARSE_RESULT_NONE){
 				ElacierService.getInstance().removeSpecifidMsg(msg.From,msg);
+				ElacierService.getInstance().sendTwilioSMS(msg.From, "Give More Info for lunch??");
 			}
 	}
 	
