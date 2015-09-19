@@ -96,6 +96,7 @@ public class JsonTransformImpl implements JsonMessageTransformer {
 	private JSONObject packInquiryRespondNotificationBody(
 			InquiryRespondNotification message, JSONObject wrapper) {
 		JSONObject body = new JSONObject();
+		body.put("restaurant-id", message.getRestaurantId());
 		body.put("opt", message.getOpt());
 		body.put("trans-id", message.getTransactionId());
 		body.put("confirm-ret", message.getResult());
@@ -141,6 +142,7 @@ public class JsonTransformImpl implements JsonMessageTransformer {
 	private JSONObject packOrderRespondNotificationBody(
 			OrderRespondNotification message, JSONObject wrapper) {
 		JSONObject body = new JSONObject();
+		body.put("restaurant-id", message.getRestaurantId());
 		body.put("opt", message.getOpt());
 		body.put("trans-id", message.getTransactionId());
 		body.put("order-id", message.getOrderId());
@@ -277,11 +279,11 @@ public class JsonTransformImpl implements JsonMessageTransformer {
 		
 		long transactionId = (Long) body.get("trans-id");
 		int ret  = ((Long)  body.get("confirm-ret")).intValue();
-		
+		long restaurantId =  (Long) body.get("restaurant-id");
 
 		Terminal terminal = getTerminal(device, deviceId);
 		InquiryRespondNotification inquiryRespondNotification = new InquiryRespondNotification(new StringToken(token),
-				terminal, transactionId, ret);
+				terminal, transactionId, ret, restaurantId);
 		inquiryRespondNotification.setTimestamp(new Date(timestatmp));
 		
 		return inquiryRespondNotification;
@@ -297,7 +299,6 @@ public class JsonTransformImpl implements JsonMessageTransformer {
 		
 		long transactionId = (Long) body.get("trans-id");
 		int ret  = ((Long)  body.get("ret")).intValue();
-		
 
 		Terminal terminal = getTerminal(device, deviceId);
 		InquiryResponse inquiryResponse = new InquiryResponse(new StringToken(token),
@@ -340,10 +341,11 @@ public class JsonTransformImpl implements JsonMessageTransformer {
 		long transactionId = (Long) body.get("trans-id");
 		long orderId = (Long)body.get("order-id");
 		int ret = ((Long)  body.get("ret")).intValue();
+		long restaurantId =  (Long) body.get("restaurant-id");
 
 		Terminal terminal = getTerminal(device, deviceId);
 		OrderRespondNotification orderRespondNotification = new OrderRespondNotification(new StringToken(token),
-				terminal, transactionId, orderId, ret);
+				terminal, transactionId, orderId, ret, restaurantId);
 		orderRespondNotification.setTimestamp(new Date(timestatmp));
 		
 		return orderRespondNotification;

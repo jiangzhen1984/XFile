@@ -178,7 +178,7 @@ public class TwilioServlet extends HttpServlet {
 		//System.out.println("Observation ServletInfo:");
 		//System.out.println(getServletInfo());
 		
-		mElacierServer = new ElacierService();
+		mElacierServer = ElacierService.getInstance();
 		mElacierServer.onCreate();
 		
 		mSmsMMS_Service = new SmsMMS_Service();

@@ -37,6 +37,8 @@ public class LongToken extends Token {
 	};
 	
 	
-	
+	public long longValue() {
+		return id;
+	}
 
 }

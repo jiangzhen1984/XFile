@@ -3,8 +3,6 @@ package elacier.provider.msg;
 import java.util.Date;
 import java.util.UUID;
 
-import org.json.simple.JSONObject;
-
 import elacier.transaction.Token;
 
 
@@ -28,13 +26,16 @@ public class OrderRespondNotification extends OrderMessage {
 	
 	private int ret;
 	
+	private long restaurantId;
+	
 	public OrderRespondNotification(Token token, Terminal terminal,
-			long transactionId, long orderId, int ret) {
+			long transactionId, long orderId, int ret, long restaurantId) {
 		super(MessageVersion.V01, MessageType.REQUEST, new Date(), token,
 				terminal, UUID.randomUUID().toString(),
 				OrderMessage.ORDER_OPT_RESTAURANT_RESPOND_GUEST_NOTIFCAITON, transactionId,
 				orderId);
 		this.ret = ret;
+		this.restaurantId = restaurantId;
 	}
 
 	public int getRet() {
@@ -46,4 +47,13 @@ public class OrderRespondNotification extends OrderMessage {
 	}
 	
 	
+	public long getRestaurantId() {
+		return restaurantId;
+	}
+
+
+	public void setRestaurantId(long restaurantId) {
+		this.restaurantId = restaurantId;
+	}
+
 }

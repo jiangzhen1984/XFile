@@ -41,7 +41,7 @@ public class JSONTransformerTest extends TestCase{
 		
 		
 		inquiryRespondNotification  = new InquiryRespondNotification(new StringToken("a1"),
-				new ServerTerminal(new StringToken("s-a")), 002L, InquiryRespondNotification.INQUIRY_RESPOND_NOTIFICAITON_RET_OK);
+				new ServerTerminal(new StringToken("s-a")), 002L, InquiryRespondNotification.INQUIRY_RESPOND_NOTIFICAITON_RET_OK, 010002L);
 		
 		inquiryResponse  = new InquiryResponse(new StringToken("a2"),
 				new ServerTerminal(new StringToken("s-a")), 003L, InquiryResponse.INQUIRY_RESPOND_CLIENT_RESPONSE_FAILED);
@@ -55,7 +55,7 @@ public class JSONTransformerTest extends TestCase{
 		((OrderNotificaiton)orderNotification).addSelectionMenu(2, "bbb");
 		
 		orderRespondNotification = new OrderRespondNotification(new StringToken("OrderRespondNotification"),
-				new ServerTerminal(new StringToken("s-a")), 001L, 102L, OrderRespondNotification.RESTAURANT_RESPONSE_RET_BUSY);
+				new ServerTerminal(new StringToken("s-a")), 001L, 102L, OrderRespondNotification.RESTAURANT_RESPONSE_RET_BUSY, 010003L);
 		
 		
 		orderResponse = new OrderResponse(new StringToken("OrderResponse"),
@@ -87,6 +87,7 @@ public class JSONTransformerTest extends TestCase{
 		assertTrue(((InquiryRespondNotification)bm).getToken().equals(new StringToken("a1")));
 		assertTrue(((InquiryRespondNotification)bm).getResult() == InquiryRespondNotification.INQUIRY_RESPOND_NOTIFICAITON_RET_OK);
 		assertTrue(((InquiryRespondNotification)bm).getTransactionId() == 002);
+		assertTrue(((InquiryRespondNotification)bm).getRestaurantId() == 010002L);
 		
 		
 		 json = transformer.transform(inquiryResponse);
@@ -129,7 +130,7 @@ public class JSONTransformerTest extends TestCase{
 		assertTrue(((OrderRespondNotification)bm).getRet() == OrderRespondNotification.RESTAURANT_RESPONSE_RET_BUSY);
 		assertTrue(((OrderRespondNotification)bm).getTransactionId() == 001);
 		assertTrue(((OrderRespondNotification)bm).getOrderId() == 102L);
-		
+		assertTrue(((OrderRespondNotification)bm).getRestaurantId() == 010003L);
 		
 		//Order response
 		 json = transformer.transform(orderResponse);

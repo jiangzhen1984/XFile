@@ -47,6 +47,5 @@ public class StringToken extends Token {
 		return token;
 	} 
 	
-	
 
 }

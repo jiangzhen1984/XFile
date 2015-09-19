@@ -46,19 +46,7 @@ public class ElacierService {
 		return TestMode;
 	}
 	
-	public ElacierService() {
-		sMe = this;
-	}
-	
-	public static ElacierService getInstance()
-	{
-		if (sMe == null) {
-			throw new IllegalStateException("No ElacierService here!");
-		}
-		return sMe;
-	}
-	
-	public void onCreate(){
+	private ElacierService() {
 		lock_map = new ConcurrentHashMap<String, smsLock>();
 		map = new ConcurrentHashMap<String, SmsMMS_Info>();
 		smsMMS_queue = new LinkedBlockingQueue<SmsMMS_Info>();
@@ -68,6 +56,18 @@ public class ElacierService {
 		commu_map = new  ConcurrentHashMap<Long, Transaction_Info>(); 
 		
 		executor = Executors.newFixedThreadPool(ElacierService.ELAICER_THREAD_POOLSIZE);
+	}
+	
+	public static ElacierService getInstance()
+	{
+		if (sMe == null) {
+			sMe = new ElacierService();
+		}
+		return sMe;
+	}
+	
+	public void onCreate(){
+		
 	}
 	
 	public void handleMsg(SmsMMS_Info msg){
@@ -208,7 +208,6 @@ public class ElacierService {
 			MessageFactory messageFactory = client.getAccount().getMessageFactory();
 			Message message = messageFactory.create(params);
 			System.out.println(message.getSid());
-		
 			return true;
 		}catch(TwilioRestException e){
 			e.printStackTrace();
