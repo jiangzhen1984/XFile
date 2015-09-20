@@ -93,61 +93,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							});
 					</script>	
 				</div>
-				<div class="signin">
-					<a href="#small-dialog" class="play-icon popup-with-zoom-anim">Sign In</a>
-					<div id="small-dialog" class="mfp-hide">
-						<h3>Login</h3>
-						<div class="social-sits">
-							<div class="facebook-button">
-								<a href="#">Connect with Facebook</a>
-							</div>
-							<div class="chrome-button">
-								<a href="#">Connect with Google</a>
-							</div>
-							<div class="button-bottom">
-								<p>New account? <a href="#small-dialog2" class="play-icon popup-with-zoom-anim">Signup</a></p>
-							</div>
-						</div>
-						<div class="signup">
-							<form>
-								<input type="text" class="email" placeholder="Enter email / mobile" />
-								<input type="password" placeholder="Password" title="Minimum 6 characters required" autocomplete="off" />
-								<input type="submit"  value="LOGIN"/>
-							</form>
-							<div class="forgot">
-								<a href="#">Forgot password ?</a>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				</div>
-				
-				<div class="clearfix"> </div>
-				
+
 				<div class="signin">
 					<a href="#create_category" class="play-icon popup-with-zoom-anim">Sign In</a>
 					<div id="create_category" class="mfp-hide">
-						<h3>Login</h3>
-						<div class="social-sits">
-							<div class="facebook-button">
-								<a href="#">Connect with Facebook</a>
-							</div>
-							<div class="chrome-button">
-								<a href="#">Connect with Google</a>
-							</div>
-							<div class="button-bottom">
-								<p>New account? <a href="#small-dialog2" class="play-icon popup-with-zoom-anim">Signup</a></p>
-							</div>
-						</div>
 						<div class="signup">
-							<form>
-								<input type="text" class="email" placeholder="Enter email / mobile" />
-								<input type="password" placeholder="Password" title="Minimum 6 characters required" autocomplete="off" />
-								<input type="submit"  value="LOGIN"/>
+						<h3>Category Create2</h3>
+							<form id="create">
+								<input type="text" class="email" placeholder="Category name" />
+								<input type="submit"  value="Create"/>
 							</form>
-							<div class="forgot">
-								<a href="#">Forgot password ?</a>
-							</div>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
@@ -240,18 +195,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					
 					<div class="col-md-4 resent-grid recommended-grid slider-top-grids">
-								<div class="resent-grid-info recommended-grid-info">
-							<h3><a href="single.html" class="title title-info"></a></h3>
-							<h3><a href="single.html" class="title title-info">1113333333333Pellentesque</a></h3>
-							<h3><a href="single.html" class="title title-info">5555Pellentesque vitae pulvinar </a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">222Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
+						<div class="resent-grid-info recommended-grid-info">
+							<h3>Category Create</h3>
+							<h:form >
+								<h:inputText type="text" class="email" placeholder="Category name"  value="#{managementDataBean.categoryName}"/>
+								<h:commandButton action="#{managementDataBean.createCategory()}" value="Create"/>
 							
+							<DIV style="diplay:float">
+							<div class="drop-navigation drop-navigation">
+								  <ul class="nav nav-sidebar">
+									<li><a href="#" class="user-icon" id="category"><span class="glyphicon glyphicon-home glyphicon-blackboard" aria-hidden="true"></span>Category Management<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
+									</ul>
+								</div>
+							
+							
+							</DIV>
+							</h:form>
 						</div>
 					</div>
 					
