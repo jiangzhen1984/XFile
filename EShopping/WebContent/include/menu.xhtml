@@ -69,16 +69,17 @@
 					<c:if test="#{item.isExistSubCategory == true}">
 					<div class="megapanel">
 						<div class="row">
+						<c:forEach  var="subItem" items="#{item.subCategory}" varStatus="subItemStatus">
 							<div class="col1">
 								<div class="h_nav">
 									<h4>
 										<h:outputLink value="shop.xhtml">    
-												<h:outputText value="#{item.firstSubCategory.name}"/>    
-												<f:param name="category" value="#{item.firstSubCategory.id}"/>    
+												<h:outputText value="#{subItem.name}"/>    
+												<f:param name="category" value="#{subItem.id}"/>    
 										</h:outputLink> 
 									</h4>
 									<ul>
-										<c:forEach  var="thirItem" items="#{item.firstSubCategory.subCategory}" varStatus="thirItemStatus">
+										<c:forEach  var="thirItem" items="#{subItem.subCategory}" varStatus="thirItemStatus">
 											<li>
 											<h:outputLink value="shop.xhtml">    
 												<h:outputText value="#{thirItem.name}"/>    
@@ -87,8 +88,13 @@
 											</li>
 										</c:forEach>
 									</ul>
+									
 								</div>
+								
+								
 							</div>
+							</c:forEach>
+							
 							<img src="web/images/nav_img.jpg" alt="" />
 						</div>
 					</div>

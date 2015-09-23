@@ -67,7 +67,7 @@ public class ShopDataBean {
 			return null;
 		}
 		
-		if (!cate.isLoadTypes()) {
+		if (!cate.isLoadCategorySpecificalType()) {
 			EShoppingService service = new EShoppingService();
 			service.getCategorySpecialType(cate);
 		}

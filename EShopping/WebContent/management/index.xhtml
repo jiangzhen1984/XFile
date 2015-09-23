@@ -22,10 +22,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="css/dashboard.css" rel="stylesheet" />
 <!-- Custom Theme files -->
 <link href="css/style.css?2ee" rel='stylesheet' type='text/css' media="all" />
+
 <script src="js/jquery-1.11.1.min.js"></script>
 <!--start-smoth-scrolling-->
 </head>
   <body>
+  
+     
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -117,7 +120,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="clearfix"> </div>
       </div>
     </nav>
-	
+    
    		   <div class="col-sm-3 col-md-2 sidebar">
 			<div class="top-navigation">
 				<div class="t-menu">MENU</div>
@@ -174,48 +177,69 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div class="main-grids">
+				<h:form >
 				<div class="top-grids">
 					<div class="recommended-info">
 						<h3>Recent Videos</h3>
 					</div>
+					
 					<div class="col-md-4 resent-grid recommended-grid slider-top-grids">
 						<div class="resent-grid-info recommended-grid-info">
-							<h3><a href="single.html" class="title title-info"></a></h3>
-							<h3><a href="single.html" class="title title-info">阿</a></h3>
-							<h3><a href="single.html" class="title title-info">5555Pellentesque vitae pulvinar </a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">222Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							<h3><a href="single.html" class="title title-info">Pellentesque vitae pulvinar</a></h3>
-							
+						<div class="main effect2"> 
+							<section class="ac-container">
+						    	<h3>Parent Category select </h3>
+						     	<c:forEach items="#{managementDataBean.topCategoryList}" var="item" varStatus="vs">
+								<div>
+									<input name="pid" type="radio" value="#{item.id}"/>
+									<label for="ac-1"><h:outputText value="#{item.name}" /></label><br />
+										<c:forEach items="#{item.subCategory}" var="subItem" >
+												&#160;&#160;&#160;&#160;<input name="pid" type="radio" value="#{subItem.id}"/>
+												&#160;&#160;&#160;&#160;<label for="ac-1"><h:outputText value="#{subItem.name}" /></label><br />
+												<c:forEach items="#{subItem.subCategory}" var="thirdItem" >
+														&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<input name="pid" type="radio" value="#{thirdItem.id}"/>
+														&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<label for="ac-1"><h:outputText value="#{thirdItem.name}" /></label><br />
+												</c:forEach>
+										</c:forEach>
+								</div>
+								</c:forEach>
+							</section>
+				        </div>
 						</div>
 					</div>
 					
 					<div class="col-md-4 resent-grid recommended-grid slider-top-grids">
 						<div class="resent-grid-info recommended-grid-info">
 							<h3>Category Create</h3>
-							<h:form >
+						
 								<h:inputText type="text" class="email" placeholder="Category name"  value="#{managementDataBean.categoryName}"/>
 								<h:commandButton action="#{managementDataBean.createCategory()}" value="Create"/>
-							
-							<DIV style="diplay:float">
-							<div class="drop-navigation drop-navigation">
-								  <ul class="nav nav-sidebar">
-									<li><a href="#" class="user-icon" id="category"><span class="glyphicon glyphicon-home glyphicon-blackboard" aria-hidden="true"></span>Category Management<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
-									</ul>
-								</div>
-							
-							
-							</DIV>
-							</h:form>
 						</div>
+						
+						<div class="main effect2"> 
+							<section class="ac-container">
+						    	<h3>Category Update Parent <h:commandButton action="#{managementDataBean.updateCategoryParent()}" value="Update"/></h3>
+						    	<h3>Remove Catetory <h:commandButton action="#{managementDataBean.removeCategory()}" value="remove"/></h3>
+						     	<c:forEach items="#{managementDataBean.topCategoryList}" var="item" varStatus="vs">
+								<div>
+									<input name="cid" type="radio" value="#{item.id}"/>
+									<label for="ac-1"><h:outputText value="#{item.name}" /></label><br />
+										<c:forEach items="#{item.subCategory}" var="subItem" >
+												&#160;&#160;&#160;&#160;<input name="cid" type="radio" value="#{subItem.id}"/>
+												&#160;&#160;&#160;&#160;<label for="ac-1"><h:outputText value="#{subItem.name}" /></label><br />
+												<c:forEach items="#{subItem.subCategory}" var="thirdItem" >
+														&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<input name="cid" type="radio" value="#{thirdItem.id}"/>
+														&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<label for="ac-1"><h:outputText value="#{thirdItem.name}" /></label><br />
+												</c:forEach>
+										</c:forEach>
+								</div>
+								</c:forEach>
+							</section>
+				        </div>
 					</div>
 					
 					<div class="clearfix"> </div>
 				</div>
+				</h:form>
 				<div class="recommended">
 					<div class="recommended-grids">
 						<div class="recommended-info">

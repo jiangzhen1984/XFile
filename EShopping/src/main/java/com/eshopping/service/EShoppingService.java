@@ -104,6 +104,16 @@ public class EShoppingService extends BaseService {
 	}
 	
 	
+	public void deleteCategory(Category cate) {
+		Session session = openSession();
+		Transaction t = beginTransaction(session);
+		ESCategory  escate = (ESCategory)session.load(ESCategory.class, cate.getId());
+		session.delete(escate);
+		t.commit();
+		session.close();
+	}
+	
+	
 	
 	public List<Category> queryCategory(int start, int fetchCount) {
 		Session sess = openSession();
@@ -331,7 +341,7 @@ public class EShoppingService extends BaseService {
 			}
 		}
 		
-		cate.setLoadTypes(true);
+		cate.setLoadCategorySpecificalType(true);
 		
 		sess.close();
 		

@@ -17,8 +17,8 @@ public class Category extends ESCategory {
 	
 	protected List<CategoryItemSpecialTypeGroup> typeGroups;
 	
-	private boolean loadTypes;
-
+	private boolean isLoadCategorySpecificalType;
+	
 	public Category() {
 		super();
 		subCategory = new ArrayList<Category>();
@@ -59,7 +59,7 @@ public class Category extends ESCategory {
 
 	
 	
-	public ESCategory getParent() {
+	public Category getParent() {
 		return parent;
 	}
 
@@ -147,14 +147,20 @@ public class Category extends ESCategory {
 	}
 
 
-	public boolean isLoadTypes() {
-		return loadTypes;
+	public boolean isExistSubCategory() {
+		return !(this.subCategory == null || this.subCategory.size() == 0); 
 	}
 
 
-	public void setLoadTypes(boolean loadTypes) {
-		this.loadTypes = loadTypes;
+	public boolean isLoadCategorySpecificalType() {
+		return isLoadCategorySpecificalType;
 	}
+
+
+	public void setLoadCategorySpecificalType(boolean isLoadCategorySpecificalType) {
+		this.isLoadCategorySpecificalType = isLoadCategorySpecificalType;
+	}
+	
 	
 	
 
