@@ -5,16 +5,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import elacier.ElacierService;
 import elacier.Menu;
 import elacier.Restaurant;
 import elacier.cache.GlobalCacheHolder;
+import elacier.order.Order;
+import elacier.order.OrderItem;
 import elacier.provider.ProviderUtil;
 import elacier.provider.msg.InquiryNotification;
 import elacier.provider.msg.InquiryRespondNotification;
 import elacier.provider.msg.OrderNotificaiton;
 import elacier.provider.msg.ServerTerminal;
 import elacier.provider.msg.Terminal;
+import elacier.service.ServiceFactory;
 import elacier.transaction.LinearTransaction;
 import elacier.transaction.LongToken;
 import elacier.transaction.State;
@@ -226,6 +228,29 @@ public class GuestTransaction extends LinearTransaction {
 			Token deviceId = new LongToken(1);
 			Terminal serverTerminal = new ServerTerminal(deviceId);
 			long transId = ((LongToken)trans.getToken()).longValue();
+			
+			
+			//generate order information and save to database
+			Order order = new Order();
+			java.sql.Date cd = new java.sql.Date(System.currentTimeMillis());
+			order.setLastUpdateDate(cd);
+			order.setTransaction(transId);
+			order.setPayType(Order.ORDER_PAY_TYPE_ON_SITE);
+			order.setState(Order.ORDER_STATE_REQUESTING);
+			order.setGuestName(information.getGuestName());
+			order.setGuestPhone(information.getGuestPhone());
+			order.setGuestNum(information.getNums());
+			for (Menu m : selectionMenus) {
+				OrderItem oi = new OrderItem();
+				oi.setName(m.getName());
+				oi.setPrice(m.getPrice());
+				oi.setOrder(order);
+				order.addItem(oi);
+			}
+			
+			ServiceFactory.getOrderService().addOrder(order);
+			orderId = order.getId();
+			
 			OrderNotificaiton notification = new OrderNotificaiton(messageToken, serverTerminal, transId, orderId);
 			//Fill selection menu
 			for (Menu m : selectionMenus) {
@@ -241,7 +266,7 @@ public class GuestTransaction extends LinearTransaction {
 				return false;
 			}
 			
-			//TODO generat order information and save to database
+			
 			return false;
 			
 		}

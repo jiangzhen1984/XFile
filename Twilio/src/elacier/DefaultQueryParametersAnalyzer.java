@@ -1,5 +1,7 @@
 package elacier;
 
+import elacier.service.RestaurantQueryParameters;
+
 public class DefaultQueryParametersAnalyzer implements QueryParametersAnalyzer {
 
 	@Override

@@ -1,11 +1,15 @@
 package com.elacier.testcase;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import elacier.Menu;
 import elacier.Restaurant;
 import elacier.process.GuestInformation;
 import elacier.process.GuestTransaction;
@@ -31,7 +35,11 @@ public class GuestTransactionTest extends TestCase {
 		trans.updateRestaurantResponse(1, InquiryRespondNotification.INQUIRY_RESPOND_NOTIFICAITON_RET_OK);
 		assertTrue(trans.getState() instanceof GuestTransaction.NotifyGuestRestaurantRespondState);
 		
-		trans.updateOrderInformation(2, new Restaurant(1, "ss", null, 0.3F), null);
+		List<Menu> list = new ArrayList<Menu>();
+		list.add(new Menu(1, "a", 2.0F));
+		list.add(new Menu(2, "a1", 2.0F));
+		list.add(new Menu(3, "a2", 2.0F));
+		trans.updateOrderInformation(2, new Restaurant(1, "ss", null, 0.3F), list);
 		assertTrue(trans.getState() instanceof GuestTransaction.GuestRequestOrderState);
 		
 		trans.updateRestaurantConfirmationOrder(1, 1);

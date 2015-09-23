@@ -7,6 +7,15 @@ public class Menu {
 	private String name;
 	
 	private float price;
+	
+	
+
+	public Menu(long menuId, String name, float price) {
+		super();
+		this.menuId = menuId;
+		this.name = name;
+		this.price = price;
+	}
 
 	public long getMenuId() {
 		return menuId;

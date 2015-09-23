@@ -2,6 +2,10 @@ package elacier;
 
 import java.util.List;
 
+import elacier.service.IRestaurantService;
+import elacier.service.RestaurantQueryParameters;
+import elacier.service.RestaurantServiceDBImpl;
+
 public class ElacierRunnable implements Runnable{
 
 	static final String LOG_TAG = "ElacierRunnable";

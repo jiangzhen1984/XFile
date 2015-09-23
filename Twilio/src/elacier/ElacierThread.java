@@ -4,10 +4,14 @@ import java.util.List;
 
 import com.twilio.sdk.TwilioRestException;
 
+import elacier.service.IRestaurantService;
+import elacier.service.RestaurantQueryParameters;
+import elacier.service.RestaurantServiceDBImpl;
+
 public class ElacierThread extends Thread{
 
     static final String LOG_TAG = "ElacierThread";
-    static final int PARSE_RESULT_FINISH = 0;
+    public static final int PARSE_RESULT_FINISH = 0;
     static final int PARSE_RESULT_MORE = 1;
     static final int PARSE_RESULT_EXCEPTION = 2;
     static final int PARSE_RESULT_NONE = 3;
