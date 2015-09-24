@@ -36,6 +36,7 @@ public class EShoppingService extends BaseService {
 			esitem.setPrice(item.getPrice());
 			esitem.setPicUrl(((SingleShoppingItem)item).getPicUrl());
 			session.saveOrUpdate(esitem);
+			
 			item.setId(esitem.getId());
 		} else if (item.getType() == AbsShoppingItem.TYPE_COMBO) {
 			ComboShoppingItem   comboShoppingItem = (ComboShoppingItem)item;
@@ -55,9 +56,76 @@ public class EShoppingService extends BaseService {
 			item.setId(comboItem.getId());
 		}
 		
+		List<Image> images = item.getImageList();
+		for(Image ig : images) {
+			ESImage esi = new ESImage();
+			esi.setUri(ig.getUrl());
+			esi.setItemType(ig.getType());
+			esi.setItemID(item.getId());
+			esi.setItemType(item.getType());
+			session.save(esi);
+		}
+		
 		t.commit();
 		session.close();
 	}
+	
+	
+	public void addShoppingItem(AbsShoppingItem item, List<Category> belongs) {
+		Session session = openSession();
+		Transaction t = beginTransaction(session);
+		if (item.getType() == AbsShoppingItem.TYPE_SINGLE) {
+			ESItem esitem = new ESItem();
+			esitem.setDescription(item.getDescription());
+			esitem.setName(item.getName());
+			esitem.setPrice(item.getPrice());
+			esitem.setPicUrl(((SingleShoppingItem)item).getPicUrl());
+			session.saveOrUpdate(esitem);
+			
+			item.setId(esitem.getId());
+		} else if (item.getType() == AbsShoppingItem.TYPE_COMBO) {
+			ComboShoppingItem   comboShoppingItem = (ComboShoppingItem)item;
+			ESComboItem comboItem = new ESComboItem();
+			comboItem.setDescription(item.getDescription());
+			comboItem.setName(item.getName());
+			comboItem.setPrice(item.getPrice());
+			
+			List<SingleShoppingItem> list = comboShoppingItem.getItemList();
+			for (SingleShoppingItem si : list) {
+				ESItem esi = new ESItem();
+				esi.setId(si.getId());
+				comboItem.addItem(esi);
+			}
+			
+			session.saveOrUpdate(comboItem);
+			item.setId(comboItem.getId());
+		}
+		
+		
+		for(Category ct : belongs) {
+			ESCategoryItem ect = new ESCategoryItem();
+			ect.setCategoryId(ct.getId());
+			ect.setItemId(item.getId());
+			ect.setType(item.getType());
+			session.save(ect);
+		}
+		
+		List<Image> images = item.getImageList();
+		for(Image ig : images) {
+			ESImage esi = new ESImage();
+			esi.setUri(ig.getUrl());
+			esi.setItemType(ig.getType());
+			esi.setItemID(item.getId());
+			esi.setItemType(item.getType());
+			session.save(esi);
+		}
+		
+		t.commit();
+		session.flush();
+		session.close();
+	}
+	
+	
 	
 	public void deleteShoppingItem(AbsShoppingItem item) {
 		Session session = openSession();

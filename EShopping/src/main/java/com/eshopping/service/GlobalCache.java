@@ -147,6 +147,10 @@ public class GlobalCache {
 	public AbsShoppingItem getShoppingItem(int type, long id) {
 		return this.mAllItemMap.get(Key.getKey(type, id));
 	}
+	
+	public void putShoppingItem(int type, long id, AbsShoppingItem item) {
+		this.mAllItemMap.put(Key.getKey(type, id), item);
+	}
 
 	public List<AbsShoppingItem> getHotList() {
 		return mHotList;

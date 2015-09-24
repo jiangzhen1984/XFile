@@ -1,10 +1,11 @@
  create table ES_ITEM (
 	id bigint not null auto_increment,
-	DESCRIPTION VARCHAR(1000),
+	DESCRIPTION VARCHAR(4000),
 	NAME VARCHAR(40), 
 	PIC_PATH VARCHAR(200), 
 	PRICE NUMERIC(6,2), 
 	STUFF VARCHAR(100), 
+	SUMMARY VARCHAR(1000), 
 	primary key (id)
 );
 

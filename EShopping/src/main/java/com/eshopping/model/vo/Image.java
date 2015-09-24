@@ -3,7 +3,8 @@ package com.eshopping.model.vo;
 public class Image {
 	
 	public static final int TYPE_THUMBNIL = 1;
-	public static final int TYPE_SOURCE = 2;
+	public static final int TYPE_NORMAL = 2;
+	public static final int TYPE_BANNER = 3;
 	
 	private long id;
 	
@@ -11,13 +12,6 @@ public class Image {
 	
 	private int type;
 
-	public Image(long id, String url) {
-		super();
-		this.id = id;
-		this.url = url;
-	}
-	
-	
 
 	public Image(long id, String url, int type) {
 		super();
@@ -26,7 +20,11 @@ public class Image {
 		this.type = type;
 	}
 
-
+	public Image(String url, int type) {
+		super();
+		this.url = url;
+		this.type = type;
+	}
 
 	public long getId() {
 		return id;
@@ -42,6 +40,18 @@ public class Image {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+
+
+	public int getType() {
+		return type;
+	}
+
+
+
+	public void setType(int type) {
+		this.type = type;
 	}
 	
 	

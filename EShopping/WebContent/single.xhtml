@@ -47,8 +47,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</li>
 							<ui:repeat value="#{singleDataBean.viewedItem.imageList}" var="ig">
 							<li>
-								<h:graphicImage url="web/images/#{ig.url}" styleClass="etalage_thumb_image" />
-								<h:graphicImage url="web/images/#{ig.url}" styleClass="etalage_source_image" />
+								<h:graphicImage url="#{global.imageHost}/#{ig.url}" styleClass="etalage_thumb_image" />
+								<h:graphicImage url="#{global.imageHost}/#{ig.url}" styleClass="etalage_source_image" />
 								<!--   <img class="etalage_thumb_image" src="web/images/t1.jpg" />
 								<img class="etalage_source_image" src="web/images/t1.jpg" /> -->
 							</li>
@@ -79,11 +79,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<!-- //details-product-slider -->	
 			</div>
 			<div class="cont1 span_2_of_a1">
-				<h3 class="m_3">Lorem ipsum dolor sit amet</h3>
+				<h3 class="m_3"><h:outputText value="#{singleDataBean.viewedItem.name}"  /></h3>
 				
 				<div class="price_single">
-							  <span class="reducedfrom">$66.00</span>
-							  <span class="actual">$12.00</span><a href="#">click for offer</a>
+							  <!--  span class="reducedfrom"><h:outputText value="#{singleDataBean.viewedItem.price}"  /></span -->
+							  <span class="actual">#{singleDataBean.viewedItem.price}</span><a href="#">click for offer</a>
 							</div>
 				<ul class="options">
 					<h4 class="m_9">Select a Size</h4>

@@ -20,6 +20,8 @@ public abstract class AbsShoppingItem {
 
 	protected String description;
 	
+	protected String summary;
+	
 	protected int type;
 	
 	protected List<Category> categorys;
@@ -111,7 +113,19 @@ public abstract class AbsShoppingItem {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	
 
+
+
+	public String getSummary() {
+		return summary;
+	}
+
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
 
 
 	public int getType() {

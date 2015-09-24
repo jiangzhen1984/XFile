@@ -21,6 +21,9 @@ public class ESItem {
 	@Column(name="STUFF", columnDefinition="VARCHAR(100)")
 	private String stuff;
 	
+	@Column(name="SUMMARY", columnDefinition="VARCHAR(1000)")
+	private String summary;
+	
 	@Column(name="DESCRIPTION", columnDefinition="VARCHAR(100)")
 	private String description;
 	
@@ -80,6 +83,16 @@ public class ESItem {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
 	@Override
