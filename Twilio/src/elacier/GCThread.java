@@ -1,6 +1,8 @@
 package elacier;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GCThread extends Thread{
 
@@ -24,18 +26,19 @@ public class GCThread extends Thread{
 	}
 
 	private void cleanMoreDataMsg(){
+		System.out.println("gc thread cleanMoreDataMsg");
 		ElacierService se = ElacierService.getInstance();
+		Iterator<String> it = se.map.keySet().iterator();
+		String phone = null;
 		
-		for(Map.Entry<String, SmsMMS_Info> e: se.map.entrySet() ){
-			SmsMMS_Info msg = e.getValue();
-			String phone = e.getKey();
-
+		while (it.hasNext()) {
+			phone = (String)it.next();
+			SmsMMS_Info msg =  se.getMsg(phone);
 			if((System.currentTimeMillis() - msg.smsMMS_getTime())> 2*timeInterval  
-				&& msg.smsMMS_getActionStatus()==SmsMMS_Info.ACTION_STATUS_NEEDMORE){
+					&& msg.smsMMS_getActionStatus()==SmsMMS_Info.ACTION_STATUS_NEEDMORE){
 				se.removeSpecifidMsg(phone, msg);
 			}
 		}
-		
 	}
 
 }
