@@ -11,6 +11,8 @@ import org.junit.Test;
 import com.eshopping.model.po.ESComboItem;
 import com.eshopping.model.vo.AbsShoppingItem;
 import com.eshopping.model.vo.Category;
+import com.eshopping.model.vo.CategoryItemSpecialType;
+import com.eshopping.model.vo.CategoryItemSpecialTypeGroup;
 import com.eshopping.model.vo.ComboShoppingItem;
 import com.eshopping.model.vo.SingleShoppingItem;
 import com.eshopping.service.EShoppingService;
@@ -81,6 +83,11 @@ public class EShoppingServiceTest extends TestCase  {
 	
 	
 	
+	
+	public void testGetCommonSpecialType() {
+		List<CategoryItemSpecialType> list = mService.getCommonSpecialType();
+	}
+	
 
 	
 	
@@ -126,5 +133,39 @@ public class EShoppingServiceTest extends TestCase  {
 		assertTrue(list  != null);
 	}
 	
+	
+	public void testAddESCatgoryItemSpecialGroup() {
+		CategoryItemSpecialTypeGroup group = new CategoryItemSpecialTypeGroup();
+		group.setBelongs(new Category());
+		
+		
+		CategoryItemSpecialType type1 = new CategoryItemSpecialType();
+		group.addType(type1);
+		group.addType(new CategoryItemSpecialType());
+		group.addType(new CategoryItemSpecialType());
+		
+		mService.addESCatgoryItemSpecialGroup(group);
+		assertTrue(group.getId() > 0);
+		
+	}
+	
+	
+	public void testAddESCatgoryItemSpecialType() {
+		CategoryItemSpecialType type1 = new CategoryItemSpecialType();
+		type1.setCategory(new Category());
+		type1.setGroup(new CategoryItemSpecialTypeGroup(2));
+		type1.setName("aaa");
+		mService.addESCatgoryItemSpecialType(type1);
+		assertTrue(type1.getId() > 0);
+	}
+	
+	
+	
+	public void testDeleteESCatgoryItemSpecialGroup() {
+		CategoryItemSpecialTypeGroup group = new CategoryItemSpecialTypeGroup();
+		group.setId(2);
+		mService.deleteESCatgoryItemSpecialGroup(group);
+		
+	}
 	
 }

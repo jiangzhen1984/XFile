@@ -110,7 +110,7 @@ public class ShopDataBean {
 		if (this.mCurrentCategory == null) {
 			tmp = GlobalCache.getInstance().getItemList();
 		} else {
-			tmp = mCurrentCategory.getItems();
+			tmp = mCurrentCategory.getItemsIncludeSubCategory(0, 1000);
 		}
 		if (filterIdList != null && filterIdList.length > 0) {
 			SpecialTypeFilter filter = new SpecialTypeFilter();
@@ -131,7 +131,7 @@ public class ShopDataBean {
 		} else if (start > size) {
 			start = size -1;
 		} else if (start + fetchCount >= size && start < size) {
-			fcount = size - start -1;
+			fcount = size - start;
 		} 
 		itemList = tmp.subList(start, start + fcount);
 	}

@@ -2,7 +2,8 @@
 	id bigint not null auto_increment,
 	DESCRIPTION VARCHAR(4000),
 	NAME VARCHAR(40), 
-	PIC_PATH VARCHAR(200), 
+	BANNER_PATH VARCHAR(200), 
+	LIST_PATH VARCHAR(200), 
 	PRICE NUMERIC(6,2), 
 	STUFF VARCHAR(100), 
 	SUMMARY VARCHAR(1000), 
@@ -162,7 +163,6 @@ alter table ES_CATEGORY_ITEM add constraint FK_rq0h09mi3q7i3um10xr4t8v0b foreign
 
 alter table ES_CATEGORY_ITEM add constraint UK_2d3wi5c7ydy3nq1pm4o2tql9c  unique (ES_CATEGORY_ID, ES_ITEM_ID);
 
-alter table ES_CATEGORY_ITEM_SPECIAL_TYPE add constraint FK_74aytr1c15gudg9yltny49y43 foreign key (CATEGORY_ID) references ES_CATEGORY (id);
 
 alter table ES_USER_ADDRESS add constraint FK_74aytr1c15gudg9yltny49y41 foreign key (ES_USER_ID) references ES_USER (id);
 

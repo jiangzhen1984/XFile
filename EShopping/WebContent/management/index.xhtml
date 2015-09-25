@@ -248,10 +248,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						    	<div>price：<input type="text" name="price" /></div>
 						    	<div>Description：<textarea  name="description" /></div>
 						    	<div>BannerImage：<h:inputFile value="#{managementDataBean.banner}" /></div>
-						    	<div>Thubmil Image：<h:inputFile value="#{managementDataBean.normal1}" /></div>
-						    	<div>Normal Image：<h:inputFile value="#{managementDataBean.normal2}" /></div>
-						    	<div>Normal Image：<h:inputFile value="#{managementDataBean.normal3}" /></div>
-						    	<div>Normal Image：<h:inputFile value="#{managementDataBean.normal4}" /></div>
+						    	<div>ShopListImage：<h:inputFile value="#{managementDataBean.shopUrl}" /></div>
+						    	
+						    	<div>Thubmil Image：<h:inputFile value="#{managementDataBean.thubnil1}" /></div>
+						    	<div>Normal1 Image：<h:inputFile value="#{managementDataBean.normal1}" /></div>
+						    	<div>Normal2 Image：<h:inputFile value="#{managementDataBean.normal2}" /></div>
+						    	<div>Normal3 Image：<h:inputFile value="#{managementDataBean.normal3}" /></div>
 						     	<c:forEach items="#{managementDataBean.topCategoryList}" var="item" varStatus="vs">
 								<div>
 									<input name="cates" type="checkbox" value="#{item.id}"/>

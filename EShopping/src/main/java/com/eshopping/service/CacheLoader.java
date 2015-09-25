@@ -73,13 +73,14 @@ public class CacheLoader {
 		
 		
 		
+		List<CategoryItemSpecialType> commonSpecialTypeList = service.getCommonSpecialType();
 		List<Category> list = service.queryCategory(0, 500);
-		loadAllCategory(service, cacheManager, list);
+		loadAllCategory(service, cacheManager, list, commonSpecialTypeList);
 	}
 	
 	
 	
-	private void loadAllCategory(EShoppingService service, GlobalCache cacheManager, List<Category> list) {
+	private void loadAllCategory(EShoppingService service, GlobalCache cacheManager, List<Category> list, List<CategoryItemSpecialType> commonSpecialTypeList) {
 		//update category
 		if (list != null) {
 			for (Category c : list) {
@@ -95,6 +96,10 @@ public class CacheLoader {
 				} else {
 					cacheManager.addTopLevelCategory(c);
 				}
+				//Fill CommonType 
+				for (CategoryItemSpecialType stype : commonSpecialTypeList) {
+					 c.addType(stype);
+				 }
 				
 				loadCategorySpecialType(service, cacheManager, c);
 				loadCategoryItem(service, cacheManager, c);

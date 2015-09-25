@@ -110,10 +110,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				   	<f:param name="itemtype" value="#{item.type}"  />
 				     <div class="view1 view-fifth1">
 				  	  <div class="top_box">
-					  	<h3 class="m_1">Lorem ipsum dolor sit amea</h3>
-					  	<p class="m_2">Lorem ipsum</p>
+					  	<h3 class="m_1">#{item.name}</h3>
+					  	<p class="m_2"></p>
 				         <div class="grid_img">
-						   <div class="css3"><img src="web/images/pic11.jpg" alt=""/></div>
+						   <div class="css3">
+						   
+						   <h:graphicImage url="#{global.imageHost}/#{item.shopShowUrl}"  />
+						   </div>
 					          <div class="mask1">
 	                       		<div class="info">Quick View</div>
 			                  </div>

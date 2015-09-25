@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -144,9 +145,23 @@ public class ManagementDataBean {
 	private Part normal4;
 	private Part normal5;
 	
+	private Part shopUrl;
 	
 	
 	
+	
+	public Part getShopUrl() {
+		return shopUrl;
+	}
+
+
+
+	public void setShopUrl(Part shopUrl) {
+		this.shopUrl = shopUrl;
+	}
+
+
+
 	public void setCateGoryList(List<Category> cateGoryList) {
 		this.cateGoryList = cateGoryList;
 	}
@@ -310,6 +325,19 @@ public class ManagementDataBean {
 		return cates;
 	}
 
+	
+	
+	public void createCategorySpecialType() {
+		Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		Category cate = null;
+		if (map.get("cid") != null) {
+			Long pid = Long.parseLong(map.get("cid"));
+			cate = GlobalCache.getInstance().getCategory(pid);
+		}
+		String groupName = map.get("groupName");
+		String[] typeNames =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterValuesMap().get("typeName");
+		
+	}
 
 
 	public void createShopItem() {
@@ -352,6 +380,7 @@ public class ManagementDataBean {
 		if (this.banner != null && this.banner.getSize() > 0) {
 			Image im = moveFile(this.banner, Image.TYPE_BANNER, 1);
 			item.addImage(im);
+			item.setBannerUrl(im.getUrl());
 		}
 		if (this.thubnil1 != null && this.thubnil1.getSize() > 0) {
 			Image im = moveFile(this.thubnil1, Image.TYPE_THUMBNIL, 1);
@@ -373,6 +402,13 @@ public class ManagementDataBean {
 			Image im = moveFile(this.normal2, Image.TYPE_NORMAL, 2);
 			item.addImage(im);
 		}
+		
+		if (this.shopUrl != null && this.shopUrl.getSize() > 0) {
+			Image im = moveFile(this.shopUrl, Image.TYPE_LIST, 0);
+			item.setShopShowUrl(im.getUrl());
+		}
+		
+		
 
 		item.setLoadImages(true);
 		ServiceFactory.getEShoppingService().addShoppingItem(item, list);
@@ -406,6 +442,11 @@ public class ManagementDataBean {
 					+ uri);
 		} else if (type == Image.TYPE_THUMBNIL) {
 			uri = "/image/" + System.currentTimeMillis()+"_thumbnil_"+index+".png";
+			newFile = new File(FacesContext
+					.getCurrentInstance().getExternalContext().getRealPath("/")
+					+ uri);
+		} else if (type == Image.TYPE_LIST) {
+			uri = "/image/" + System.currentTimeMillis()+"_list_"+index+".png";
 			newFile = new File(FacesContext
 					.getCurrentInstance().getExternalContext().getRealPath("/")
 					+ uri);

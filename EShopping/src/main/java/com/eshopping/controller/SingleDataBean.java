@@ -1,5 +1,7 @@
 package com.eshopping.controller;
 
+import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -17,6 +19,7 @@ public class SingleDataBean {
 	@ManagedProperty(value="#{checkoutDataBean}")
 	private CheckoutDataBean checkDataBean;
 	private AbsShoppingItem item;
+	private List<AbsShoppingItem> relatedList;
 	private String errMsgAddtoCart;
 	
 	public SingleDataBean() {
@@ -43,10 +46,15 @@ public class SingleDataBean {
 			EShoppingService service = new EShoppingService();
 			service.queryImageList(item);
 		}
+		
+		relatedList = GlobalCache.getInstance().getNewList();
 	}
 	
 	
 	
+	public List<AbsShoppingItem> getRelatedList() {
+		return relatedList;
+	}
 	
 	
 	

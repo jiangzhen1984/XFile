@@ -7,7 +7,7 @@ public class CategoryItemSpecialType {
 	
 	protected long id;
 	
-	private int group;
+	private CategoryItemSpecialTypeGroup group;
 	
 	private String groupName;
 	
@@ -23,7 +23,7 @@ public class CategoryItemSpecialType {
 	
 	public CategoryItemSpecialType(ESCatgoryItemSpecialType esType) {
 		this.id = esType.getId();
-		this.group = esType.getGroup();
+		this.group = new CategoryItemSpecialTypeGroup(esType.getGroup());
 		this.groupName = esType.getGroupName();
 		this.name = esType.getName();
 		this.isShow = esType.isShow();
@@ -38,11 +38,11 @@ public class CategoryItemSpecialType {
 		this.id = id;
 	}
 
-	public int getGroup() {
+	public CategoryItemSpecialTypeGroup getGroup() {
 		return group;
 	}
 
-	public void setGroup(int group) {
+	public void setGroup(CategoryItemSpecialTypeGroup group) {
 		this.group = group;
 	}
 

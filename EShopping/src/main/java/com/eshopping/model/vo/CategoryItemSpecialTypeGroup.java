@@ -13,10 +13,20 @@ public class CategoryItemSpecialTypeGroup {
 	
 	private boolean isShow;
 	
+	private Category belongs;
+	
+	private boolean isCommon;
+	
 	
 
 	public CategoryItemSpecialTypeGroup() {
 		super();
+		types = new ArrayList<CategoryItemSpecialType>();
+	}
+	
+	public CategoryItemSpecialTypeGroup(int id) {
+		super();
+		this.id = id;
 		types = new ArrayList<CategoryItemSpecialType>();
 	}
 
@@ -39,10 +49,18 @@ public class CategoryItemSpecialTypeGroup {
 	
 	
 	public void addType(CategoryItemSpecialType item) {
+		if (item == null) {
+			return;
+		}
+		item.setCategory(belongs);
+		item.setGroup(this);
 		this.types.add(item);
 	}
 	
 	public void removeType(CategoryItemSpecialType item) {
+		if (item == null) {
+			return;
+		}
 		this.types.remove(item);
 	}
 	
@@ -61,6 +79,26 @@ public class CategoryItemSpecialTypeGroup {
 
 	public void setShow(boolean isShow) {
 		this.isShow = isShow;
+	}
+	
+	
+	
+	
+
+	public Category getBelongs() {
+		return belongs;
+	}
+
+	public void setBelongs(Category belongs) {
+		this.belongs = belongs;
+	}
+
+	public boolean isCommon() {
+		return isCommon;
+	}
+
+	public void setCommon(boolean isCommon) {
+		this.isCommon = isCommon;
 	}
 
 	@Override

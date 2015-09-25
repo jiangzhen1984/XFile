@@ -7,6 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <title>Free Adidas Website Template | Checkout :: w3layouts</title>
@@ -49,8 +50,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<li><span>Item</span></li>
 				<li><span>Product Name</span></li>		
 				<li><span>Unit Price</span></li>
+				<li><span>Quantity</span></li>
 				<li><span>Delivery Details</span></li>
-				<li> </li>
 				<li></li>
 				<div class="clear"> </div>
 			</ul>
@@ -69,10 +70,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					
 					<ul class="cart-header" id="#{item.value.wr.id}h">
 						<div class="close" id="#{item.value.wr.id}"> </div>
-							<li class="ring-in"><a href="single.html" ><img src="web/images/c-1.jpg" class="img-responsive" alt="" /></a>
+							<li class="ring-in">
+							<h:outputLink value="single.xhtml" >
+								<f:param name="itemid" value="#{item.value.wr.id}" />
+								<f:param name="itemtype" value="#{item.value.wr.type}" />
+								<h:graphicImage url="#{global.imageHost}/#{item.value.wr.shopShowUrl}"  />
+								
+							</h:outputLink>
 							</li>
-							<li><span class="name">Analog Watches</span></li>
-							<li><span class="cost">$ 290.00</span></li>
+							<li><span class="name">#{item.value.wr.name}</span></li>
+							<li><span class="cost">#{item.value.wr.price}</span></li>
+							<li><span class="cost">#{item.value.count}</span></li>
 							<li><span>Free</span>
 							<p>Delivered in 2-3 business days</p></li>
 							<li><span></span></li>

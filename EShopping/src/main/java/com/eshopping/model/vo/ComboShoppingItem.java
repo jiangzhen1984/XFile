@@ -7,6 +7,10 @@ import com.eshopping.model.po.ESComboItem;
 import com.eshopping.model.po.ESItem;
 
 public class ComboShoppingItem extends AbsShoppingItem {
+	
+	private String bannerUrl;
+	
+	private String shopShowUrl;
 
 	private List<SingleShoppingItem> items;
 	
@@ -53,4 +57,27 @@ public class ComboShoppingItem extends AbsShoppingItem {
 	public List<SingleShoppingItem> getItemList() {
 		return items;
 	}
+
+
+	public String getBannerUrl() {
+		return bannerUrl;
+	}
+
+
+	public void setBannerUrl(String bannerUrl) {
+		this.bannerUrl = bannerUrl;
+	}
+
+
+	public String getShopShowUrl() {
+		return shopShowUrl;
+	}
+
+
+	public void setShopShowUrl(String shopShowUrl) {
+		this.shopShowUrl = shopShowUrl;
+	}
+	
+	
+	
 }

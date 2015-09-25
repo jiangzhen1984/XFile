@@ -2,6 +2,7 @@ package com.eshopping.model.vo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import com.eshopping.model.po.ESCategory;
 
@@ -100,20 +101,67 @@ public class Category extends ESCategory {
 	}
 	
 	
+	public  List<AbsShoppingItem> getItemsIncludeSubCategory(int start, int fetchCount) {
+		List<AbsShoppingItem> newList = new ArrayList<AbsShoppingItem>(fetchCount);
+		int size = this.items.size();
+		if (size > start) {
+			int co = size - start;
+			newList.addAll(items.subList(size - co, size));
+			fetchCount -= co;
+		} 
+		
+		Stack<Category> st = new Stack<Category>();
+		populateStack(st, this);
+		
+		do {
+			
+			if (st.isEmpty()) {
+				break;
+			}
+			Category subCategory = st.pop();
+			if (subCategory == this) {
+				break;
+			}
+			if (subCategory != null) {
+				int itemSize = subCategory.getItems().size();
+				if (itemSize < fetchCount) {
+					newList.addAll(subCategory.getItems().subList(0, itemSize));
+					fetchCount -= itemSize;
+				} else {
+					newList.addAll(subCategory.getItems().subList(0, fetchCount));
+					break;
+				}
+			}
+			
+			
+		} while (fetchCount > 0);
+		
+		return newList;
+		
+	}
+	
+	
+	private void populateStack(Stack<Category> st, Category cate) {
+		st.push(cate);
+		for(int i = 0; i <cate.getSubCategory().size(); i++) {
+			populateStack(st, cate.getSubCategory().get(i));
+		}
+	}
+	
 	public void addType(CategoryItemSpecialType type) {
 		if (type == null) {
 			return;
 		}
 		CategoryItemSpecialTypeGroup g = null;
 		for (CategoryItemSpecialTypeGroup group : typeGroups) {
-			if (type.getGroup() == group.getId()) {
+			if (type.getGroup().getId() == group.getId()) {
 				g = group;
 				break;
 			}
 		}
 		if (g == null) {
 			g = new CategoryItemSpecialTypeGroup();
-			g.setId(type.getGroup());
+			g.setId(type.getGroup().getId());
 			g.setName(type.getGroupName());
 			g.setShow(type.isShow());
 			typeGroups.add(g);
@@ -130,7 +178,7 @@ public class Category extends ESCategory {
 		CategoryItemSpecialTypeGroup g = null;
 		
 		for (CategoryItemSpecialTypeGroup group : typeGroups) {
-			if (type.getGroup() == group.getId()) {
+			if (type.getGroup().getId() == group.getId()) {
 				g = group;
 				break;
 			}

@@ -45,18 +45,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<img class="etalage_source_image" src="web/images/t2.jpg" />
 								</a>
 							</li>
-							<ui:repeat value="#{singleDataBean.viewedItem.imageList}" var="ig">
+							<c:forEach items="#{singleDataBean.viewedItem.imageList}" var="ig">
 							<li>
-								<h:graphicImage url="#{global.imageHost}/#{ig.url}" styleClass="etalage_thumb_image" />
-								<h:graphicImage url="#{global.imageHost}/#{ig.url}" styleClass="etalage_source_image" />
+								<c:if test="#{ig.isNotBanner()==true}" >
+									<h:graphicImage url="#{global.imageHost}/#{ig.url}" styleClass="etalage_source_image" />
+									<h:graphicImage url="#{global.imageHost}/#{ig.url}" styleClass="etalage_thumb_image" />
 								<!--   <img class="etalage_thumb_image" src="web/images/t1.jpg" />
 								<img class="etalage_source_image" src="web/images/t1.jpg" /> -->
+								</c:if>
 							</li>
-							</ui:repeat>
+							</c:forEach>
 						</ul>
 					
 					
 			<!-- end product_slider -->
+			
 			
 		<!-- Include the Etalage files -->
 				<script>
@@ -93,9 +96,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="clear"></div>
 				</ul>
 				<div class="btn_form">
-				   <form>
-					 <input type="submit" value="buy now" title="" />
-				  </form>
+				    <h:form>
+                   	  	<input type="hidden"  value="#{singleDataBean.viewedItem.id}" name="itemid"  />
+                   	  	<input type="hidden" value="#{singleDataBean.viewedItem.type}" name="itemtype" />
+						<h:commandButton action="#{singleDataBean.addToCart}" class="grey" value="Buy now"></h:commandButton>
+				 	</h:form>
 				</div>
 				<ul class="add-to-links">
     			   <li><img src="web/images/wish.png" alt=""/><a href="#">Add to wishlist</a></li>
@@ -115,11 +120,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      
      
          <ul id="flexiselDemo3">
-			<li><img src="web/images/pic11.jpg" /><div class="grid-flex"><a href="#">Bloch</a><p>Rs 850</p></div></li>
-			<li><img src="web/images/pic10.jpg" /><div class="grid-flex"><a href="#">Capzio</a><p>Rs 850</p></div></li>
-			<li><img src="web/images/pic9.jpg" /><div class="grid-flex"><a href="#">Zumba</a><p>Rs 850</p></div></li>
-			<li><img src="web/images/pic8.jpg" /><div class="grid-flex"><a href="#">Bloch</a><p>Rs 850</p></div></li>
-			<li><img src="web/images/pic7.jpg" /><div class="grid-flex"><a href="#">Capzio</a><p>Rs 850</p></div></li>
+         	<ui:repeat id="item" var="item" value="#{singleDataBean.relatedList}"
+					varStatus="itemStatus">
+         
+				<li><img src="web/images/pic11.jpg" /><div class="grid-flex"><a href="#">Bloch</a><p>Rs 850</p></div></li>
+			</ui:repeat>
 		 </ul>
 	    <script type="text/javascript">
 		 $(window).load(function() {

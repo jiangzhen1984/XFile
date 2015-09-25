@@ -5,6 +5,7 @@ public class Image {
 	public static final int TYPE_THUMBNIL = 1;
 	public static final int TYPE_NORMAL = 2;
 	public static final int TYPE_BANNER = 3;
+	public static final int TYPE_LIST = 4;
 	
 	private long id;
 	
@@ -54,6 +55,10 @@ public class Image {
 		this.type = type;
 	}
 	
+	
+	public boolean isNotBanner() {
+		return this.type != TYPE_BANNER;
+	}
 	
 	
 	

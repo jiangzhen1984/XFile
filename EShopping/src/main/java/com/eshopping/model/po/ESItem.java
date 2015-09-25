@@ -27,8 +27,11 @@ public class ESItem {
 	@Column(name="DESCRIPTION", columnDefinition="VARCHAR(100)")
 	private String description;
 	
-	@Column(name="PIC_PATH", columnDefinition="VARCHAR(200)")
-	private String picUrl;
+	@Column(name="BANNER_PATH", columnDefinition="VARCHAR(200)")
+	private String bannerUrl;
+	
+	@Column(name="LIST_PATH", columnDefinition="VARCHAR(200)")
+	private String shopShowUrl;
 	
 	@Column(name = "PRICE", columnDefinition =  "NUMERIC(6,2)")
 	private float price;
@@ -50,14 +53,24 @@ public class ESItem {
 		this.name = name;
 	}
 
-	public String getPicUrl() {
-		return picUrl;
+	
+
+
+	public String getBannerUrl() {
+		return bannerUrl;
 	}
 
-	public void setPicUrl(String picUrl) {
-		this.picUrl = picUrl;
+	public void setBannerUrl(String bannerUrl) {
+		this.bannerUrl = bannerUrl;
 	}
 
+	public String getShopShowUrl() {
+		return shopShowUrl;
+	}
+
+	public void setShopShowUrl(String shopShowUrl) {
+		this.shopShowUrl = shopShowUrl;
+	}
 
 	public float getPrice() {
 		return price;
