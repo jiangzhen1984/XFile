@@ -28,4 +28,22 @@
     <servlet-class>lunch.LunchServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  
+  
+   <servlet-mapping>
+    <servlet-name>ProcessServlet</servlet-name>
+    <url-pattern>/process</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ProcessServlet</servlet-name>
+    <servlet-class>elacier.process.ProcessServlet</servlet-class>
+  </servlet>
+  
+  
+
+  <servlet>
+    <servlet-name>LoaderServlet</servlet-name>
+    <servlet-class>elacier.process.LoaderServlet</servlet-class>
+     <load-on-startup>0</load-on-startup>
+  </servlet>
 </web-app>

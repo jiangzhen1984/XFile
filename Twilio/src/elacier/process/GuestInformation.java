@@ -3,7 +3,7 @@ package elacier.process;
 import java.util.ArrayList;
 import java.util.List;
 
-import elacier.Menu;
+import elacier.restaurant.Menu;
 
 public class GuestInformation {
 	

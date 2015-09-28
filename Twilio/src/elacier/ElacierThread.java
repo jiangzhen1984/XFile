@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.twilio.sdk.TwilioRestException;
 
+import elacier.restaurant.Restaurant;
 import elacier.service.IRestaurantService;
 import elacier.service.RestaurantQueryParameters;
 import elacier.service.RestaurantServiceDBImpl;

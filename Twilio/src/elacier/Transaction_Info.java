@@ -2,6 +2,8 @@ package elacier;
 
 import java.util.List;
 
+import elacier.restaurant.Restaurant;
+
 public class Transaction_Info {
 
 	public String trans_id;

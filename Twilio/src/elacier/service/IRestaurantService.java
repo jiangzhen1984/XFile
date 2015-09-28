@@ -3,7 +3,8 @@ package elacier.service;
 import java.util.List;
 
 import elacier.Location;
-import elacier.Restaurant;
+import elacier.restaurant.Menu;
+import elacier.restaurant.Restaurant;
 
 public interface IRestaurantService {
 	
@@ -26,4 +27,18 @@ public interface IRestaurantService {
 	 */
 	public List<Restaurant> queryRestaurant(RestaurantQueryParameters queryPara);
 	
+	
+	
+	public void registerRestaurant(Restaurant rest);
+
+	
+	
+	public void addRestaurantMenu(Restaurant rest, List<Menu> menus);
+	
+	
+	
+	public void removeRestaurantMenu(Restaurant rest, Menu menu);
+	
+	
+	public List<Menu> queryRestaurantMenu(Restaurant rest, int start, int fetchCount);
 }

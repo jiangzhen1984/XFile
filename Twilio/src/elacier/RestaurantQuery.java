@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.List;
 
+import elacier.restaurant.Restaurant;
+
 public class RestaurantQuery implements IRestaurantCommunication{
 	static long token_id = 1000;
 	Object lock;

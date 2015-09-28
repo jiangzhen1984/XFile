@@ -42,14 +42,16 @@ public class TransactionManager {
 	}
 	
 	
-	public void beginTransaction(Transaction trans) {
-		if (trans != null) {
-			trans.begin();
+	public boolean beginTransaction(Transaction trans) {
+		if (trans == null) {
+			throw new NullPointerException("transaction is null");
 		}
+		
+		return trans.begin();
 	}
 	
 	
-	public void finishTransaction(Transaction trans) {
+	public boolean finishTransaction(Transaction trans) {
 		if (trans == null) {
 			throw new IllegalArgumentException(" trans is null");
 		}
@@ -57,7 +59,7 @@ public class TransactionManager {
 			throw new IllegalArgumentException(" transation token is null");
 		}
 		mMap.remove(trans.getToken());
-		trans.finish();
+		return trans.finish();
 	}
 	
 	

@@ -34,6 +34,8 @@
         
         <mapping class="elacier.order.Order" />
        	<mapping class="elacier.order.OrderItem" />
+       	<mapping class="elacier.restaurant.Restaurant" />
+       	<mapping class="elacier.restaurant.Menu" />
     </session-factory>
 
 </hibernate-configuration>

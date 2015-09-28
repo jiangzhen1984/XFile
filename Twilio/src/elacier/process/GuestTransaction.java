@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import elacier.Menu;
-import elacier.Restaurant;
 import elacier.cache.GlobalCacheHolder;
 import elacier.order.Order;
 import elacier.order.OrderItem;
@@ -14,8 +12,11 @@ import elacier.provider.ProviderUtil;
 import elacier.provider.msg.InquiryNotification;
 import elacier.provider.msg.InquiryRespondNotification;
 import elacier.provider.msg.OrderNotificaiton;
+import elacier.provider.msg.OrderRespondNotification;
 import elacier.provider.msg.ServerTerminal;
 import elacier.provider.msg.Terminal;
+import elacier.restaurant.Menu;
+import elacier.restaurant.Restaurant;
 import elacier.service.ServiceFactory;
 import elacier.transaction.LinearTransaction;
 import elacier.transaction.LongToken;
@@ -27,11 +28,11 @@ public class GuestTransaction extends LinearTransaction {
 	
 	private GuestInformation information;
 	
-	private List<Restaurant> restaurants;
+	private List<RestarurantStateHolder> restaurants;
 	
 	private Restaurant orderRestaurant;
 	
-	private long orderId;
+	private Order guestOrder;
 	
 	private List<Menu> selectionMenus;
 	
@@ -40,7 +41,7 @@ public class GuestTransaction extends LinearTransaction {
 	
 	public GuestTransaction(Token token) {
 		super(token, new Date());
-		restaurants = new ArrayList<Restaurant>();
+		restaurants = new ArrayList<RestarurantStateHolder>();
 		selectionMenus = new ArrayList<Menu>();
 	}
 
@@ -78,20 +79,35 @@ public class GuestTransaction extends LinearTransaction {
 	
 
 
-
-	public List<Restaurant> getAllRestaurants() {
-		return restaurants;
-	}
-	
 	
 	public List<Restaurant> getAllRespondedRestaurants() {
-		return restaurants;
+		if (restaurants == null || restaurants.size() <= 0) {
+			return null;
+		}
+		List<Restaurant> responed = new ArrayList<Restaurant>();
+		
+		for (RestarurantStateHolder holder : restaurants) {
+			if (holder.queryState == InquiryRespondNotification.INQUIRY_RESPOND_NOTIFICAITON_RET_OK) {
+				responed.add(holder.rest);
+			}
+		}
+		return responed;
 	}
 
 
 
 	public List<Restaurant> getAllConfirmedOrderRestaurants() {
-		return restaurants;
+		if (restaurants == null || restaurants.size() <= 0) {
+			return null;
+		}
+		List<Restaurant> confirmed = new ArrayList<Restaurant>();
+		
+		for (RestarurantStateHolder holder : restaurants) {
+			if (holder.orderState == OrderRespondNotification.RESTAURANT_RESPONSE_RET_OK) {
+				confirmed.add(holder.rest);
+			}
+		}
+		return confirmed;
 	}
 
 	/**
@@ -104,7 +120,8 @@ public class GuestTransaction extends LinearTransaction {
 		
 		if (status == InquiryRespondNotification.INQUIRY_RESPOND_NOTIFICAITON_RET_OK) {
 			//TODO only turn once
-			this.turnToNextState();
+			boolean ret = this.turnToNextState();
+			//FIXME if turn to next state failed notification
 		}
 	}
 	
@@ -115,7 +132,7 @@ public class GuestTransaction extends LinearTransaction {
 	 * @param orderRestaurant
 	 * @param menus
 	 */
-	public void updateOrderInformation(long orderId, Restaurant orderRestaurant, List<Menu> menus) {
+	public void updateOrderInformation(Restaurant orderRestaurant, List<Menu> menus) {
 		if (orderRestaurant == null) {
 			throw new RuntimeException(" restaurant is null");
 		}
@@ -128,7 +145,8 @@ public class GuestTransaction extends LinearTransaction {
 		//TODO check current state
 		
 		this.orderRestaurant = orderRestaurant;
-		this.turnToNextState();
+		boolean ret = this.turnToNextState();
+		//FIXME if turn to next state failed notification
 	}
 	
 	/**
@@ -140,16 +158,19 @@ public class GuestTransaction extends LinearTransaction {
 		//FIXME check restaurantId is same origin?
 		//Because user maybe confirm order few times
 		orderConfirmStatus = status;
-		this.turnToNextState();
+		boolean ret = this.turnToNextState();
+		//FIXME if turn to next state failed notification
 	}
 	
 
 	public void addAvailableRestaurant(Restaurant rest) {
-		restaurants.add(rest);
+		restaurants.add(new RestarurantStateHolder(rest));
 	}
 	
 	public void addAvailableRestaurant(List<Restaurant> rests) {
-		restaurants.addAll(rests);
+		for (Restaurant rest : rests) {
+			restaurants.add(new RestarurantStateHolder(rest));
+		}
 	}
 
 
@@ -158,29 +179,43 @@ public class GuestTransaction extends LinearTransaction {
 		@Override
 		public boolean actvie(Transaction trans) {
 			if (information == null) {
-				//FIXME logging information is statist
+				//FIXME logging information is staticist
 				return false;
 			}
-			Token messageToken = new LongToken(System.currentTimeMillis());
-			Token deviceId = new LongToken(1);
-			Terminal serverTerminal = new ServerTerminal(deviceId);
-			long transId = ((LongToken)trans.getToken()).longValue();
-			InquiryNotification notifcation = new InquiryNotification(messageToken, serverTerminal, transId, information.getType());
-			
-			List<Restaurant> listRes = getAllRestaurants();
+			List<RestarurantStateHolder> listRes = restaurants;
 			if (listRes == null || listRes.size() <= 0) {
 				//FIXME logging no available restaurant
 				return false;
 			}
-			List<Terminal> terminals = new ArrayList<Terminal>(listRes.size());
-			for (Restaurant res : listRes) {
-				Terminal term = GlobalCacheHolder.getInstance().getRestaurantTerminal(res.getRestId());
+				
+			Token messageToken = new LongToken(System.currentTimeMillis());
+			Token deviceId = new LongToken(1);
+			Terminal serverTerminal = new ServerTerminal(deviceId);
+			long transId = 0;
+			if (trans.getToken() instanceof LongToken) {
+				transId = ((LongToken)trans.getToken()).longValue();
+			} else {
+				//FIXME maybe transaction is same should avoid this issue
+				transId = trans.getToken().hashCode();
+			}
+			InquiryNotification notifcation = new InquiryNotification(messageToken, serverTerminal, transId, information.getType());
+			notifcation.setGuestPhone(information.getGuestPhone());
+			notifcation.setWord(information.getFav());
+			notifcation.setNumOfPeople(information.getNums());
+			
+			List<Terminal> terminals = new ArrayList<Terminal>();
+			for (RestarurantStateHolder res : listRes) {
+				Terminal term = GlobalCacheHolder.getInstance().getRestaurantTerminal(res.rest.getRestId());
 				if (term  != null) {
 					terminals.add(term);
 				} else {
 					//FIXME logging no terminal
 				}
 						
+			}
+			if (terminals.size() <= 0) {
+				//Means restaurant never connect to server
+				return false;
 			}
 			try {
 				ProviderUtil.pushNotification(notifcation, terminals);
@@ -194,7 +229,7 @@ public class GuestTransaction extends LinearTransaction {
 
 		@Override
 		public boolean deactive(Transaction trans) {
-			return false;
+			return true;
 		}
 		
 	}
@@ -214,7 +249,7 @@ public class GuestTransaction extends LinearTransaction {
 
 		@Override
 		public boolean deactive(Transaction trans) {
-			return false;
+			return true;
 		}
 		
 	}
@@ -249,9 +284,9 @@ public class GuestTransaction extends LinearTransaction {
 			}
 			
 			ServiceFactory.getOrderService().addOrder(order);
-			orderId = order.getId();
+			guestOrder = order;
 			
-			OrderNotificaiton notification = new OrderNotificaiton(messageToken, serverTerminal, transId, orderId);
+			OrderNotificaiton notification = new OrderNotificaiton(messageToken, serverTerminal, transId, guestOrder.getId());
 			//Fill selection menu
 			for (Menu m : selectionMenus) {
 				notification.addSelectionMenu(m.getMenuId(), m.getName());
@@ -273,7 +308,7 @@ public class GuestTransaction extends LinearTransaction {
 
 		@Override
 		public boolean deactive(Transaction trans) {
-			return false;
+			return true;
 		}
 		
 	}
@@ -293,8 +328,29 @@ public class GuestTransaction extends LinearTransaction {
 
 		@Override
 		public boolean deactive(Transaction trans) {
-			return false;
+			return true;
 		}
+		
+	}
+	
+	
+	
+	class RestarurantStateHolder {
+		Restaurant rest;
+		int queryState;
+		int orderState;
+		public RestarurantStateHolder(Restaurant rest, int queryState,
+				int orderState) {
+			super();
+			this.rest = rest;
+			this.queryState = queryState;
+			this.orderState = orderState;
+		}
+		public RestarurantStateHolder(Restaurant rest) {
+			super();
+			this.rest = rest;
+		}
+		
 		
 	}
 	

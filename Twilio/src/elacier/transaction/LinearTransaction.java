@@ -41,23 +41,28 @@ public abstract class LinearTransaction extends Transaction {
 			return false;
 		}
 		currentState = states.peekFirst();
-		currentState.actvie(this);
-		return true;
+		return currentState.actvie(this);
 	}
 
 
 	@Override
 	public boolean finish() {
+		boolean flag = true;
 		if (states.size() <= 0) {
 			return false;
 		}
 		if (!isFinish) {
-			currentState.deactive(this);
+			flag = currentState.deactive(this);
+			if (!flag) {
+				return false;
+			}
 			currentState = states.peekLast();
-			currentState.actvie(this);
-			isFinish = true;
+			flag = currentState.actvie(this);
+			if (flag) {
+				isFinish = true;
+			}
 		}
-		return true;
+		return flag;
 	}
 
 
@@ -66,9 +71,15 @@ public abstract class LinearTransaction extends Transaction {
 		if (index <= 0) {
 			return false;
 		}
-		currentState.deactive(this);
+		boolean flag = currentState.deactive(this);
+		if (!flag) {
+			return false;
+		}
 		currentState = states.get(index - 1);
-		currentState.actvie(this);
+		flag = currentState.actvie(this);
+		if (!flag) {
+			return false;
+		}
 		return true;
 	}
 	
@@ -88,12 +99,14 @@ public abstract class LinearTransaction extends Transaction {
 		}
 		
 		if (it.hasNext()) {
-			currentState.deactive(this);
+			flag = currentState.deactive(this);
+			if (!flag) {
+				return false;
+			}
 			currentState = it.next();
-			currentState.actvie(this);
-			flag = true;
-		} 
-		if (isFinishState()) {
+			flag = currentState.actvie(this);
+		}
+		if (isFinishState() && flag) {
 			isFinish = true;
 		}
 		return flag;

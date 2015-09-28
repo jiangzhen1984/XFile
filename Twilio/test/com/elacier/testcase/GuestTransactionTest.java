@@ -9,11 +9,11 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
-import elacier.Menu;
-import elacier.Restaurant;
 import elacier.process.GuestInformation;
 import elacier.process.GuestTransaction;
 import elacier.provider.msg.InquiryRespondNotification;
+import elacier.restaurant.Menu;
+import elacier.restaurant.Restaurant;
 import elacier.transaction.TransactionManager;
 
 public class GuestTransactionTest extends TestCase {
@@ -39,7 +39,7 @@ public class GuestTransactionTest extends TestCase {
 		list.add(new Menu(1, "a", 2.0F));
 		list.add(new Menu(2, "a1", 2.0F));
 		list.add(new Menu(3, "a2", 2.0F));
-		trans.updateOrderInformation(2, new Restaurant(1, "ss", null, 0.3F), list);
+		trans.updateOrderInformation(new Restaurant(1, "ss", null, 0.3F), list);
 		assertTrue(trans.getState() instanceof GuestTransaction.GuestRequestOrderState);
 		
 		trans.updateRestaurantConfirmationOrder(1, 1);

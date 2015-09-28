@@ -16,7 +16,9 @@ public class GCThread extends Thread{
 		System.out.println("gc thread is running");
 		while(true){
 			try{
-				Thread.sleep(timeInterval);
+				synchronized(this) {
+					wait(timeInterval);
+				}
 				cleanMoreDataMsg();
 			}catch(InterruptedException e){
 				e.printStackTrace();

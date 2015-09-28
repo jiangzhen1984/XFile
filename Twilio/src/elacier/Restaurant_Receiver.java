@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import elacier.restaurant.Restaurant;
+
 public class Restaurant_Receiver extends Thread{
 	private Socket s;
 	private Restaurant shop;
@@ -25,7 +27,7 @@ public class Restaurant_Receiver extends Thread{
     	   BufferedReader rdr = new BufferedReader(new InputStreamReader(s.getInputStream()));  
     	   line = rdr.readLine();
            while(true){
-        	   //wtr.println("ÄãºÃ£¬·þÎñÆ÷ÒÑ¾­ÊÕµ½ÄúµÄÐÅÏ¢£¡'" + line + "'\n");  
+        	   //wtr.println("ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½'" + line + "'\n");  
         	   //wtr.flush();  
         	   start = line.indexOf(":");
         	   if(start <1 ){   /*error received, but treat it as heart beat*/	

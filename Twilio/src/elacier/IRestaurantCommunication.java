@@ -2,6 +2,8 @@ package elacier;
 
 import java.util.List;
 
+import elacier.restaurant.Restaurant;
+
 public interface IRestaurantCommunication {
 	final static int RESTAURANT_COMM_OK=0;
 	final static int RESTAURANT_COMM_NOK=1;

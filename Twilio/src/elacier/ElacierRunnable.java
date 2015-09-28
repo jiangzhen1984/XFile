@@ -2,9 +2,15 @@ package elacier;
 
 import java.util.List;
 
+import elacier.process.GuestInformation;
+import elacier.process.GuestTransaction;
+import elacier.provider.msg.InquiryMessage;
+import elacier.restaurant.Restaurant;
 import elacier.service.IRestaurantService;
 import elacier.service.RestaurantQueryParameters;
 import elacier.service.RestaurantServiceDBImpl;
+import elacier.service.ServiceFactory;
+import elacier.transaction.TransactionManager;
 
 public class ElacierRunnable implements Runnable{
 
@@ -23,7 +29,7 @@ public class ElacierRunnable implements Runnable{
 		// TODO Auto-generated constructor stub
 		msg = smsMMS;
 		analyzer = new DefaultQueryParametersAnalyzer();
-        	IRService = new RestaurantServiceDBImpl();
+        IRService = ServiceFactory.getRestaurantService();
 	}
 
 	@Override
@@ -118,6 +124,24 @@ public class ElacierRunnable implements Runnable{
 						/*send msg back to user for no search result*/
 						ElacierService.getInstance().sendTwilioSMS(msg.From, "no restaurant is available now");
 					}else{
+						//Start order transaction
+						GuestTransaction trans = (GuestTransaction)TransactionManager.getInstance().createTransaction(GuestTransaction.class);
+						GuestInformation gi = new GuestInformation();
+						gi.setFav(parm.favKey);
+						gi.setGuestPhone(msg.From);
+						//gi.setGuestName(guestName);
+						gi.setNums(parm.persons);
+						//Default for always on site
+						gi.setType(InquiryMessage.INQUIRY_OPT_TYPE_ON_SITE);
+						trans.setInformation(gi);
+						//Add restaurants
+						trans.addAvailableRestaurant(shop_list);
+						
+						boolean ret = TransactionManager.getInstance().beginTransaction(trans);
+						if (!ret) {
+							ElacierService.getInstance().sendTwilioSMS(msg.From, "Internal trnsaction failed!");
+						}
+						
 						/*query cmd send to restaurant and restaurant receiver should receive answer*/
 						System.out.println(LOG_TAG + ":" + "query info send to socket server successfully");
 					}
