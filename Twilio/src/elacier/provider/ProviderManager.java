@@ -38,4 +38,13 @@ public class ProviderManager {
 		}
 	}
 	
+	
+	public void addProvider(Provider provider) {
+		if (provider == null) {
+			//FIXME log
+			return;
+		}
+		this.providers.add(provider);
+	}
+	
 }

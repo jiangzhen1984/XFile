@@ -8,5 +8,11 @@ package elacier.transaction;
 public abstract class Token {
 
 	
+	
+	public abstract long toLongValue();
+	
+	public abstract int toIntValue();
+	
+	public abstract String toStringValue();
 
 }

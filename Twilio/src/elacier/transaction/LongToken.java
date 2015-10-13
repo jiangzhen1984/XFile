@@ -34,11 +34,25 @@ public class LongToken extends Token {
 	@Override
 	public String toString() {
 		return "LongToken [id=" + id + "]";
+	}
+
+	@Override
+	public long toLongValue() {
+		return id;
+	}
+
+	@Override
+	public String toStringValue() {
+		return null;
+	}
+
+	@Override
+	public int toIntValue() {
+		return (int)id;
 	};
 	
 	
-	public long longValue() {
-		return id;
-	}
+	
+	
 
 }

@@ -7,6 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import elacier.cache.GlobalCacheHolder;
+import elacier.provider.Provider;
+import elacier.provider.ProviderFactory;
+import elacier.provider.ProviderManager;
 import elacier.restaurant.Menu;
 import elacier.restaurant.Restaurant;
 import elacier.service.RestaurantServiceDBImpl;
@@ -40,6 +43,11 @@ public class LoaderServlet extends HttpServlet {
 			}
 		} while (restList != null && restList.size() >= fetchCount);
 		
+		
+		
+		//TODO load ios providers
+		Provider iosProvider = ProviderFactory.createProvider(ProviderFactory.PROVIDER_TYPE_IOS, null);
+		ProviderManager.getInstance().addProvider(iosProvider);
 		
 	}
 

@@ -45,7 +45,24 @@ public class StringToken extends Token {
 	@Override
 	public String toString() {
 		return token;
+	}
+
+	@Override
+	public long toLongValue() {
+		return 0;
+	}
+
+	@Override
+	public int toIntValue() {
+		return 0;
+	}
+
+	@Override
+	public String toStringValue() {
+		return token;
 	} 
+	
+	
 	
 
 }

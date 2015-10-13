@@ -193,7 +193,7 @@ public class GuestTransaction extends LinearTransaction {
 			Terminal serverTerminal = new ServerTerminal(deviceId);
 			long transId = 0;
 			if (trans.getToken() instanceof LongToken) {
-				transId = ((LongToken)trans.getToken()).longValue();
+				transId = trans.getToken().toLongValue();
 			} else {
 				//FIXME maybe transaction is same should avoid this issue
 				transId = trans.getToken().hashCode();
@@ -262,7 +262,13 @@ public class GuestTransaction extends LinearTransaction {
 			Token messageToken = new LongToken(System.currentTimeMillis());
 			Token deviceId = new LongToken(1);
 			Terminal serverTerminal = new ServerTerminal(deviceId);
-			long transId = ((LongToken)trans.getToken()).longValue();
+			long transId;
+			if (trans.getToken() instanceof LongToken) {
+				transId = trans.getToken().toLongValue();
+			} else {
+				//FIXME maybe transaction is same should avoid this issue
+				transId = trans.getToken().hashCode();
+			}
 			
 			
 			//generate order information and save to database
