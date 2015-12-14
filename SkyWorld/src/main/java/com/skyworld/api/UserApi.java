@@ -45,25 +45,46 @@ public class UserApi extends HttpServlet {
 			if ("register".equalsIgnoreCase(action)) {
 				boolean error = false;
 				JSONObject body = map.get("body");
-				String uname = (String)body.get("username");
-				String pwd = (String)body.get("pwd");
-				String confirmPwd = (String)body.get("confirm_pwd");
-				if (uname == null || uname.isEmpty()||pwd == null || pwd.isEmpty() ||confirmPwd == null || confirmPwd.isEmpty()) {
-					response.append("{ret: -3}");
+				if (body == null) {
 					error = true;
+					response.append("{ret: -3}");
 				}
-				if (!pwd.equals(confirmPwd)) {
+				if (!error) {
+					if (!body.has("username") || !body.has("cellphone") || !body.has("pwd")|| !body.has("confirm_pwd")) {
+						response.append("{ret: -3}");
+						error = true;
+					}
+				}
+				String uname = null;
+				String cellphone = null;
+				String pwd = null;
+				String confirmPwd = null;
+				
+				if (!error) {
+					 uname = (String)body.getString("username");
+					 cellphone = (String)body.getString("cellphone");
+					 pwd = (String)body.getString("pwd");
+					 confirmPwd = (String)body.getString("confirm_pwd");
+					if (uname == null || uname.isEmpty() || pwd == null
+							|| pwd.isEmpty() || confirmPwd == null
+							|| confirmPwd.isEmpty() || cellphone == null
+							|| cellphone.isEmpty()) {
+						response.append("{ret: -3}");
+						error = true;
+					}
+				}
+				if (!error && !pwd.equals(confirmPwd)) {
 					response.append("{ret: -102}");
 					error = true;
 				}
 				
 				if (!error){
-					User user = ServiceFactory.getESUserService().selectUser(uname, uname);
+					User user = ServiceFactory.getESUserService().selectUser(cellphone, uname);
 					if (user != null) {
 						response.append("{ret: -101}");
 					} else {
 						user = new User();
-						user.setCellPhone(uname);
+						user.setCellPhone(cellphone);
 						user.setMail(uname);
 						user.setPassword(pwd);
 						int ret = ServiceFactory.getESUserService().addUser(user);
@@ -96,7 +117,6 @@ public class UserApi extends HttpServlet {
 				response.append("{ret: -2}"); 
 			}
 		}
-		
 		try {
 			resp.setContentType("application/json");
 			resp.getWriter().write(response.toString());
