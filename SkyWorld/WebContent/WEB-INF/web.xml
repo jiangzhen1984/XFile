@@ -20,8 +20,18 @@
         <servlet-class>com.skyworld.api.UserApi</servlet-class>
     </servlet>
     
+     <servlet>
+        <servlet-name>QuestionAPI</servlet-name>
+        <servlet-class>com.skyworld.api.QuestionApi</servlet-class>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>UserAPI</servlet-name>
         <url-pattern>/api/1.0/UserAPI</url-pattern>
+    </servlet-mapping>
+    
+     <servlet-mapping>
+        <servlet-name>QuestionAPI</servlet-name>
+        <url-pattern>/api/1.0/QuestionAPI</url-pattern>
     </servlet-mapping>
 </web-app>

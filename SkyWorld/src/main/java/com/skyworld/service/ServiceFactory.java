@@ -3,6 +3,8 @@ package com.skyworld.service;
 public class ServiceFactory {
 	
 	private static SWUserService eUserService;
+	
+	private static SWQuestionService eQuestionService;
 
 	public ServiceFactory() {
 	}
@@ -14,6 +16,16 @@ public class ServiceFactory {
 		}
 		
 		return eUserService;
+	}
+	
+	
+	
+	public static SWQuestionService getQuestionService() {
+		if (eQuestionService == null) {
+			eQuestionService = new SWQuestionService();
+		}
+		
+		return eQuestionService;
 	}
 	
 	

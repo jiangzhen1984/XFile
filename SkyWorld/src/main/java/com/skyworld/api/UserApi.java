@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.skyworld.cache.CacheManager;
+import com.skyworld.cache.Token;
 import com.skyworld.service.ServiceFactory;
 import com.skyworld.service.dsf.User;
 import com.skyworld.utils.JSONFormat;
@@ -89,7 +91,8 @@ public class UserApi extends HttpServlet {
 						user.setPassword(pwd);
 						int ret = ServiceFactory.getESUserService().addUser(user);
 						if (ret == 0) {
-							response.append("{ret: 0, token:\""+System.currentTimeMillis()+"\"}");
+							Token token = CacheManager.getIntance().saveUser(user);
+							response.append("{ret: 0, token:\""+token.getValue()+"\"}");
 						} else {
 							response.append("{ret: -103}");
 						}
@@ -110,7 +113,8 @@ public class UserApi extends HttpServlet {
 					if (user == null) {
 						response.append("{ret: -201}");
 					} else {
-						response.append("{ret: 0, token:\""+System.currentTimeMillis()+"\"}");
+						Token token = CacheManager.getIntance().saveUser(user);
+						response.append("{ret: 0, token:\""+token.getValue()+"\"}");
 					}
 				}
 			} else {
