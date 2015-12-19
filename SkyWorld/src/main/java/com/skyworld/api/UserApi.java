@@ -93,6 +93,8 @@ public class UserApi extends HttpServlet {
 						if (ret == 0) {
 							Token token = CacheManager.getIntance().saveUser(user);
 							response.append("{ret: 0, token:\""+token.getValue()+"\"}");
+							
+							ServiceFactory.getEaseMobService().register(user.getMail(), user.getPassword());
 						} else {
 							response.append("{ret: -103}");
 						}

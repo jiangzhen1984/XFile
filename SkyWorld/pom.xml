@@ -9,11 +9,6 @@
 	<!-- <properties> <maven.test.skip>true</maven.test.skip> </properties> -->
 	<repositories>
 		<repository>
-			<id>ibiblio.org</id>
-			<name>ibiblio Mirror of http://repo1.maven.org/maven2/</name>
-			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
-		</repository>
-		<repository>
 			<id>mvnrepository</id>
 			<name>ibiblio Mirror of http://mvnrepository.com</name>
 			<url>https://repo1.maven.org/maven2</url>
@@ -79,6 +74,18 @@
 			<artifactId>json</artifactId>
 			<version>20131018</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.3</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>junit</groupId>

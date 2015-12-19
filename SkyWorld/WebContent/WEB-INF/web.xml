@@ -16,6 +16,12 @@
 
     
     <servlet>
+        <servlet-name>StartupServlet</servlet-name>
+        <servlet-class>com.skyworld.init.StartupServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    
+    <servlet>
         <servlet-name>UserAPI</servlet-name>
         <servlet-class>com.skyworld.api.UserApi</servlet-class>
     </servlet>
