@@ -1,6 +1,6 @@
-package com.skyworld.cache;
+package com.skyworld.service.dsf;
 
-import com.skyworld.service.dsf.User;
+import com.skyworld.cache.Token;
 
 public class UserToken extends Token {
 	

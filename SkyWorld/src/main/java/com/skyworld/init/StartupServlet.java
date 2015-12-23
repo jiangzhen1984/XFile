@@ -10,6 +10,8 @@ import javax.servlet.ServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.skyworld.push.PushServerDeamon;
+import com.skyworld.pushimpl.JSONTransformer;
 import com.skyworld.service.ServiceFactory;
 
 public class StartupServlet extends GenericServlet {
@@ -34,6 +36,8 @@ public class StartupServlet extends GenericServlet {
 		
 		ServiceFactory.getEaseMobService().authorize("SkyWorld", "SkyWorld", "YXA6UW3TIKTGEeW8okGnOCdMYw", "YXA60GJ7UHua7FFXKEf_P3brVRdUusM");
 		log.info("============server start request easemod token <<<=====");
+		
+		PushServerDeamon.getInstance().setHttpPushMessageTransformer(new JSONTransformer());
 	}
 
 	@Override

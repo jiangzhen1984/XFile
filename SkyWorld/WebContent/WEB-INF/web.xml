@@ -21,6 +21,12 @@
         <load-on-startup>0</load-on-startup>
     </servlet>
     
+    
+     <servlet>
+        <servlet-name>SimplePushServlet</servlet-name>
+        <servlet-class>com.skyworld.push.SimplePushServlet</servlet-class>
+        
+    </servlet>
     <servlet>
         <servlet-name>UserAPI</servlet-name>
         <servlet-class>com.skyworld.api.UserApi</servlet-class>
@@ -39,5 +45,10 @@
      <servlet-mapping>
         <servlet-name>QuestionAPI</servlet-name>
         <url-pattern>/api/1.0/QuestionAPI</url-pattern>
+    </servlet-mapping>
+    
+      <servlet-mapping>
+        <servlet-name>SimplePushServlet</servlet-name>
+        <url-pattern>/push</url-pattern>
     </servlet-mapping>
 </web-app>
