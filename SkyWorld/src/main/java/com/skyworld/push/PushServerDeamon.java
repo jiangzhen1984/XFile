@@ -22,6 +22,8 @@ public class PushServerDeamon {
 	
 	private AuthorizationChecker  authorizationChecker;
 	
+	private OnConnectionNotifier notifiier;
+	
 	private TimeoutThread timeoutThread;
 	
 	private IntervalDebugPush debugPush;
@@ -49,6 +51,16 @@ public class PushServerDeamon {
 	}
 	
 	
+	
+	
+	public OnConnectionNotifier getNotifiier() {
+		return notifiier;
+	}
+
+	public void setNotifiier(OnConnectionNotifier notifiier) {
+		this.notifiier = notifiier;
+	}
+
 	public void init() {
 		if (timeoutThread != null && timeoutThread.isAlive()) { 
 			timeoutThread.requestStop();
@@ -104,6 +116,9 @@ public class PushServerDeamon {
 			terminal.socket.isAvl = true;
 			terminal.isTimeout = false;
 			terminal.timeout = 0;
+			if (notifiier != null) {
+				notifiier.onConnected(token, terminal);
+			}
 			
 			terminal.waitForEvent();
 		} else {

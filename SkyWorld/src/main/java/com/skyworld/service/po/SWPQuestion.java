@@ -31,6 +31,9 @@ public class SWPQuestion {
 	
 	@Column(name="TIME_STAMP", columnDefinition="datetime")
 	private Date timestamp;
+	
+	@Column(name="Q_STATE", columnDefinition="NUMERIC(1)")
+	private int state;
 
 	
 	
@@ -47,6 +50,7 @@ public class SWPQuestion {
 		this.setName(u.getName());
 		this.setMail(u.getMail());
 		this.setTimestamp(u.getTimestamp());
+		this.setState(u.getState());
 	}
 
 	public long getId() {
@@ -90,5 +94,15 @@ public class SWPQuestion {
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+	
+	
 	
 }

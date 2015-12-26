@@ -9,11 +9,18 @@ public class Question {
 	private String question;
 	
 	private Date timestamp;
+	
+	private State state;
+	
+	public Question() {
+		super();
+	}
 
 	public Question(String question) {
 		super();
 		this.question = question;
 		timestamp = new Date(System.currentTimeMillis());
+		this.state = State.INQUIREING;
 	}
 
 	public String getQuestion() {
@@ -39,8 +46,22 @@ public class Question {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
 	
 
 	
+	
+	public enum State {
+		INQUIREING,
+		CANCEL,
+		RESOVLED
+	}
 	
 }

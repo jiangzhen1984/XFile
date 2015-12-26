@@ -11,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.skyworld.push.PushServerDeamon;
+import com.skyworld.pushimpl.DefaultPushConnectionNotifier;
 import com.skyworld.pushimpl.JSONTransformer;
 import com.skyworld.service.ServiceFactory;
 
@@ -38,6 +39,7 @@ public class StartupServlet extends GenericServlet {
 		log.info("============server start request easemod token <<<=====");
 		
 		PushServerDeamon.getInstance().setHttpPushMessageTransformer(new JSONTransformer());
+		PushServerDeamon.getInstance().setNotifiier(new DefaultPushConnectionNotifier());
 	}
 
 	@Override

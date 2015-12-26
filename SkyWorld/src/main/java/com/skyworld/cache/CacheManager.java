@@ -41,11 +41,24 @@ public class CacheManager {
 			mUserCache.remove(cacheToken);
 		}
 		
-		LongToken token = (LongToken)TokenFactory.generateLongToken();
+		Token token = TokenFactory.generateStringToken();
 		user.setToken(token);
 		mUserCache.put(token, user);
 		mUserIdCache.put(user.getId(), token);
 		
 		return token;
+	}
+	
+	
+	public User removeUser(Token token) {
+		if (token == null) {
+			throw new NullPointerException(" token is null");
+		}
+		
+		User user = mUserCache.remove(token);
+		if (user != null) {
+			mUserIdCache.remove(user.getId());
+		}
+		return user;
 	}
 }

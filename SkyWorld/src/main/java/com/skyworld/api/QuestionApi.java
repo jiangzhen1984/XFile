@@ -93,10 +93,15 @@ public class QuestionApi extends HttpServlet {
 	private String quest(Token token, JSONObject jobject) {
 		int opt = 1;
 		String quest = null;
+		long id = 0;
 
 		try {
 			opt = jobject.getInt("opt");
-			quest = jobject.getString("question");
+			if (opt == 1) {
+				quest = jobject.getString("question");
+			} else {
+				id = jobject.getLong("question_id");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "{ ret : -3 }";
@@ -108,14 +113,15 @@ public class QuestionApi extends HttpServlet {
 			return "{ ret : -5 }";
 		} 
 		
-		if (quest == null || quest.isEmpty()) {
-			return "{ ret : -3 }";
-		}
 		
-		Question question = new Question(quest);
 
 		switch (opt) {
 		case 1:
+			if (quest == null || quest.isEmpty()) {
+				return "{ ret : -3 }";
+			}
+			
+			Question question = new Question(quest);
 			int ret = ServiceFactory.getQuestionService().saveQuestion(user, question);
 			if (ret == 0) {
 				user.setCurrentQuest(question);
@@ -124,8 +130,14 @@ public class QuestionApi extends HttpServlet {
 				return "{ ret : -302 }";
 			}
 		case 2:
+			Question cancelQuest = new Question();
+			cancelQuest.setId(id);
+			ServiceFactory.getQuestionService().cancelQuestion(cancelQuest);
 			return "{ ret : 0 }";
 		case 3:
+			Question finishQuest = new Question();
+			finishQuest.setId(id);
+			ServiceFactory.getQuestionService().finishQuestion(finishQuest);
 			return "{ ret : 0 }";
 		default:
 			return "{ ret : -301 }";

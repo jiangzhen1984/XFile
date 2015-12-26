@@ -12,6 +12,8 @@ import org.json.JSONObject;
 
 import com.skyworld.cache.CacheManager;
 import com.skyworld.cache.Token;
+import com.skyworld.cache.TokenFactory;
+import com.skyworld.push.event.ConnectionCloseEvent;
 import com.skyworld.service.ServiceFactory;
 import com.skyworld.service.dsf.User;
 import com.skyworld.utils.JSONFormat;
@@ -119,7 +121,40 @@ public class UserApi extends HttpServlet {
 						response.append("{ret: 0, token:\""+token.getValue()+"\"}");
 					}
 				}
-			} else {
+			}else if ("logout".equalsIgnoreCase(action)) {
+				boolean error = false;
+				String tokenId = null;
+				JSONObject header = map.get("header");
+				if (header == null) {
+					response.append("{ret: -3}");
+					error = true;
+				}
+				
+				if (!error) {
+					try {
+						tokenId = header.getString("token");
+						if (tokenId == null || tokenId.trim().isEmpty()) {
+							response.append("{ret: 401}");
+							error = true;
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						response.append("{ret: -3}");
+						error = true;
+					}
+				}
+				
+				if (!error) {
+					Token token = TokenFactory.valueOf(tokenId);
+					User user = CacheManager.getIntance().removeUser(token);
+					if (user != null && user.getPushTerminal() != null) {
+						user.getPushTerminal().postEvents(new ConnectionCloseEvent());
+					}
+				}
+				
+				response.append("{ret: 0}"); 
+			}
+			else {
 				response.append("{ret: -2}"); 
 			}
 		}
