@@ -10,16 +10,51 @@ public class User extends SWPUser {
 	
 	private Token token;
 	
-	private Question currentQuest;
 	
 	private ClientTerminal pushTerminal;
+	
+	private UserType userType;
 
 	public User() {
 		super();
+		userType = UserType.CUSTOMER;
+	}
+	
+	public User(User u) {
+		this.setAddress(u.getAddress());
+		this.setCellPhone(u.getCellPhone());
+		this.setName(u.getName());
+		this.setId(u.getId());
+		switch(u.getuType()) {
+		case 0:
+			this.userType = UserType.CUSTOMER;
+			break;
+		case 1:
+			this.userType = UserType.SERVICER;
+			break;
+		case 2:
+			this.userType = UserType.GROUP;
+			break;
+		}
+		
 	}
 
 	public User(SWPUser u) {
-		super(u);
+		this.setAddress(u.getAddress());
+		this.setCellPhone(u.getCellPhone());
+		this.setName(u.getName());
+		this.setId(u.getId());
+		switch(u.getuType()) {
+		case 0:
+			this.userType = UserType.CUSTOMER;
+			break;
+		case 1:
+			this.userType = UserType.SERVICER;
+			break;
+		case 2:
+			this.userType = UserType.GROUP;
+			break;
+		}
 	}
 
 	public Token getToken() {
@@ -30,13 +65,6 @@ public class User extends SWPUser {
 		this.token = token;
 	}
 
-	public Question getCurrentQuest() {
-		return currentQuest;
-	}
-
-	public void setCurrentQuest(Question currentQuest) {
-		this.currentQuest = currentQuest;
-	}
 
 	public ClientTerminal getPushTerminal() {
 		return pushTerminal;
@@ -44,6 +72,14 @@ public class User extends SWPUser {
 
 	public void setPushTerminal(ClientTerminal pushTerminal) {
 		this.pushTerminal = pushTerminal;
+	}
+
+	public UserType getUserType() {
+		return userType;
+	}
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
 	}
 	
 	

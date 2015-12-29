@@ -10,8 +10,8 @@ httpClient = None
 
 while (True) :
 	try:
-	    headers = {"Content-type": "application/x-www-form-urlencoded","Accept": "application/json", "Authorization" : int(time.time())}  
-	    httpClient = httplib.HTTPConnection('121.42.207.185', 80, timeout=30)
+	    headers = {"Content-type": "application/x-www-form-urlencoded","Accept": "application/json", "Authorization" : "95119025614290946"}  
+	    httpClient = httplib.HTTPConnection('localhost', 8080, timeout=30)
 	    httpClient.request('GET', '/SkyWorld/push', '', headers)
 
 	    #response是HTTPResponse对象

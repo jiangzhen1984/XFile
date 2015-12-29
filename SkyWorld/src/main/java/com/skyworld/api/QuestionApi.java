@@ -13,9 +13,13 @@ import org.json.JSONObject;
 import com.skyworld.cache.CacheManager;
 import com.skyworld.cache.Token;
 import com.skyworld.cache.TokenFactory;
+import com.skyworld.push.event.MessageEvent;
+import com.skyworld.pushimpl.AnswerMessage;
 import com.skyworld.service.ServiceFactory;
+import com.skyworld.service.dsf.Answer;
+import com.skyworld.service.dsf.Customer;
 import com.skyworld.service.dsf.Question;
-import com.skyworld.service.dsf.User;
+import com.skyworld.service.dsf.SKServicer;
 import com.skyworld.utils.JSONFormat;
 
 public class QuestionApi extends HttpServlet {
@@ -63,19 +67,24 @@ public class QuestionApi extends HttpServlet {
 					error = true;
 				} 
 				
-				if (!"question".equalsIgnoreCase(action)) {
-					response.append("{ ret : -2 }");
-					error = true;
-				}
-				
-				if (!error) {
+				if ("question".equalsIgnoreCase(action) && !error) {
 					try {
 						Long lon = Long.parseLong(tokenId);
-						response.append(quest(TokenFactory.valueOf(lon), map.get("body")));
+						response.append(quest(TokenFactory.valueOf(tokenId), map.get("body")));
 					} catch (NumberFormatException e) {
 						response.append("{ ret : -4 }");
+						error = true;
 					}
-	
+				}
+				
+				if ("answer".equalsIgnoreCase(action) && !error) {
+					try {
+						Long lon = Long.parseLong(tokenId);
+						response.append(answer(TokenFactory.valueOf(tokenId), map.get("body")));
+					} catch (NumberFormatException e) {
+						response.append("{ ret : -4 }");
+						error = true;
+					}
 				}
 			}
 
@@ -89,7 +98,40 @@ public class QuestionApi extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
+	private String answer(Token token, JSONObject jobject) {
+		String ans = null;
+		long  questId;
+		try {
+			ans = jobject.getString("answer");
+			questId = jobject.getLong("question_id");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "{ ret : -3 }";
+		}
+		
+		if (ans == null || ans.isEmpty()) {
+			return "{ ret : -3 }";
+		}
+		
+		SKServicer servicer = CacheManager.getIntance().getSKServicer(token);
+		if (servicer == null) {
+			return "{ ret : -5 }";
+		}
+		
+		Question quest = CacheManager.getIntance().getPendingQuestion(questId);
+		if (quest == null) {
+			return "{ ret : 401 }";
+		}
+		Answer  answer = new Answer(ans);
+		quest.setAnswer(servicer, answer);
+		quest.getAsker().getPushTerminal().postEvents(new MessageEvent(new AnswerMessage(quest, answer, servicer)));
+		
+		return "{ ret : 0 }";
+	}
+	
+	
 	private String quest(Token token, JSONObject jobject) {
 		int opt = 1;
 		String quest = null;
@@ -108,7 +150,7 @@ public class QuestionApi extends HttpServlet {
 		}
 		
 		
-		User user = CacheManager.getIntance().getUser(token);
+		Customer user = CacheManager.getIntance().getCustomer(token);
 		if (user == null) {
 			return "{ ret : -5 }";
 		} 
@@ -121,10 +163,12 @@ public class QuestionApi extends HttpServlet {
 				return "{ ret : -3 }";
 			}
 			
-			Question question = new Question(quest);
+			Question question = new Question(user, quest);
 			int ret = ServiceFactory.getQuestionService().saveQuestion(user, question);
+			CacheManager.getIntance().addPendingQuestion(question);
 			if (ret == 0) {
 				user.setCurrentQuest(question);
+				ServiceFactory.getQuestionService().broadcastQuestion(question);
 				return "{ ret : 0, question_id : "+question.getId()+" }";
 			} else {
 				return "{ ret : -302 }";
@@ -133,11 +177,13 @@ public class QuestionApi extends HttpServlet {
 			Question cancelQuest = new Question();
 			cancelQuest.setId(id);
 			ServiceFactory.getQuestionService().cancelQuestion(cancelQuest);
+			CacheManager.getIntance().removePendingQuestion(id);
 			return "{ ret : 0 }";
 		case 3:
 			Question finishQuest = new Question();
 			finishQuest.setId(id);
 			ServiceFactory.getQuestionService().finishQuestion(finishQuest);
+			CacheManager.getIntance().removePendingQuestion(id);
 			return "{ ret : 0 }";
 		default:
 			return "{ ret : -301 }";

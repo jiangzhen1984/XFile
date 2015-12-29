@@ -22,7 +22,7 @@ public class SWUserService extends BaseService {
 		List<User> list = (List<User>)query.list();
 		User user = null;
 		if (list.size() > 0) {
-			user = new User(list.get(0));
+			user = new User((SWPUser)list.get(0));
 		}
 		session.close();
 		return user;
@@ -37,7 +37,7 @@ public class SWUserService extends BaseService {
 		List<User> list = (List<User>)query.list();
 		User user = null;
 		if (list.size() > 0) {
-			user = new User(list.get(0));
+			user = new User((SWPUser)list.get(0));
 		}
 		session.close();
 		return user;
@@ -55,6 +55,7 @@ public class SWUserService extends BaseService {
 		esu.setMail(user.getMail());
 		esu.setName(user.getName());
 		esu.setPassword(user.getPassword());
+		esu.setuType(user.getUserType().ordinal());
 		session.save(esu);
 		user.setId(esu.getId());
 		t.commit();

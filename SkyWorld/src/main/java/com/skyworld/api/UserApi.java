@@ -15,7 +15,10 @@ import com.skyworld.cache.Token;
 import com.skyworld.cache.TokenFactory;
 import com.skyworld.push.event.ConnectionCloseEvent;
 import com.skyworld.service.ServiceFactory;
+import com.skyworld.service.dsf.Customer;
+import com.skyworld.service.dsf.SKServicer;
 import com.skyworld.service.dsf.User;
+import com.skyworld.service.dsf.UserType;
 import com.skyworld.utils.JSONFormat;
 
 public class UserApi extends HttpServlet {
@@ -93,9 +96,15 @@ public class UserApi extends HttpServlet {
 						user.setPassword(pwd);
 						int ret = ServiceFactory.getESUserService().addUser(user);
 						if (ret == 0) {
-							Token token = CacheManager.getIntance().saveUser(user);
-							response.append("{ret: 0, token:\""+token.getValue()+"\"}");
-							
+							Token token = CacheManager.getIntance().saveUser(new Customer(user));
+							response.append("{ret: 0, token:\""
+									+ token.getValue()
+									+ "\",  user: {\"name\" : \""
+									+ user.getName() + "\", \"cellphone\", :\""
+									+ user.getAddress() + "\", \"mail\":\""
+									+ user.getMail() + "\", \"type\":"
+									+ user.getUserType().ordinal() + " }}");
+
 							ServiceFactory.getEaseMobService().register(user.getMail(), user.getPassword());
 						} else {
 							response.append("{ret: -103}");
@@ -117,8 +126,18 @@ public class UserApi extends HttpServlet {
 					if (user == null) {
 						response.append("{ret: -201}");
 					} else {
+						if (user.getUserType() == UserType.CUSTOMER) {
+							user = new Customer(user);
+						} else if (user.getUserType() == UserType.SERVICER) {
+							user = new SKServicer(user);
+						}
 						Token token = CacheManager.getIntance().saveUser(user);
-						response.append("{ret: 0, token:\""+token.getValue()+"\"}");
+						response.append("{ret: 0, token:\"" + token.getValue()
+								+ "\",  user: {\"name\" : \"" + user.getName()
+								+ "\", \"cellphone\", :\"" + user.getAddress()
+								+ "\", \"mail\":\"" + user.getMail()
+								+ "\" , \"type\":"
+								+ user.getUserType().ordinal() + " }}");
 					}
 				}
 			}else if ("logout".equalsIgnoreCase(action)) {

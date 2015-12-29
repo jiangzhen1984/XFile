@@ -16,7 +16,7 @@ public class PushServerDeamon {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	
-	private static boolean LOCAL_DEBUG = true;
+	private static boolean LOCAL_DEBUG = false;
 	
 	private HttpPushMessageTransformer transformer;
 	

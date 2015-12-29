@@ -31,6 +31,9 @@ public class SWPUser {
 	
 	@Column(name="MAIL", columnDefinition="VARCHAR(100)")
 	private String mail;
+	
+	@Column(name="U_TYPE", columnDefinition="NUMERIC(1)")
+	private int uType;
 
 	
 	
@@ -92,6 +95,16 @@ public class SWPUser {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+
+	public int getuType() {
+		return uType;
+	}
+
+	public void setuType(int uType) {
+		this.uType = uType;
+	}
+	
+	
 	
 
 }
