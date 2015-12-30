@@ -35,9 +35,9 @@ public class JSONTransformer implements HttpPushMessageTransformer {
 					+ am.getQuestion().getId()
 					+ ", \"syservicer\":"
 					+ am.getServicer().getId()
-					+ ", \"answer\":"
+					+ ", \"answer\":\""
 					+ am.getAns().getContent()
-					+"}}";
+					+"\"}}";
 		} else {
 			return "{header:{ret: 0}}";
 		}

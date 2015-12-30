@@ -178,13 +178,13 @@ public class QuestionApi extends HttpServlet {
 			cancelQuest.setId(id);
 			ServiceFactory.getQuestionService().cancelQuestion(cancelQuest);
 			CacheManager.getIntance().removePendingQuestion(id);
-			return "{ ret : 0 }";
+			return "{ ret : 0, question_id : "+id+" }";
 		case 3:
 			Question finishQuest = new Question();
 			finishQuest.setId(id);
 			ServiceFactory.getQuestionService().finishQuestion(finishQuest);
 			CacheManager.getIntance().removePendingQuestion(id);
-			return "{ ret : 0 }";
+			return "{ ret : 0, question_id : "+id+" }";
 		default:
 			return "{ ret : -301 }";
 		}
