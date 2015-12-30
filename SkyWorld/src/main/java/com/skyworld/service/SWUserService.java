@@ -6,7 +6,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.skyworld.service.dsf.SKServicer;
 import com.skyworld.service.dsf.User;
+import com.skyworld.service.dsf.UserType;
 import com.skyworld.service.po.SWPUser;
 
 
@@ -64,6 +66,24 @@ public class SWUserService extends BaseService {
 	}
 	
 
+	
+	
+	public boolean updradeUserToSKServicer(SKServicer servicer) {
+		Session session = openSession();
+		Query query = session.createQuery(" from SWPUser where id = ?");
+		query.setLong(0, servicer.getId());
+		List<User> list = (List<User>)query.list();
+		if (list.size() > 0) {
+			SWPUser cache = (SWPUser)list.get(0);
+			cache.setuType(UserType.SERVICER.ordinal());
+			Transaction t = session.beginTransaction();
+			session.update(cache);
+			t.commit();
+		}
+		session.close();
+		
+		return true;
+	}
 
 
 }

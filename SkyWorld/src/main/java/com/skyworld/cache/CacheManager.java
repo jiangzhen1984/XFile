@@ -69,6 +69,8 @@ public class CacheManager {
 		Token cacheToken = mUserIdCache.get(user.getId());
 		if (cacheToken != null) {
 			mUserCache.remove(cacheToken);
+			mServicerCache.remove(cacheToken);
+			mCustomerCache.remove(cacheToken);
 		}
 		
 		Token token = TokenFactory.generateStringToken();
