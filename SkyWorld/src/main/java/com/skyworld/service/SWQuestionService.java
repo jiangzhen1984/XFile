@@ -36,6 +36,7 @@ public class SWQuestionService extends BaseService {
 		question.setId(ques.getId());
 		t.commit();
 		session.close();
+		question.setAsker(user);
 		return 0;
 	}
 	

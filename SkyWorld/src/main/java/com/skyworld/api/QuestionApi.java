@@ -7,7 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
 import com.skyworld.cache.CacheManager;
@@ -24,6 +27,9 @@ import com.skyworld.utils.JSONFormat;
 
 public class QuestionApi extends HttpServlet {
 
+	
+	Log log = LogFactory.getLog(this.getClass());
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -33,11 +39,13 @@ public class QuestionApi extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		checkJson(req, resp);
 	}
 
 	private void checkJson(HttpServletRequest req, HttpServletResponse resp) {
 		String data = req.getParameter("data");
+		log.info("====> data: " + data);
 		StringBuffer response = new StringBuffer();
 		if (data == null) {
 			response.append("{ret: -1}");
@@ -91,9 +99,14 @@ public class QuestionApi extends HttpServlet {
 		}
 
 		try {
+			resp.setHeader("connection", "close");
 			resp.setContentType("application/json");
+			resp.setContentLength(response.length());
 			resp.getWriter().write(response.toString());
-			req.getSession().invalidate();
+			HttpSession sess = req.getSession(false);
+			if (sess != null) {
+				sess.invalidate();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -126,7 +139,11 @@ public class QuestionApi extends HttpServlet {
 		}
 		Answer  answer = new Answer(ans);
 		quest.setAnswer(servicer, answer);
-		quest.getAsker().getPushTerminal().postEvents(new MessageEvent(new AnswerMessage(quest, answer, servicer)));
+		if (quest.getAsker().getPushTerminal() != null) {
+			quest.getAsker().getPushTerminal().postEvents(new MessageEvent(new AnswerMessage(quest, answer, servicer)));
+		} else {
+			log.error("[ERROR] No push terminal : " + quest.getAsker());
+		}
 		
 		return "{ ret : 0 }";
 	}

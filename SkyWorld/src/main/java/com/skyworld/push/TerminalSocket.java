@@ -1,6 +1,7 @@
 package com.skyworld.push;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +27,7 @@ public class TerminalSocket {
 		this.req = req;
 		this.resp = resp;
 		isAvl = true;
+		log.info(" [SOCKET] req: "+req+" resp:" + resp);
 	}
 
 
@@ -59,7 +61,10 @@ public class TerminalSocket {
 	public boolean write(char[] buf, int off, int len) throws IOException {
 		if (isAvailable()) {
 			log.info(" [WRITE-CHAR] :" + new String(buf, off,len));
-			resp.getWriter().write(buf, off, len);
+			log.info(" [WRITE] :" + resp);
+			PrintWriter pw = resp.getWriter();
+			pw.write(buf, off, len);
+			pw.flush();
 			isAvl = false;
 			return true;
 		} else {
@@ -72,7 +77,12 @@ public class TerminalSocket {
 	public boolean write(String msg) throws IOException {
 		if (isAvailable()) {
 			log.info(" [WRITE ] :" + msg);
-			resp.getWriter().write(msg);
+			log.info(" [WRITE] :" + resp);
+			resp.setBufferSize(msg.length());
+			PrintWriter pw = resp.getWriter();
+			pw.write(msg);
+			pw.flush();
+			resp.flushBuffer();
 			isAvl = false;
 			return true;
 		} else {
@@ -83,7 +93,7 @@ public class TerminalSocket {
 	
 	public void setHeader(String name, String val) {
 		if (isAvailable()) {
-			resp.setHeader(name, val);
+			resp.setHeader(name, val);			
 		}
 	}
 }

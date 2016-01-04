@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SimplePushServlet extends HttpServlet {
 	
@@ -62,7 +63,13 @@ public class SimplePushServlet extends HttpServlet {
 			resp.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, " deamon is not running");
 			return;
 		}
+		resp.setCharacterEncoding("utf8");
 		deamon.service(req, resp);
+		
+		HttpSession sess = req.getSession(false);
+		if (sess != null) {
+			sess.invalidate();
+		}
 	}
 	
 	

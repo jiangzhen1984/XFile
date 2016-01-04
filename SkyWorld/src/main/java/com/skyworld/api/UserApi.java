@@ -7,7 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
 import com.skyworld.cache.CacheManager;
@@ -23,6 +26,10 @@ import com.skyworld.utils.JSONFormat;
 
 public class UserApi extends HttpServlet {
 
+	
+	Log log = LogFactory.getLog(this.getClass());
+	
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -38,6 +45,7 @@ public class UserApi extends HttpServlet {
 	
 	private void checkJson(HttpServletRequest req, HttpServletResponse resp) {
 		String data = req.getParameter("data");
+		log.info("====> data: " + data);
 		StringBuffer response = new StringBuffer();
 		if (data == null) {
 			response.append("{ret: -1}"); 
@@ -62,9 +70,14 @@ public class UserApi extends HttpServlet {
 			}
 		}
 		try {
+			resp.setHeader("connection", "close");
 			resp.setContentType("application/json");
+			resp.setContentLength(response.length());
 			resp.getWriter().write(response.toString());
-			req.getSession().invalidate();
+			HttpSession sess = req.getSession(false);
+			if (sess != null) {
+				sess.invalidate();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -231,11 +244,11 @@ public class UserApi extends HttpServlet {
 			Customer cus = CacheManager.getIntance().getCustomer(TokenFactory.valueOf(tokenId));
 			if (cus != null) {
 				SKServicer servicer = new SKServicer((User)cus);
-				error = ServiceFactory.getESUserService().updradeUserToSKServicer(servicer);
-				if (error) {
-					CacheManager.getIntance().saveUser(servicer);
+				boolean ret = ServiceFactory.getESUserService().updradeUserToSKServicer(servicer);
+				if (ret) {
+					Token newToken = CacheManager.getIntance().saveUser(servicer);
 					response.append("{ret: 0, token:\""
-							+ tokenId
+							+ newToken
 							+ "\",  user: {\"name\" : \""
 							+ servicer.getName() + "\", \"cellphone\": \""
 							+ servicer.getCellPhone() + "\", \"mail\":\""

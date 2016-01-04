@@ -95,7 +95,6 @@ public class PushServerDeamon {
 
 	public void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		TerminalSocket socket = new TerminalSocket(req, resp);
-		
 		if (!authorize(socket)) {
 			boolean ret = socket.writeError(Code.SC_UNAUTHORIZED, " Token is unavailable ");
 			log.info(" send  error message result: "+ ret);
@@ -104,8 +103,8 @@ public class PushServerDeamon {
 		
 		Token token = initToken(socket);
 		if (token != null) {
-			log.info(" fetch token " + token.getValue());
 			ClientTerminal terminal = TerminalManager.getInstance().getTerminal(token);
+			log.info(" fetch token " + token.getValue()+"   terminal:"+  terminal);
 			if (terminal == null) {
 				terminal = new ClientTerminal(token, socket, transformer);
 				TerminalManager.getInstance().recordTerminal(token, terminal);

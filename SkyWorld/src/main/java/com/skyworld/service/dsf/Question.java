@@ -31,6 +31,13 @@ public class Question {
 		this.question = question;
 		timestamp = new Date(System.currentTimeMillis());
 		this.state = State.INQUIREING;
+		
+		if (waitanswerList == null) {
+			waitanswerList = new ArrayList<SKServicer>();
+		}
+		if (answeredList == null) {
+			answeredList = new ArrayList<Answer>();
+		}
 	}
 
 	public String getQuestion() {
@@ -107,6 +114,7 @@ public class Question {
 		waitanswerList.remove(servicer);
 		answeredList.add(ans);
 	}
+	
 	
 
 

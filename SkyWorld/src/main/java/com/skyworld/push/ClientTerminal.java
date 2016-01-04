@@ -87,11 +87,11 @@ public class ClientTerminal  implements Serializable {
 		if (!socket.isAvailable()) {
 			return false;
 		}
-		log.info(" ==== > post event :" + ev);
 		boolean flag = false;
 		synchronized (events) {
-			events.offer(ev);
+			events.add(ev);
 			events.notify();
+			log.info(" ==== > post event :" + ev+"  to queue :"+events+" client :" + this);
 		}
 		
 		return flag;
@@ -115,6 +115,7 @@ public class ClientTerminal  implements Serializable {
 			}
 			
 			try {
+				log.info("start to handle event: " + ev);
 				handleEvent(ev);
 			} catch (IOException e) {
 				log.error("handle event error " + ev , e);
@@ -130,9 +131,10 @@ public class ClientTerminal  implements Serializable {
 		switch (st) {
 		case POST_MESSAGE:
 			String data = transformer.serialize(((MessageEvent)event).getMessage());
-			socket.setHeader("content-type", transformer.getContentType());
-			socket.setHeader("content-length", data.length()+"");
+			socket.setHeader("Content-Type", transformer.getContentType());
+			//socket.setHeader("Content-Length", (data.length()+"Content-Type".length() + transformer.getContentType().length() +"Content-Length".length())+"");
 			socket.write(data);
+			log.info(">>>>" + data);
 			break;
 		case CLOSE:
 			break;
