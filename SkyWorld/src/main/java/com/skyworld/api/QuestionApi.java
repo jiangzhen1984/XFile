@@ -48,7 +48,7 @@ public class QuestionApi extends HttpServlet {
 		log.info("====> data: " + data);
 		StringBuffer response = new StringBuffer();
 		if (data == null) {
-			response.append("{ret: -1}");
+			response.append("{\"ret\": -1}");
 		} else {
 			Map<String, JSONObject> map = null;
 			boolean error = false;
@@ -56,7 +56,7 @@ public class QuestionApi extends HttpServlet {
 				map = JSONFormat.parse(data);
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.append("{ret: -1}");
+				response.append("{\"ret\": -1}");
 				error = true;
 			}
 			if (!error) {
@@ -71,7 +71,7 @@ public class QuestionApi extends HttpServlet {
 	
 				if (tokenId == null || tokenId.isEmpty() || action == null
 						|| action.isEmpty()) {
-					response.append("{ ret : -3 }");
+					response.append("{\"ret\" : -3 }");
 					error = true;
 				} 
 				
@@ -80,7 +80,7 @@ public class QuestionApi extends HttpServlet {
 						Long lon = Long.parseLong(tokenId);
 						response.append(quest(TokenFactory.valueOf(tokenId), map.get("body")));
 					} catch (NumberFormatException e) {
-						response.append("{ ret : -4 }");
+						response.append("{\"ret\" : -4 }");
 						error = true;
 					}
 				}
@@ -90,7 +90,7 @@ public class QuestionApi extends HttpServlet {
 						Long lon = Long.parseLong(tokenId);
 						response.append(answer(TokenFactory.valueOf(tokenId), map.get("body")));
 					} catch (NumberFormatException e) {
-						response.append("{ ret : -4 }");
+						response.append("{\"ret\" : -4 }");
 						error = true;
 					}
 				}
@@ -121,21 +121,21 @@ public class QuestionApi extends HttpServlet {
 			questId = jobject.getLong("question_id");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "{ ret : -3 }";
+			return "{\"ret\" : -3 }";
 		}
 		
 		if (ans == null || ans.isEmpty()) {
-			return "{ ret : -3 }";
+			return "{\"ret\" : -3 }";
 		}
 		
 		SKServicer servicer = CacheManager.getIntance().getSKServicer(token);
 		if (servicer == null) {
-			return "{ ret : -5 }";
+			return "{\"ret\" : -5 }";
 		}
 		
 		Question quest = CacheManager.getIntance().getPendingQuestion(questId);
 		if (quest == null) {
-			return "{ ret : 401 }";
+			return "{\"ret\" : 401 }";
 		}
 		Answer  answer = new Answer(ans);
 		quest.setAnswer(servicer, answer);
@@ -145,7 +145,7 @@ public class QuestionApi extends HttpServlet {
 			log.error("[ERROR] No push terminal : " + quest.getAsker());
 		}
 		
-		return "{ ret : 0 }";
+		return "{\"ret\" : 0 }";
 	}
 	
 	
@@ -163,13 +163,13 @@ public class QuestionApi extends HttpServlet {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "{ ret : -3 }";
+			return "{\"ret\" : -3 }";
 		}
 		
 		
 		Customer user = CacheManager.getIntance().getCustomer(token);
 		if (user == null) {
-			return "{ ret : -5 }";
+			return "{\"ret\" : -5 }";
 		} 
 		
 		
@@ -177,7 +177,7 @@ public class QuestionApi extends HttpServlet {
 		switch (opt) {
 		case 1:
 			if (quest == null || quest.isEmpty()) {
-				return "{ ret : -3 }";
+				return "{\"ret\" : -3 }";
 			}
 			
 			Question question = new Question(user, quest);
@@ -186,24 +186,24 @@ public class QuestionApi extends HttpServlet {
 			if (ret == 0) {
 				user.setCurrentQuest(question);
 				ServiceFactory.getQuestionService().broadcastQuestion(question);
-				return "{ ret : 0, question_id : "+question.getId()+" }";
+				return "{\"ret\" : 0, \"question_id\" : "+question.getId()+" }";
 			} else {
-				return "{ ret : -302 }";
+				return "{\"ret\" : -302 }";
 			}
 		case 2:
 			Question cancelQuest = new Question();
 			cancelQuest.setId(id);
 			ServiceFactory.getQuestionService().cancelQuestion(cancelQuest);
 			CacheManager.getIntance().removePendingQuestion(id);
-			return "{ ret : 0, question_id : "+id+" }";
+			return "{\"ret\" : 0, \"question_id\" : "+id+" }";
 		case 3:
 			Question finishQuest = new Question();
 			finishQuest.setId(id);
 			ServiceFactory.getQuestionService().finishQuestion(finishQuest);
 			CacheManager.getIntance().removePendingQuestion(id);
-			return "{ ret : 0, question_id : "+id+" }";
+			return "{\"ret\" : 0, \"question_id\" : "+id+" }";
 		default:
-			return "{ ret : -301 }";
+			return "{\"ret\" : -301 }";
 		}
 	}
 	

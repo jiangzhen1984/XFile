@@ -48,7 +48,7 @@ public class UserApi extends HttpServlet {
 		log.info("====> data: " + data);
 		StringBuffer response = new StringBuffer();
 		if (data == null) {
-			response.append("{ret: -1}"); 
+			response.append("{\"ret\": -1}"); 
 		}  else {
 			Map<String, JSONObject> map = JSONFormat.parse(data);
 			String action = "";
@@ -66,7 +66,7 @@ public class UserApi extends HttpServlet {
 			}else if ("upgrade".equalsIgnoreCase(action)) {
 				response.append(doUpgrade(map.get("header"), map.get("body")));
 			} else {
-				response.append("{ret: -2}");
+				response.append("{\"ret\": -2}");
 			}
 		}
 		try {
@@ -92,13 +92,13 @@ public class UserApi extends HttpServlet {
 		String uname = (String)body.get("username");
 		String pwd = (String)body.get("pwd");
 		if (uname == null || uname.isEmpty()||pwd == null || pwd.isEmpty()) {
-			response.append("{ret: -3}");
+			response.append("{\"ret\": -3}");
 			error = true;
 		}
 		if (!error){
 			User user = ServiceFactory.getESUserService().selectUser(uname, uname, pwd);
 			if (user == null) {
-				response.append("{ret: -201}");
+				response.append("{\"ret\": -201}");
 			} else {
 				if (user.getUserType() == UserType.CUSTOMER) {
 					user = new Customer(user);
@@ -106,8 +106,8 @@ public class UserApi extends HttpServlet {
 					user = new SKServicer(user);
 				}
 				Token token = CacheManager.getIntance().saveUser(user);
-				response.append("{ret: 0, token:\"" + token.getValue()
-						+ "\",  user: {\"name\" : \"" + user.getName()
+				response.append("{\"ret\": 0, token:\"" + token.getValue()
+						+ "\",  \"user\": {\"name\" : \"" + user.getName()
 						+ "\", \"cellphone\": \"" + user.getCellPhone()
 						+ "\", \"mail\":\"" + user.getMail()
 						+ "\" , \"type\":"
@@ -124,11 +124,11 @@ public class UserApi extends HttpServlet {
 		boolean error = false;
 		if (body == null) {
 			error = true;
-			response.append("{ret: -3}");
+			response.append("{\"ret\": -3}");
 		}
 		if (!error) {
 			if (!body.has("username") || !body.has("cellphone") || !body.has("pwd")|| !body.has("confirm_pwd")) {
-				response.append("{ret: -3}");
+				response.append("{\"ret\": -3}");
 				error = true;
 			}
 		}
@@ -146,19 +146,19 @@ public class UserApi extends HttpServlet {
 					|| pwd.isEmpty() || confirmPwd == null
 					|| confirmPwd.isEmpty() || cellphone == null
 					|| cellphone.isEmpty()) {
-				response.append("{ret: -3}");
+				response.append("{\"ret\": -3}");
 				error = true;
 			}
 		}
 		if (!error && !pwd.equals(confirmPwd)) {
-			response.append("{ret: -102}");
+			response.append("{\"ret\": -102}");
 			error = true;
 		}
 		
 		if (!error){
 			User user = ServiceFactory.getESUserService().selectUser(cellphone, uname);
 			if (user != null) {
-				response.append("{ret: -101}");
+				response.append("{\"ret\": -101}");
 			} else {
 				user = new User();
 				user.setCellPhone(cellphone);
@@ -167,7 +167,7 @@ public class UserApi extends HttpServlet {
 				int ret = ServiceFactory.getESUserService().addUser(user);
 				if (ret == 0) {
 					Token token = CacheManager.getIntance().saveUser(new Customer(user));
-					response.append("{ret: 0, \"token\" :\""
+					response.append("{\"ret\": 0, \"token\" :\""
 							+ token.getValue()
 							+ "\",  \"user\": {\"name\" : \""
 							+ user.getName() + "\", \"cellphone\": \""
@@ -177,7 +177,7 @@ public class UserApi extends HttpServlet {
 
 					ServiceFactory.getEaseMobService().register(user.getMail(), user.getPassword());
 				} else {
-					response.append("{ret: -103}");
+					response.append("{\"ret\": -103}");
 				}
 			}
 		}
@@ -191,7 +191,7 @@ public class UserApi extends HttpServlet {
 		boolean error = false;
 		String tokenId = null;
 		if (header == null) {
-			response.append("{ret: -3}");
+			response.append("{\"ret\": -3}");
 			error = true;
 		}
 		
@@ -199,12 +199,12 @@ public class UserApi extends HttpServlet {
 			try {
 				tokenId = header.getString("token");
 				if (tokenId == null || tokenId.trim().isEmpty()) {
-					response.append("{ret: -401}");
+					response.append("{\"ret\": -401}");
 					error = true;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.append("{ret: -3}");
+				response.append("{\"ret\": -3}");
 				error = true;
 			}
 		}
@@ -217,7 +217,7 @@ public class UserApi extends HttpServlet {
 			}
 		}
 		
-		response.append("{ret: 0}"); 
+		response.append("{\"ret\": 0}"); 
 		return response.toString();
 	}
 	
@@ -230,12 +230,12 @@ public class UserApi extends HttpServlet {
 		try {
 			tokenId = header.getString("token");
 			if (tokenId == null || tokenId.trim().isEmpty()) {
-				response.append("{ret: -5}");
+				response.append("{\"ret\": -5}");
 				error = true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.append("{ret: -4}");
+			response.append("{\"ret\": -4}");
 			error = true;
 		}
 		
@@ -247,7 +247,7 @@ public class UserApi extends HttpServlet {
 				boolean ret = ServiceFactory.getESUserService().updradeUserToSKServicer(servicer);
 				if (ret) {
 					Token newToken = CacheManager.getIntance().saveUser(servicer);
-					response.append("{ret: 0, \"token\":\""
+					response.append("{\"ret\": 0, \"token\":\""
 							+ newToken
 							+ "\",  \"user\": {\"name\" : \""
 							+ servicer.getName() + "\", \"cellphone\": \""
@@ -255,7 +255,7 @@ public class UserApi extends HttpServlet {
 							+ servicer.getMail() + "\", \"type\":"
 							+ servicer.getUserType().ordinal() + " }}");
 				} else {
-					response.append("{ret: -501}");
+					response.append("{\"ret\": -501}");
 				}
 			}
 			
