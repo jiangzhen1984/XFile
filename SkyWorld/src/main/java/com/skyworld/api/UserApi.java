@@ -167,9 +167,9 @@ public class UserApi extends HttpServlet {
 				int ret = ServiceFactory.getESUserService().addUser(user);
 				if (ret == 0) {
 					Token token = CacheManager.getIntance().saveUser(new Customer(user));
-					response.append("{ret: 0, token:\""
+					response.append("{ret: 0, \"token\" :\""
 							+ token.getValue()
-							+ "\",  user: {\"name\" : \""
+							+ "\",  \"user\": {\"name\" : \""
 							+ user.getName() + "\", \"cellphone\": \""
 							+ user.getCellPhone() + "\", \"mail\":\""
 							+ user.getMail() + "\", \"type\":"
@@ -213,7 +213,7 @@ public class UserApi extends HttpServlet {
 			Token token = TokenFactory.valueOf(tokenId);
 			User user = CacheManager.getIntance().removeUser(token);
 			if (user != null && user.getPushTerminal() != null) {
-				user.getPushTerminal().postEvents(new ConnectionCloseEvent());
+				user.getPushTerminal().postEvent(new ConnectionCloseEvent());
 			}
 		}
 		
@@ -247,9 +247,9 @@ public class UserApi extends HttpServlet {
 				boolean ret = ServiceFactory.getESUserService().updradeUserToSKServicer(servicer);
 				if (ret) {
 					Token newToken = CacheManager.getIntance().saveUser(servicer);
-					response.append("{ret: 0, token:\""
+					response.append("{ret: 0, \"token\":\""
 							+ newToken
-							+ "\",  user: {\"name\" : \""
+							+ "\",  \"user\": {\"name\" : \""
 							+ servicer.getName() + "\", \"cellphone\": \""
 							+ servicer.getCellPhone() + "\", \"mail\":\""
 							+ servicer.getMail() + "\", \"type\":"

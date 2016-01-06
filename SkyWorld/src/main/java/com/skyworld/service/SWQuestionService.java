@@ -81,7 +81,7 @@ public class SWQuestionService extends BaseService {
 		while(it.hasNext()) {
 			User u = it.next();
 			if (u.getPushTerminal() != null) {
-				u.getPushTerminal().postEvents(new MessageEvent(new QuestionMessage(question)));
+				u.getPushTerminal().postEvent(new MessageEvent(new QuestionMessage(question)));
 				question.addSKServicer((SKServicer)u);
 			}
 		}

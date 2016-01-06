@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class SimplePushServlet extends HttpServlet {
 	
+	Log log = LogFactory.getLog(this.getClass());
 	
 	private static boolean DEBUG_MODE = true;
 	private PushServerDeamon deamon;

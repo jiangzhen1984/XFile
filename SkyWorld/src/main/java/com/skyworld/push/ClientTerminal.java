@@ -37,8 +37,10 @@ public class ClientTerminal  implements Serializable {
 
 	protected TerminalSocket socket;
 	
-	
 	protected  HttpPushMessageTransformer transformer;
+	
+	
+	private Object mSyncLock;
 
 	public ClientTerminal(Token token, TerminalSocket socket, HttpPushMessageTransformer transformer) {
 		this.token = token;
@@ -46,6 +48,7 @@ public class ClientTerminal  implements Serializable {
 		this.transformer = transformer;
 		lastUpdate = System.currentTimeMillis();
 		events = new LinkedBlockingDeque<SHPEvent>();
+		mSyncLock = new Object();
 	}
 	
 	
@@ -80,28 +83,52 @@ public class ClientTerminal  implements Serializable {
 	}
 
 
-	public boolean postEvents(SHPEvent ev) {
+	public boolean postEvent(SHPEvent ev) {
 		if (ev == null) {
 			throw new NullPointerException(" event is  null");
 		}
 		if (!socket.isAvailable()) {
 			return false;
 		}
-		boolean flag = false;
 		synchronized (events) {
 			events.add(ev);
-			events.notify();
+			events.notifyAll();
 			log.info(" ==== > post event :" + ev+"  to queue :"+events+" client :" + this);
 		}
 		
-		return flag;
+		return true;
 	}
 
 	
+	public boolean postSyncEvent(SHPEvent ev) {
+		if (ev == null) {
+			throw new NullPointerException(" event is  null");
+		}
+		if (!socket.isAvailable()) {
+			return false;
+		}
+		synchronized (events) {
+			events.add(ev);
+			events.notifyAll();
+			log.info(" ==== > post event :" + ev+"  to queue :"+events+" client :" + this);
+		}
+		synchronized (mSyncLock) {
+			try {
+				mSyncLock.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return true;
+	}
+	
+	
 	
 	public void waitForEvent() {
+		SHPEvent ev = null;
 		synchronized (events) {
-			SHPEvent ev = events.poll();
+			ev = events.poll();
 			if (ev == null) {
 				try {
 					events.wait();
@@ -110,17 +137,20 @@ public class ClientTerminal  implements Serializable {
 				}
 			}
 			ev = events.poll();
-			if (ev == null) {
-				throw new IllegalArgumentException(" event is null ");
-			}
-			
-			try {
-				log.info("start to handle event: " + ev);
-				handleEvent(ev);
-			} catch (IOException e) {
-				log.error("handle event error " + ev , e);
-			}
-			
+		}
+		if (ev == null) {
+			throw new IllegalArgumentException(" event is null ");
+		}
+		
+		try {
+			log.info("start to handle event: " + ev+" Thread:"+ Thread.currentThread());
+			handleEvent(ev);
+		} catch (IOException e) {
+			log.error("handle event error " + ev , e);
+		}
+		
+		synchronized (mSyncLock) {
+			mSyncLock.notify();
 		}
 	}
 	
@@ -132,11 +162,12 @@ public class ClientTerminal  implements Serializable {
 		case POST_MESSAGE:
 			String data = transformer.serialize(((MessageEvent)event).getMessage());
 			socket.setHeader("Content-Type", transformer.getContentType());
-			//socket.setHeader("Content-Length", (data.length()+"Content-Type".length() + transformer.getContentType().length() +"Content-Length".length())+"");
+			socket.setHeader("Content-Length", Integer.toOctalString(data.length()));
 			socket.write(data);
-			log.info(">>>>" + data);
 			break;
 		case CLOSE:
+			socket.setHeader("connection", "close");
+			socket.writeError(Code.SC_SERVICE_UNAVAILABLE, " connection close ");
 			break;
 		case TIME_OUT:
 			this.isTimeout = true;

@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.skyworld.cache.Token;
 import com.skyworld.cache.TokenFactory;
+import com.skyworld.push.event.ConnectionCloseEvent;
 import com.skyworld.pushimpl.IntervalDebugPush;
 
 public class PushServerDeamon {
@@ -109,6 +110,8 @@ public class PushServerDeamon {
 				terminal = new ClientTerminal(token, socket, transformer);
 				TerminalManager.getInstance().recordTerminal(token, terminal);
 			} else {
+				//Make sure prior thread resume
+				terminal.postSyncEvent(new ConnectionCloseEvent());
 				terminal.socket = socket;
 			}
 			terminal.updateTimeStamp();

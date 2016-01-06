@@ -31,7 +31,7 @@ public class IntervalDebugPush extends Thread {
 			List<ClientTerminal> list = TerminalManager.getInstance().queueTerminal();
 			log.info(" DEBUG===> broadcast : " + list+"  size: " +list.size());
 			for (ClientTerminal ter : list) {
-				ter.postEvents(new MessageEvent(new DebugMessage()));
+				ter.postEvent(new MessageEvent(new DebugMessage()));
 			}
 			
 			synchronized (this) {

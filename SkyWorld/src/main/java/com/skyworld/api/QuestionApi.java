@@ -140,7 +140,7 @@ public class QuestionApi extends HttpServlet {
 		Answer  answer = new Answer(ans);
 		quest.setAnswer(servicer, answer);
 		if (quest.getAsker().getPushTerminal() != null) {
-			quest.getAsker().getPushTerminal().postEvents(new MessageEvent(new AnswerMessage(quest, answer, servicer)));
+			quest.getAsker().getPushTerminal().postEvent(new MessageEvent(new AnswerMessage(quest, answer, servicer)));
 		} else {
 			log.error("[ERROR] No push terminal : " + quest.getAsker());
 		}

@@ -46,7 +46,7 @@ public class TimeoutThread extends Thread {
 				}
 				
 				if (triggerTimeout) {
-					ter.postEvents(new TimeoutEvent());
+					ter.postEvent(new TimeoutEvent());
 					
 				}
 				if (remove) {
