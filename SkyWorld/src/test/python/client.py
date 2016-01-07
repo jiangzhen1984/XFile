@@ -164,47 +164,19 @@ class QuestionListenService(Service):
 
 
 	def run(self, config):
-		command ="servicer.py {0} {1} {2} {3}".format(config.getHost(), config.getPort(), config.getToken(), " end")
-		print command
-		#a = popen2.popen2(command)
-		subprocess.Popen(["servicer.py", config.getHost(), str(config.getPort()), config.getToken(), " end"])
-		#pushthread = PushListener(config)
-		#pushthread.start()
-		time.sleep(2)
+		if config.getToken():
+			subprocess.Popen(["./pushlistener.py", config.getHost(), str(config.getPort()), config.getToken(), "question_listener"])
 
 
-class PushListener(threading.Thread):
+class AnswerListenService(Service):
 
-	def __init__(self, config):
-		threading.Thread.__init__(self)
-		self.config = config
+	def __init__(self):
+		Service.__init__(self)
 
-	def run(self):
-	    	headers = {"Content-type": "application/x-www-form-urlencoded","Accept": "application/json"} 
-		headers['Authorization'] = self.config.getToken()
-		uri="/SkyWorld/push"
-		serviceName = "PushListener"
-		while True:
-			try:
-				print "[INFO][",serviceName,"] start to host: ", self.config.getHost(), ":" , self.config.getPort() , " headers:", headers
-				httpClient = httplib.HTTPConnection(self.config.getHost(), self.config.getPort(), timeout=30)
-				httpClient.request('POST', uri, '', headers)
-				response = httpClient.getresponse()
-				if (response.status == 200):
-					result = response.read(1024)
-					print "[INFO][",serviceName,"] ===> GET RESULT ", result
-					result = re.sub('([{,])([^{:\s"]*):', lambda m: '%s"%s":'%(m.group(1),m.group(2)),result)
-					print "[INFO][",serviceName,"] ===> GET RESULT ", result
-				else:
-					print '[ERROR][',serviceName,']  ====>  http status :', response.status
-			except Exception, e:
-				print '[ERROR][',serviceName,'] ' , e
-				traceback.print_exc()
-				break;
-			finally:
-				if httpClient:
-					httpClient.close()
-		
+
+	def run(self, config):
+		if config.getToken():
+			subprocess.Popen(["./pushlistener.py", config.getHost(), str(config.getPort()), config.getToken(), "answer_listener"])
 
 
 
@@ -278,6 +250,9 @@ if __name__ == "__main__":
 
 	chain.append(QuestionListenService())
 	configs.append(re2config)
+
+	chain.append(AnswerListenService())
+	configs.append(re1config)
 
 	chain.append(InquireService())
 	configs.append(re1config)

@@ -36,9 +36,14 @@ class PushListener:
 				response = httpClient.getresponse()
 				if (response.status == 200):
 					result = response.read(1024)
-					print "[INFO][",serviceName,"] ===> GET RESULT ", result
 					result = re.sub('([{,])([^{:\s"]*):', lambda m: '%s"%s":'%(m.group(1),m.group(2)),result)
 					print "[INFO][",serviceName,"] ===> GET RESULT ", result
+					if self.config['type'] == 'answer_listener':
+						print "[INFO][",serviceName,"] ======> GET Answer ", result
+						return
+					rt = json.loads(result)
+					if rt and rt['body']['quest_id']:	
+						subprocess.call(["./answer.py", self.config['host'], str(self.config['port']), self.config['token'], str(rt['body']['quest_id'])])
 				else:
 					print '[ERROR][',serviceName,']  ====>  http status :', response.status
 			except Exception, e:
@@ -53,11 +58,10 @@ class PushListener:
 
 if __name__ == "__main__":
 
-	print >> sys.stdout , "9999999999999999999"
-	if (len(sys.argv) < 3):
+	if (len(sys.argv) < 4):
 		print "[ERROR] ====>  RUN COMMMAND python pushclient.py host port"		
 		sys.exit(1)
-	p = PushListener({'host' : sys.argv[1], 'port' : int(sys.argv[2]), 'token' : sys.argv[3]})
+	p = PushListener({'host' : sys.argv[1], 'port' : int(sys.argv[2]), 'token' : sys.argv[3], 'type' : sys.argv[4]})
 	p.run()
 	
 	
