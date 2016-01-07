@@ -111,7 +111,6 @@ public class PushServerDeamon {
 				TerminalManager.getInstance().recordTerminal(token, terminal);
 			} else {
 				//Make sure prior thread resume
-				terminal.postSyncEvent(new ConnectionCloseEvent());
 				terminal.socket = socket;
 			}
 			terminal.updateTimeStamp();

@@ -118,7 +118,7 @@ public class QuestionApi extends HttpServlet {
 		long  questId;
 		try {
 			ans = jobject.getString("answer");
-			questId = jobject.getLong("question_id");
+			questId = jobject.getLong("question");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "{\"ret\" : -3 }";

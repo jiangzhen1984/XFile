@@ -65,6 +65,7 @@ public class TerminalSocket {
 			PrintWriter pw = resp.getWriter();
 			pw.write(buf, off, len);
 			pw.flush();
+			resp.flushBuffer();
 			isAvl = false;
 			return true;
 		} else {

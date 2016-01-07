@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.skyworld.push.event.ConnectionCloseEvent;
 import com.skyworld.push.event.TimeoutEvent;
 
 public class TimeoutThread extends Thread {
@@ -58,7 +59,7 @@ public class TimeoutThread extends Thread {
 			
 			synchronized (this) {
 				try {
-					wait(15000);
+					wait(5000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

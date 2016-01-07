@@ -39,8 +39,9 @@ public class ClientTerminal  implements Serializable {
 	
 	protected  HttpPushMessageTransformer transformer;
 	
+	private Thread attacher;
 	
-	private Object mSyncLock;
+	
 
 	public ClientTerminal(Token token, TerminalSocket socket, HttpPushMessageTransformer transformer) {
 		this.token = token;
@@ -48,7 +49,6 @@ public class ClientTerminal  implements Serializable {
 		this.transformer = transformer;
 		lastUpdate = System.currentTimeMillis();
 		events = new LinkedBlockingDeque<SHPEvent>();
-		mSyncLock = new Object();
 	}
 	
 	
@@ -87,56 +87,37 @@ public class ClientTerminal  implements Serializable {
 		if (ev == null) {
 			throw new NullPointerException(" event is  null");
 		}
-		if (!socket.isAvailable()) {
-			return false;
-		}
 		synchronized (events) {
-			events.add(ev);
+			events.offer(ev);
 			events.notifyAll();
-			log.info(" ==== > post event :" + ev+"  to queue :"+events+" client :" + this);
+			log.info(events+ " ==== > post event :" + ev+"  to queue :"+events+" client :" + this);
 		}
-		
 		return true;
 	}
 
 	
-	public boolean postSyncEvent(SHPEvent ev) {
-		if (ev == null) {
-			throw new NullPointerException(" event is  null");
-		}
-		if (!socket.isAvailable()) {
-			return false;
-		}
-		synchronized (events) {
-			events.add(ev);
-			events.notifyAll();
-			log.info(" ==== > post event :" + ev+"  to queue :"+events+" client :" + this);
-		}
-		synchronized (mSyncLock) {
-			try {
-				mSyncLock.wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return true;
-	}
-	
-	
-	
 	public void waitForEvent() {
 		SHPEvent ev = null;
 		synchronized (events) {
+			log.error("Set attacher:  Thread:"+ Thread.currentThread());
+			attacher = Thread.currentThread();
 			ev = events.poll();
 			if (ev == null) {
 				try {
+					log.info("Wait1:  Thread:"+ Thread.currentThread());
 					events.wait();
+					log.info(events+ "Resume2:  Thread:"+ Thread.currentThread());
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				
+				if (attacher != Thread.currentThread()) {
+					log.warn("attacher quit due to not match" + Thread.currentThread());
+					events.notifyAll();
+					return;
+				}
+				ev = events.poll();
 			}
-			ev = events.poll();
 		}
 		if (ev == null) {
 			throw new IllegalArgumentException(" event is null ");
@@ -149,9 +130,6 @@ public class ClientTerminal  implements Serializable {
 			log.error("handle event error " + ev , e);
 		}
 		
-		synchronized (mSyncLock) {
-			mSyncLock.notify();
-		}
 	}
 	
 	
