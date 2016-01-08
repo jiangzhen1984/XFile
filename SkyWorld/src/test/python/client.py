@@ -228,12 +228,12 @@ if __name__ == "__main__":
 	re1config = ServiceConfig(sys.argv[1], sys.argv[2], False)
 	re2config = ServiceConfig(sys.argv[1], sys.argv[2], False)
 
-	re1config.setUserName("aaaaa2341")
-	re1config.setCellphone("13682341")
+	re1config.setUserName("a")
+	re1config.setCellphone("1")
 	re1config.setPwd("a")
 
-	re2config.setUserName("aaaa82341")
-	re2config.setCellphone("13582341")
+	re2config.setUserName("baaa82341")
+	re2config.setCellphone("213582341")
 	re2config.setPwd("a")
 
 	chain = []

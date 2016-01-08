@@ -3,11 +3,14 @@ package com.skyworld.easemob;
 import java.util.Date;
 import java.util.concurrent.ForkJoinPool;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.skyworld.cache.Token;
 
 public class EaseMobDeamon {
 	
-	
+	protected Log log = LogFactory.getLog(this.getClass());
 	
 	private ForkJoinPool mPool;
 	
@@ -39,14 +42,28 @@ public class EaseMobDeamon {
 	
 	
 	public void register(String username, String pwd) {
+		if (config == null) {
+			log.error("Configuration doesn't initalize yet ");
+			return;
+		}
 		if (!config.isAuthed()) {
-			mPool.execute(new ChainRunnable(new Runnable[]{new AuthorizationRunnable(config), new RegisterRunnable(config, username, pwd)}));
+			mPool.execute(new ChainRunnable(new Runnable[]{new AuthorizationRunnable(config), new RegisterRunnable(config, username, pwd, null)}));
 		} else {
-			mPool.execute(new RegisterRunnable(config, username, pwd));
+			mPool.execute(new RegisterRunnable(config, username, pwd, null));
 		}
 	}
 	
-	
+	public void register(String username, String pwd, EasemobRegisterCallback callback) {
+		if (config == null) {
+			log.error("Configuration doesn't initalize yet ");
+			return;
+		}
+		if (!config.isAuthed()) {
+			mPool.execute(new ChainRunnable(new Runnable[]{new AuthorizationRunnable(config), new RegisterRunnable(config, username, pwd, callback)}));
+		} else {
+			mPool.execute(new RegisterRunnable(config, username, pwd, callback));
+		}
+	}
 	
 	class Configuration {
 		String url;

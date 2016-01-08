@@ -9,6 +9,8 @@ public class ServiceFactory {
 	private static SWQuestionService eQuestionService;
 	
 	private static EaseMobDeamon  mEaseMobDeamon;
+	
+	private static APIService mApiService;
 
 	public ServiceFactory() {
 	}
@@ -40,6 +42,20 @@ public class ServiceFactory {
 		return eQuestionService;
 	}
 	
+	
+	
+	public static APIService getAPIService() {
+		if (mApiService == null) {
+			mApiService = new APIChainService();
+			((APIChainService)mApiService).addActionMapping("login", new APILoginService());
+			((APIChainService)mApiService).addActionMapping("register", new APIRegisterService());
+			((APIChainService)mApiService).addActionMapping("upgrade", new APIUpgradeService());
+			((APIChainService)mApiService).addActionMapping("question", new APIInquireService());
+			((APIChainService)mApiService).addActionMapping("answer", new APIAnswerService());
+		}
+		
+		return mApiService;
+	}
 	
 	
 	

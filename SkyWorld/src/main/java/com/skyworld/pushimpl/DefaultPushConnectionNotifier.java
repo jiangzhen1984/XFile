@@ -13,6 +13,7 @@ public class DefaultPushConnectionNotifier implements OnConnectionNotifier {
 		User user = CacheManager.getIntance().getUser(token);
 		if (user != null) {
 			user.setPushTerminal(terminal);
+			//TODO is exist message, then push message
 		}
 	}
 

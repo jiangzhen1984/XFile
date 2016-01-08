@@ -34,6 +34,7 @@ public class StartupServlet extends GenericServlet {
 		log.info("============server initialized easemod service ==>"+ServiceFactory.getEaseMobService());
 		log.info("============server initialized user service ==>"+ServiceFactory.getESUserService());
 		log.info("============server initialized querstion service ==>"+ServiceFactory.getQuestionService());
+		log.info("============server initialized API service ==>"+ ServiceFactory.getAPIService());
 		
 		ServiceFactory.getEaseMobService().authorize("SkyWorld", "SkyWorld", "YXA6UW3TIKTGEeW8okGnOCdMYw", "YXA60GJ7UHua7FFXKEf_P3brVRdUusM");
 		log.info("============server start request easemod token <<<=====");

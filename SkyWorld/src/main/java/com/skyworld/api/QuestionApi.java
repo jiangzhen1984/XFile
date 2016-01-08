@@ -33,14 +33,16 @@ public class QuestionApi extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		checkJson(req, resp);
+//		checkJson(req, resp);
+		ServiceFactory.getAPIService().service(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
-		checkJson(req, resp);
+//		req.setCharacterEncoding("UTF-8");
+//		checkJson(req, resp);
+		ServiceFactory.getAPIService().service(req, resp);
 	}
 
 	private void checkJson(HttpServletRequest req, HttpServletResponse resp) {

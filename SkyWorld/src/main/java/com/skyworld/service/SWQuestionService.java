@@ -48,11 +48,13 @@ public class SWQuestionService extends BaseService {
 			throw new NullPointerException(" question is null");
 		}
 		Session session = openSession();
-		SWPQuestion q = (SWPQuestion)session.load(SWPQuestion.class , question.getId());
-		q.setState(Question.State.CANCEL.ordinal());
-		Transaction t = session.beginTransaction();
-		session.update(q);
-		t.commit();
+		SWPQuestion q = (SWPQuestion)session.get(SWPQuestion.class , question.getId());
+		if (q != null) {
+			q.setState(Question.State.CANCEL.ordinal());
+			Transaction t = session.beginTransaction();
+			session.update(q);
+			t.commit();
+		}
 		session.close();
 		question.setState(Question.State.CANCEL);
 	}
@@ -64,11 +66,13 @@ public class SWQuestionService extends BaseService {
 		}
 		
 		Session session = openSession();
-		SWPQuestion q = (SWPQuestion)session.load(SWPQuestion.class , question.getId());
-		q.setState(Question.State.RESOVLED.ordinal());
-		Transaction t = session.beginTransaction();
-		session.update(q);
-		t.commit();
+		SWPQuestion q = (SWPQuestion)session.get(SWPQuestion.class , question.getId());
+		if (q != null) {
+			q.setState(Question.State.RESOVLED.ordinal());
+			Transaction t = session.beginTransaction();
+			session.update(q);
+			t.commit();
+		}
 		session.close();
 		question.setState(Question.State.RESOVLED);
 	}

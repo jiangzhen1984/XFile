@@ -8,11 +8,6 @@ public class DebugMessage extends HttpPushMessage {
 		super();
 	}
 
-	@Override
-	public int compareTo(Object o) {
-		return 0;
-	}
-	
-	
+
 
 }

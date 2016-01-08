@@ -33,7 +33,7 @@ class Answer:
 
 		data['body'] = dict()
 		data['body']['answer'] = "Answer for content"
-		data['body']['question'] = question
+		data['body']['question_id'] = question
 		params = urllib.urlencode({"data" : json.dumps(data)})
 	    	headers = {"Content-type": "application/x-www-form-urlencoded","Accept": "application/json"} 
 		serviceName = "AnswerProcess"

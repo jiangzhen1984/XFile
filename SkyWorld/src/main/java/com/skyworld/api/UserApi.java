@@ -16,7 +16,10 @@ import org.json.JSONObject;
 import com.skyworld.cache.CacheManager;
 import com.skyworld.cache.Token;
 import com.skyworld.cache.TokenFactory;
+import com.skyworld.easemob.EasemobRegisterCallback;
 import com.skyworld.push.event.ConnectionCloseEvent;
+import com.skyworld.push.event.MessageEvent;
+import com.skyworld.pushimpl.EasemobMessage;
 import com.skyworld.service.ServiceFactory;
 import com.skyworld.service.dsf.Customer;
 import com.skyworld.service.dsf.SKServicer;
@@ -33,13 +36,13 @@ public class UserApi extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		checkJson(req, resp);
+		ServiceFactory.getAPIService().service(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		checkJson(req, resp);
+		ServiceFactory.getAPIService().service(req, resp);
 	}
 	
 	
@@ -175,7 +178,25 @@ public class UserApi extends HttpServlet {
 							+ user.getMail() + "\", \"type\":"
 							+ user.getUserType().ordinal() + " }}");
 
-					ServiceFactory.getEaseMobService().register(user.getMail(), user.getPassword());
+					final User u = user;
+					ServiceFactory.getEaseMobService().register(cellphone, user.getPassword(), new EasemobRegisterCallback() {
+
+						@Override
+						public void onRegistered() {
+							u.getPushTerminal().postEvent(new MessageEvent(new EasemobMessage(u)));
+						}
+
+						@Override
+						public void onFailed() {
+							u.getPushTerminal().postEvent(new MessageEvent(new EasemobMessage(u)));
+						}
+
+						@Override
+						public void onError() {
+							u.getPushTerminal().postEvent(new MessageEvent(new EasemobMessage(u)));
+						}
+						
+					});
 				} else {
 					response.append("{\"ret\": -103}");
 				}

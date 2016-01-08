@@ -27,12 +27,16 @@ public class RegisterRunnable implements Runnable {
 	EaseMobDeamon.Configuration config;
 	String username;
 	String password;
+	
+	
+	EasemobRegisterCallback registerCallback;
 
-	public RegisterRunnable(Configuration config, String username, String pwd) {
+	public RegisterRunnable(Configuration config, String username, String pwd, EasemobRegisterCallback registerCallback) {
 		super();
 		this.config = config;
 		this.username = username;
 		this.password = pwd;
+		this.registerCallback = registerCallback;
 	}
 
 	@Override
@@ -58,6 +62,7 @@ public class RegisterRunnable implements Runnable {
 		context.setCredentialsProvider(new BasicCredentialsProvider());
 
 		CloseableHttpResponse response = null;
+		int ret = 0;
 		try {
 			HttpClient httpclient = HttpClientSSLBuilder.buildHttpClient();
 			response = (CloseableHttpResponse) httpclient
@@ -67,10 +72,12 @@ public class RegisterRunnable implements Runnable {
 			case 200:
 				log.info("handle 200");
 				handle200(response);
+				ret = 0;
 				break;
 			case 400:
 				log.info("handle 400");
 				handle400(response);
+				ret = 1;
 				break;
 			case 401:
 				log.info("handle 401");
@@ -79,6 +86,7 @@ public class RegisterRunnable implements Runnable {
 			default:
 				log.info("handle "+httpCode);
 				handleOthers(response);
+				ret = -1;
 				break;
 
 			}
@@ -95,6 +103,10 @@ public class RegisterRunnable implements Runnable {
 					e.printStackTrace();
 				}
 			}
+		}
+		
+		if (registerCallback != null) {
+			registerCallback.onRegistered();
 		}
 
 	}

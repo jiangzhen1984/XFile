@@ -20,10 +20,6 @@ public class AnswerMessage extends HttpPushMessage {
 		this.servicer = servicer;
 	}
 
-	@Override
-	public int compareTo(Object o) {
-		return 0;
-	}
 
 	public Question getQuestion() {
 		return question;

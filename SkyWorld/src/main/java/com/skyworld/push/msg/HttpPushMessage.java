@@ -2,7 +2,7 @@ package com.skyworld.push.msg;
 
 import java.io.Serializable;
 
-public abstract class HttpPushMessage<E extends Comparable<? super E>> implements Serializable, Comparable<HttpPushMessage<E>>{
+public abstract class HttpPushMessage implements Serializable, Comparable<HttpPushMessage>{
 
 	/**
 	 * 
@@ -13,11 +13,13 @@ public abstract class HttpPushMessage<E extends Comparable<? super E>> implement
 	
 	
 	protected long timestamp;
-	
-	
-	
-	public int compareTo(HttpPushMessage<?> other) {
+
+
+
+
+	public int compareTo(HttpPushMessage other) {
 		return this.timestamp > other.timestamp ? 1 : (this.timestamp == other.timestamp ? 0 : -1);
    }
+	
 
 }

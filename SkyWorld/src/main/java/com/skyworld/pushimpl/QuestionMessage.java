@@ -12,10 +12,7 @@ public class QuestionMessage extends HttpPushMessage {
 		this.question = question;
 	}
 
-	@Override
-	public int compareTo(Object o) {
-		return 0;
-	}
+
 
 	public Question getQuestion() {
 		return question;
