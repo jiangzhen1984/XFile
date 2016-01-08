@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.skyworld.cache.Token;
 import com.skyworld.cache.TokenFactory;
-import com.skyworld.push.event.ConnectionCloseEvent;
+import com.skyworld.push.msg.HttpPushMessage;
 import com.skyworld.pushimpl.IntervalDebugPush;
 
 public class PushServerDeamon {
@@ -19,7 +19,7 @@ public class PushServerDeamon {
 	
 	private static boolean LOCAL_DEBUG = false;
 	
-	private HttpPushMessageTransformer transformer;
+	private HttpPushMessageTransformer<HttpPushMessage> transformer;
 	
 	private AuthorizationChecker  authorizationChecker;
 	
@@ -43,7 +43,7 @@ public class PushServerDeamon {
 	}
 	
 	
-	public void setHttpPushMessageTransformer(HttpPushMessageTransformer transformer) {
+	public void setHttpPushMessageTransformer(HttpPushMessageTransformer<HttpPushMessage> transformer) {
 		this.transformer = transformer;
 	}
 	

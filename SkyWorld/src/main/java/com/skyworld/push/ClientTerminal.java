@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import com.skyworld.cache.Token;
 import com.skyworld.push.event.MessageEvent;
 import com.skyworld.push.event.SHPEvent;
+import com.skyworld.push.msg.HttpPushMessage;
 
 public class ClientTerminal  implements Serializable {
 	
@@ -37,13 +38,13 @@ public class ClientTerminal  implements Serializable {
 
 	protected TerminalSocket socket;
 	
-	protected  HttpPushMessageTransformer transformer;
+	protected  HttpPushMessageTransformer<HttpPushMessage> transformer;
 	
 	private Thread attacher;
 	
 	
 
-	public ClientTerminal(Token token, TerminalSocket socket, HttpPushMessageTransformer transformer) {
+	public ClientTerminal(Token token, TerminalSocket socket, HttpPushMessageTransformer<HttpPushMessage> transformer) {
 		this.token = token;
 		this.socket = socket;
 		this.transformer = transformer;

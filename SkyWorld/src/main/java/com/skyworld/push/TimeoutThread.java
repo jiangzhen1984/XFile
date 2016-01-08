@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.skyworld.push.event.ConnectionCloseEvent;
 import com.skyworld.push.event.TimeoutEvent;
 
 public class TimeoutThread extends Thread {
@@ -39,7 +38,7 @@ public class TimeoutThread extends Thread {
 							remove = true;
 						}
 					} else {
-						if ((System.currentTimeMillis() - ter.lastUpdate) / 1000 > 20) {
+						if ((System.currentTimeMillis() - ter.lastUpdate) / 1000 > 40) {
 							triggerTimeout = true;
 							ter.setTimeout(true);
 						}
@@ -59,7 +58,7 @@ public class TimeoutThread extends Thread {
 			
 			synchronized (this) {
 				try {
-					wait(5000);
+					wait(10000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
