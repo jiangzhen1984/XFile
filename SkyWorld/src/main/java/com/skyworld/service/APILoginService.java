@@ -4,6 +4,8 @@ import org.json.JSONObject;
 
 import com.skyworld.cache.CacheManager;
 import com.skyworld.cache.Token;
+import com.skyworld.push.event.MessageEvent;
+import com.skyworld.pushimpl.EasemobMessage;
 import com.skyworld.service.dsf.Customer;
 import com.skyworld.service.dsf.SKServicer;
 import com.skyworld.service.dsf.User;
@@ -38,6 +40,8 @@ public class APILoginService extends APIBasicJsonApiService {
 			user = new SKServicer(user);
 		}
 		Token token = CacheManager.getIntance().saveUser(user);
+		//Add pending event of Easemob message
+		user.addPendingEvent(new MessageEvent(new EasemobMessage(user)));
 		return new RegisterResponse(user, token);
 	}
 

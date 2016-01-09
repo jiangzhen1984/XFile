@@ -104,6 +104,7 @@ public class PushServerDeamon {
 		
 		Token token = initToken(socket);
 		if (token != null) {
+			//FIXME check token legal
 			ClientTerminal terminal = TerminalManager.getInstance().getTerminal(token);
 			log.info(" fetch token " + token.getValue()+"   terminal:"+  terminal);
 			if (terminal == null) {

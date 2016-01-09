@@ -1,7 +1,11 @@
 package com.skyworld.service.dsf;
 
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import com.skyworld.cache.Token;
 import com.skyworld.push.ClientTerminal;
+import com.skyworld.push.event.SHPEvent;
 import com.skyworld.service.po.SWPUser;
 
 
@@ -14,6 +18,8 @@ public class User extends SWPUser {
 	private ClientTerminal pushTerminal;
 	
 	private UserType userType;
+	
+	private Queue<SHPEvent> pengingEvents;
 
 	public User() {
 		super();
@@ -25,6 +31,7 @@ public class User extends SWPUser {
 		this.setCellPhone(u.getCellPhone());
 		this.setName(u.getName());
 		this.setId(u.getId());
+		this.setMail(u.getMail());
 		switch(u.getuType()) {
 		case 0:
 			this.userType = UserType.CUSTOMER;
@@ -44,6 +51,7 @@ public class User extends SWPUser {
 		this.setCellPhone(u.getCellPhone());
 		this.setName(u.getName());
 		this.setId(u.getId());
+		this.setMail(u.getMail());
 		switch(u.getuType()) {
 		case 0:
 			this.userType = UserType.CUSTOMER;
@@ -84,7 +92,17 @@ public class User extends SWPUser {
 	
 	
 	
+	public synchronized void addPendingEvent(SHPEvent event) {
+		if (pengingEvents ==  null) {
+			pengingEvents = new LinkedBlockingQueue<SHPEvent>();
+		}
+		
+		pengingEvents.offer(event);
+	}
 	
+	public Queue<SHPEvent> getPendingEvents() {
+		return pengingEvents;
+	}
 	
 	
 	

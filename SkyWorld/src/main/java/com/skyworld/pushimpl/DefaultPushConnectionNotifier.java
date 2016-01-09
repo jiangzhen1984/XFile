@@ -1,9 +1,12 @@
 package com.skyworld.pushimpl;
 
+import java.util.Queue;
+
 import com.skyworld.cache.CacheManager;
 import com.skyworld.cache.Token;
 import com.skyworld.push.ClientTerminal;
 import com.skyworld.push.OnConnectionNotifier;
+import com.skyworld.push.event.SHPEvent;
 import com.skyworld.service.dsf.User;
 
 public class DefaultPushConnectionNotifier implements OnConnectionNotifier {
@@ -13,7 +16,12 @@ public class DefaultPushConnectionNotifier implements OnConnectionNotifier {
 		User user = CacheManager.getIntance().getUser(token);
 		if (user != null) {
 			user.setPushTerminal(terminal);
-			//TODO is exist message, then push message
+			//post pending message
+			Queue<SHPEvent> queue = user.getPendingEvents();
+			SHPEvent ev = null;
+			while ((ev = queue.poll()) != null) {
+				terminal.postEvent(ev);
+			}
 		}
 	}
 
