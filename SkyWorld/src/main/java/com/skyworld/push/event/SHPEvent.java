@@ -25,6 +25,7 @@ public abstract class SHPEvent{
 		POST_MESSAGE,
 		TIME_OUT,
 		CLOSE,
+		SHUTDOWN,
 	}
 	
 	

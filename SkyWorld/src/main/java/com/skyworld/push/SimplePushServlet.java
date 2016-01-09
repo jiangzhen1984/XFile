@@ -1,6 +1,7 @@
 package com.skyworld.push;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.skyworld.push.event.ShutdownEvent;
 
 public class SimplePushServlet extends HttpServlet {
 	
@@ -23,6 +26,11 @@ public class SimplePushServlet extends HttpServlet {
 	@Override
 	public void destroy() {
 		super.destroy();
+		List<ClientTerminal> list = TerminalManager.getInstance().queueTerminal();
+		log.info("Start to shut down ");
+		for (ClientTerminal ter : list) {
+			ter.postEvent(new ShutdownEvent());
+		}
 		if (deamon != null) {
 			deamon.destroy();
 		}

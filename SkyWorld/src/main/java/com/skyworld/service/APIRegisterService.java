@@ -71,17 +71,29 @@ public class APIRegisterService extends APIBasicJsonApiService {
 
 			@Override
 			public void onRegistered() {
-				user.getPushTerminal().postEvent(new MessageEvent(new EasemobMessage(user)));
+				if (user.getPushTerminal() == null) {
+					user.addPendingEvent(new MessageEvent(new EasemobMessage(user)));
+				} else {
+					user.getPushTerminal().postEvent(new MessageEvent(new EasemobMessage(user)));
+				}
 			}
 
 			@Override
 			public void onFailed() {
-				user.getPushTerminal().postEvent(new MessageEvent(new EasemobMessage(user)));
+				if (user.getPushTerminal() == null) {
+					user.addPendingEvent(new MessageEvent(new EasemobMessage(user)));
+				} else {
+					user.getPushTerminal().postEvent(new MessageEvent(new EasemobMessage(user)));
+				}
 			}
 
 			@Override
 			public void onError() {
-				user.getPushTerminal().postEvent(new MessageEvent(new EasemobMessage(user)));
+				if (user.getPushTerminal() == null) {
+					user.addPendingEvent(new MessageEvent(new EasemobMessage(user)));
+				} else {
+					user.getPushTerminal().postEvent(new MessageEvent(new EasemobMessage(user)));
+				}
 			}
 			
 		});

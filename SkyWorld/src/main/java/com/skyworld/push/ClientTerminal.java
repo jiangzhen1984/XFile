@@ -145,6 +145,7 @@ public class ClientTerminal  implements Serializable {
 			socket.write(data);
 			break;
 		case CLOSE:
+		case SHUTDOWN:
 			socket.setHeader("connection", "close");
 			socket.writeError(Code.SC_SERVICE_UNAVAILABLE, " connection close ");
 			break;
