@@ -1,4 +1,7 @@
 Protocol Version: M1
+Protocol Version: M2 
+               Add PUSH API
+               Add username property in answer json protocol
 
 
 =======================================Register JSON Protocol =====================================
@@ -231,7 +234,8 @@ Not Servicer：  {ret: -602}
 http://121.42.207.185/SkyWorld/api/1.0/QuestionAPI?data={"header": {"action": "answer", "token":"95056787646578688"}, "body": { "answer":"content", "question_id" : quid}}
 
 
-
+Push Connect API:
+121.42.207.185/SkyWorld/push
 =======================================Push New Question JSON Protocol =====================================
 New question  json:
 
@@ -255,7 +259,7 @@ New question  json:
             "cellphone":"138"
         },
         "quest":"Who am I?",
-        "opt":1
+        "opt": [0/1]  0: new Question  1: question was cancelled
     }
 
 }
@@ -282,7 +286,8 @@ New Answer json:
             {
                 "username":"138"
             },
-            "cellphone":"138"
+            "cellphone":"138",
+            "username":"syservicer_mail"
         },
         "quest":
         {

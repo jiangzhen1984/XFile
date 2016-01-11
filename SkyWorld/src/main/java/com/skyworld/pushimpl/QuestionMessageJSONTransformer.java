@@ -24,7 +24,7 @@ public class QuestionMessageJSONTransformer implements HttpPushMessageTransforme
 		
 		header.put("category", "question");
 		
-		body.put("opt", 1);
+		body.put("opt", qm.getQuestion().getState().ordinal());
 		body.put("quest", qm.getQuestion().getQuestion());
 		body.put("quest_id", qm.getQuestion().getId());
 		body.put("datetime", System.currentTimeMillis());

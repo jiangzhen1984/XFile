@@ -80,6 +80,7 @@ public class APIInquireService extends APIBasicJsonApiService {
 		}
 		ServiceFactory.getQuestionService().cancelQuestion(cancelQuest);
 		CacheManager.getIntance().removePendingQuestion(id);
+		ServiceFactory.getQuestionService().broadcastQuestion(cancelQuest);
 		return new InquireResponse(null, cancelQuest);
 	}
 
