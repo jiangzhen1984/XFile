@@ -3,6 +3,8 @@ package com.skyworld.service;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -17,7 +19,7 @@ import com.skyworld.service.po.SWPQuestion;
 
 public class SWQuestionService extends BaseService {
 
-	
+	private Log log = LogFactory.getLog(this.getClass());
 	
 	public int saveQuestion(User user, Question question) {
 		if (question == null) {
@@ -85,8 +87,11 @@ public class SWQuestionService extends BaseService {
 		while(it.hasNext()) {
 			User u = it.next();
 			if (u.getPushTerminal() != null) {
+				log.info("Push question to user["+u+"] terminal: " +  u.getPushTerminal());
 				u.getPushTerminal().postEvent(new MessageEvent(new QuestionMessage(question)));
 				question.addSKServicer((SKServicer)u);
+			} else {
+				log.warn("User["+u+"] terminal is null");
 			}
 		}
 	}

@@ -19,7 +19,7 @@ public class DefaultPushConnectionNotifier implements OnConnectionNotifier {
 			//post pending message
 			Queue<SHPEvent> queue = user.getPendingEvents();
 			SHPEvent ev = null;
-			while ((ev = queue.poll()) != null) {
+			while (queue != null && (ev = queue.poll()) != null) {
 				terminal.postEvent(ev);
 			}
 		}
