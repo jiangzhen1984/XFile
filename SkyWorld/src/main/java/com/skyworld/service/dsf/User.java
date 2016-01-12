@@ -32,6 +32,7 @@ public class User extends SWPUser {
 		this.setName(u.getName());
 		this.setId(u.getId());
 		this.setMail(u.getMail());
+		this.setPassword(u.getPassword());
 		switch(u.getuType()) {
 		case 0:
 			this.userType = UserType.CUSTOMER;

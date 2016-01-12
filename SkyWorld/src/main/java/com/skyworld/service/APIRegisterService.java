@@ -54,8 +54,9 @@ public class APIRegisterService extends APIBasicJsonApiService {
 		user.setPassword(pwd);
 		int ret = ServiceFactory.getESUserService().addUser(user);
 		if (ret == 0) {
-			Token token = CacheManager.getIntance().saveUser(new Customer(user));
-			requestRegisterEasemob(user);
+			Customer cus = new Customer(user);
+			Token token = CacheManager.getIntance().saveUser(cus);
+			requestRegisterEasemob(cus);
 			return new RegisterResponse(user, token);
 			
 		} else {
@@ -66,11 +67,12 @@ public class APIRegisterService extends APIBasicJsonApiService {
 	
 	private void requestRegisterEasemob(final User user) {
 
-
+		log.info("request to register on easemob ==>" + user);
 		ServiceFactory.getEaseMobService().register(user.getCellPhone(), user.getPassword(), new EasemobRegisterCallback() {
 
 			@Override
 			public void onRegistered() {
+				log.info("onRegistered  ease callback to register on easemob ==>" + user);
 				if (user.getPushTerminal() == null) {
 					user.addPendingEvent(new MessageEvent(new EasemobMessage(user)));
 				} else {
@@ -80,6 +82,7 @@ public class APIRegisterService extends APIBasicJsonApiService {
 
 			@Override
 			public void onFailed() {
+				log.info("onFailed  ease callback to register on easemob ==>" + user);
 				if (user.getPushTerminal() == null) {
 					user.addPendingEvent(new MessageEvent(new EasemobMessage(user)));
 				} else {
@@ -89,6 +92,7 @@ public class APIRegisterService extends APIBasicJsonApiService {
 
 			@Override
 			public void onError() {
+				log.info("onError  ease callback to register on easemob ==>" + user);
 				if (user.getPushTerminal() == null) {
 					user.addPendingEvent(new MessageEvent(new EasemobMessage(user)));
 				} else {

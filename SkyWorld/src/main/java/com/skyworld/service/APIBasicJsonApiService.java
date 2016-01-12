@@ -24,6 +24,7 @@ public abstract class APIBasicJsonApiService implements APIService {
 	@Override
 	public void service(HttpServletRequest req, HttpServletResponse resp) {
 		String data = req.getParameter("data");
+		log.info(" request ==> data =  " + data);
 		JSONObject root = null;
 		if (data == null || (root = parse(data)) == null) {
 			writeResponse(new RTCodeResponse(APICode.REQUEST_PARAMETER_INVALID), req, resp);
@@ -37,6 +38,7 @@ public abstract class APIBasicJsonApiService implements APIService {
 		}
 		String action = header.getString("action");
 		APIBasicJsonApiService hanldeService = mapping.get(action);
+		log.info(" action ==>   " + action+"    servicer===>" + hanldeService);
 		if (hanldeService == null) {
 			writeResponse(new RTCodeResponse(APICode.ACTION_NOT_SUPPORT), req, resp);
 			return;
@@ -73,6 +75,7 @@ public abstract class APIBasicJsonApiService implements APIService {
 	
 	
 	private void writeResponse(BasicResponse response, HttpServletRequest req, HttpServletResponse resp) {
+		resp.setCharacterEncoding("utf8");
 		String strResp = response.getResponse();
 		resp.setContentType("application/json");
 		resp.setContentLength(strResp.length());

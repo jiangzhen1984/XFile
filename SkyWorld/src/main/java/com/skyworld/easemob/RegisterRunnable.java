@@ -41,11 +41,12 @@ public class RegisterRunnable implements Runnable {
 
 	@Override
 	public void run() {
+		log.info("====== RegisterRunnable start =====");
 		if (config == null || username == null || username.isEmpty()
 				|| password == null || password.isEmpty()) {
 			return;
 		}
-
+		log.info("====== RegisterRunnable check passed =====");
 		HttpPost post = new HttpPost(config.url + config.org + "/" + config.app
 				+ "/users");
 
@@ -76,7 +77,7 @@ public class RegisterRunnable implements Runnable {
 				break;
 			case 400:
 				log.info("handle 400");
-				handle400(response);
+				handle200(response);
 				ret = 1;
 				break;
 			case 401:
@@ -125,7 +126,7 @@ public class RegisterRunnable implements Runnable {
 			while ((n = in.read(buf)) != -1) {
 				out.write(buf, 0, n);
 			}
-			
+			//TODO save to database
 			log.info(new String(out.toByteArray()));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -134,7 +135,6 @@ public class RegisterRunnable implements Runnable {
 				try {
 					in.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -154,7 +154,6 @@ public class RegisterRunnable implements Runnable {
 	}
 
 	private void handle400(CloseableHttpResponse response) {
-
 	}
 
 	private void handleOthers(CloseableHttpResponse response) {
